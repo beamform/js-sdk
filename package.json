@@ -19,7 +19,9 @@
 		"build": "tsup",
 		"dev": "tsup --watch",
 		"generate:types": "openapi-typescript ./schema.yaml -o ./src/generated/schema.d.ts",
-		"generate:types:remote": "openapi-typescript http://localhost:8000/docs/openapi.json -o ./src/generated/schema.d.ts"
+		"generate:types:remote": "openapi-typescript http://localhost:8000/docs/openapi.json -o ./src/generated/schema.d.ts",
+		"test": "vitest run",
+		"test:watch": "vitest"
 	},
 	"keywords": [
 		"beamform",
@@ -32,7 +34,8 @@
 	"devDependencies": {
 		"openapi-typescript": "^7.9.1",
 		"tsup": "^8.5.0",
-		"typescript": "^5.9.2"
+		"typescript": "^5.9.2",
+		"vitest": "^3.2.4"
 	},
 	"dependencies": {
 		"openapi-fetch": "^0.14.0"
