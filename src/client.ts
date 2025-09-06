@@ -39,7 +39,7 @@ let autoRefresh: boolean = true;
  */
 const createClient = async (
   refreshToken: string,
-  config: ClientConfig = {},
+  config: ClientConfig = {}
 ): Promise<Client<ClientPaths>> => {
   baseUrl = config.baseUrl ?? "https://api.beamform.com";
   customHeaders = config.headers ?? {};
@@ -89,9 +89,7 @@ const createClient = async (
 
 const getValidSessionToken = async (): Promise<string> => {
   if (!tokens) {
-    throw new Error(
-      "Not authenticated - call createClient() first with refresh token",
-    );
+    throw new Error("Not authenticated - call createClient() first with refresh token");
   }
 
   if (isSessionTokenExpiringSoon()) {
@@ -152,7 +150,7 @@ const scheduleTokenRefresh = (): void => {
     } catch (error) {
       console.warn(
         "Proactive token refresh failed. Token will be refreshed on next API call. Error:",
-        error,
+        error
       );
     }
     refreshTimer = null;
@@ -172,4 +170,3 @@ const clear = (): void => {
 };
 
 export { clear, createClient };
-
