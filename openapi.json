@@ -1,0 +1,2422 @@
+{
+  "components": {
+    "schemas": {
+      "Action": {
+        "description": "Action button for notifications",
+        "properties": {
+          "link": {
+            "description": "URL to open when button is clicked",
+            "example": "https://app.beamform.ai/onboarding?welcome=true&source=notification",
+            "type": "string"
+          },
+          "title": {
+            "description": "Button text",
+            "example": "Get Started",
+            "type": "string"
+          }
+        },
+        "required": [
+          "title",
+          "link"
+        ],
+        "type": "object"
+      },
+      "ApiError": {
+        "description": "Standard API error response used across all services",
+        "properties": {
+          "code": {
+            "description": "Machine-readable error code",
+            "example": "INVALID_REQUEST",
+            "type": "string"
+          },
+          "details": {
+            "description": "Additional error context"
+          },
+          "message": {
+            "description": "Human-readable error message",
+            "example": "Invalid request format",
+            "type": "string"
+          }
+        },
+        "required": [
+          "message",
+          "code"
+        ],
+        "type": "object"
+      },
+      "ApiKey": {
+        "description": "ApiKey identifier",
+        "example": "sk_123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkm",
+        "pattern": "^sk_[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{45}$",
+        "type": "string"
+      },
+      "CheckPermissionParams": {
+        "description": "Query parameters for checking API key permissions",
+        "properties": {
+          "permission": {
+            "$ref": "#/components/schemas/Permission",
+            "description": "The permission to check"
+          }
+        },
+        "required": [
+          "permission"
+        ],
+        "type": "object"
+      },
+      "CheckPermissionResponse": {
+        "description": "Response for permission check",
+        "properties": {
+          "hasPermission": {
+            "description": "Whether the API key has the required permission",
+            "example": true,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "hasPermission"
+        ],
+        "type": "object"
+      },
+      "Cluster": {
+        "description": "Cluster of related notifications",
+        "properties": {
+          "content": {
+            "description": "Cluster summary description",
+            "example": "Updates related to your account settings, security changes, and profile modifications",
+            "type": "string"
+          },
+          "id": {
+            "description": "Cluster identifier",
+            "example": "cls_EQy9eND9ESLXNBwMDMuXqse",
+            "type": "string"
+          },
+          "interest": {
+            "description": "Cluster relevance score (0.0-1.0)",
+            "example": 0.92,
+            "format": "double",
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "notifications": {
+            "description": "Notifications in this cluster",
+            "items": {
+              "$ref": "#/components/schemas/Notification"
+            },
+            "type": "array"
+          },
+          "subject": {
+            "description": "Cluster title",
+            "example": "Account Updates",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "subject",
+          "content",
+          "interest",
+          "notifications"
+        ],
+        "type": "object"
+      },
+      "CreateKeyRequest": {
+        "description": "Request for creating a new key",
+        "properties": {
+          "expiresAt": {
+            "description": "Optional expiration time (ISO 8601 format)",
+            "example": "2026-01-15T10:30:00Z",
+            "format": "date-time",
+            "type": "string"
+          },
+          "name": {
+            "description": "Human-readable name for the API key",
+            "example": "Production API Key",
+            "maxLength": 255,
+            "minLength": 1,
+            "type": "string"
+          },
+          "permissions": {
+            "description": "Permissions to grant to this API key",
+            "items": {
+              "$ref": "#/components/schemas/Permission"
+            },
+            "maxItems": 12,
+            "minItems": 1,
+            "type": "array"
+          }
+        },
+        "required": [
+          "name",
+          "permissions"
+        ],
+        "type": "object"
+      },
+      "CreateKeyResponse": {
+        "description": "Response for key creation",
+        "properties": {
+          "keyId": {
+            "description": "The generated API key ID",
+            "example": "key_01HQXYZ9ABC123DEF456GHI",
+            "type": "string"
+          },
+          "keySecret": {
+            "description": "The actual API key secret (only returned once)",
+            "example": "sk_test_1234567890abcdef1234567890abcdef12345678",
+            "type": "string"
+          }
+        },
+        "required": [
+          "keyId",
+          "keySecret"
+        ],
+        "type": "object"
+      },
+      "CreateRequest": {
+        "description": "Request payload for creating a new notification",
+        "properties": {
+          "actions": {
+            "description": "Action buttons for this notification",
+            "items": {
+              "$ref": "#/components/schemas/Action"
+            },
+            "maxItems": 10,
+            "type": "array"
+          },
+          "content": {
+            "description": "Message content",
+            "example": "Your account has been successfully created. Welcome to our platform!",
+            "maxLength": 10240,
+            "minLength": 1,
+            "type": "string"
+          },
+          "deliverWithin": {
+            "description": "Delivery deadline as duration from now (e.g. \"1h\", \"24h\")",
+            "example": "1h",
+            "type": "string"
+          },
+          "metadata": {
+            "description": "Custom JSON data (max 10KB)",
+            "type": "object"
+          },
+          "recipients": {
+            "description": "Who should receive this notification",
+            "items": {
+              "$ref": "#/components/schemas/Recipient"
+            },
+            "maxItems": 1024,
+            "minItems": 1,
+            "type": "array"
+          },
+          "subject": {
+            "description": "Notification title",
+            "example": "Welcome to Beamform",
+            "maxLength": 2048,
+            "minLength": 1,
+            "type": "string"
+          },
+          "timestamp": {
+            "description": "When this notification was created. Defaults to current time.",
+            "example": "2024-01-15T10:30:00Z",
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "subject",
+          "content",
+          "recipients"
+        ],
+        "type": "object"
+      },
+      "CreateSessionRequest": {
+        "description": "Request for creating a new recipient session\n\nAll parameters are optional and use smart defaults optimized for embedded widget authentication.\nDuration fields use human-readable strings like \"24h\", \"2h\", \"30m\" for easy configuration.",
+        "properties": {
+          "sessionLifetime": {
+            "description": "Maximum total session lifetime before forced expiration\n\nExamples: \"24h\", \"8h\", \"7d\"\nDefault: 24 hours\nRange: 10 seconds to 10 years",
+            "example": "24h",
+            "type": "string"
+          },
+          "sessionTokenLifetime": {
+            "description": "Individual session token validity period\n\nSession tokens have fixed lifetimes and must be refreshed when they expire.\nExamples: \"2h\", \"1h\", \"30m\"\nDefault: 2 hours\nRange: 10 seconds to 7 days",
+            "example": "2h",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "CreateSessionResponse": {
+        "description": "Response for session creation",
+        "properties": {
+          "expiresAt": {
+            "description": "When the session expires (absolute deadline)",
+            "example": "2024-01-02T10:00:00Z",
+            "format": "date-time",
+            "type": "string"
+          },
+          "refreshToken": {
+            "description": "The refresh token for this session (only returned once)\n\nThis token should be embedded in the client HTML and used by the widget\nto obtain session tokens for API calls.",
+            "example": "sr_8vN2H3kL9mP4qR7sT1uX5yZ8bC6fG2hJ4kM7nQ9rS3vW",
+            "type": "string"
+          },
+          "sessionId": {
+            "description": "The generated session identifier",
+            "example": "ses_01HM4X5N9JKQRT8WVYZ2B6EP",
+            "type": "string"
+          }
+        },
+        "required": [
+          "sessionId",
+          "refreshToken",
+          "expiresAt"
+        ],
+        "type": "object"
+      },
+      "CurrentSessionResponse": {
+        "description": "Response for current session details (recipient-accessible)",
+        "properties": {
+          "createdAt": {
+            "description": "When the session was created (derived from `session_id` timestamp)",
+            "example": "2024-01-01T10:00:00Z",
+            "format": "date-time",
+            "type": "string"
+          },
+          "expiresAt": {
+            "description": "When the session expires",
+            "example": "2024-01-02T10:00:00Z",
+            "format": "date-time",
+            "type": "string"
+          },
+          "sessionId": {
+            "description": "Current session identifier",
+            "example": "ses_01HM4X5N9JKQRT8WVYZ2B6EP",
+            "type": "string"
+          }
+        },
+        "required": [
+          "sessionId",
+          "createdAt",
+          "expiresAt"
+        ],
+        "type": "object"
+      },
+      "ErrorResponse": {
+        "description": "Standard error response format used across all endpoints\n\nAll HTTP error responses follow this simple format. The error message provides\nhuman-readable details about what went wrong. Engineers should parse this format\nand handle specific error conditions based on HTTP status codes.",
+        "properties": {
+          "error": {
+            "description": "Human-readable error message describing what went wrong",
+            "example": "metadata is not valid JSON",
+            "type": "string"
+          }
+        },
+        "required": [
+          "error"
+        ],
+        "type": "object"
+      },
+      "FeedOptions": {
+        "description": "Query parameters for inbox requests",
+        "properties": {
+          "limit": {
+            "description": "Maximum items to return (1-500, default: 100)",
+            "example": 20,
+            "format": "int32",
+            "maximum": 500,
+            "minimum": 1,
+            "type": [
+              "integer",
+              "null"
+            ]
+          }
+        },
+        "type": "object"
+      },
+      "Inbox": {
+        "description": "Inbox response",
+        "properties": {
+          "items": {
+            "description": "Inbox items sorted by relevance",
+            "items": {
+              "$ref": "#/components/schemas/InboxItem"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "items"
+        ],
+        "type": "object"
+      },
+      "InboxItem": {
+        "description": "Inbox item - either a notification or cluster",
+        "oneOf": [
+          {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Notification",
+                "description": "Single notification with full content"
+              },
+              {
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "notification"
+                    ],
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type"
+                ],
+                "type": "object"
+              }
+            ],
+            "description": "Single notification with full content"
+          },
+          {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Cluster",
+                "description": "Group of related notifications with summary"
+              },
+              {
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "cluster"
+                    ],
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type"
+                ],
+                "type": "object"
+              }
+            ],
+            "description": "Group of related notifications with summary"
+          }
+        ]
+      },
+      "KeyId": {
+        "description": "KeyId identifier",
+        "example": "key_8W7X9mEr5YqS2TzN6vCpKj",
+        "pattern": "^key_[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{22}$",
+        "type": "string"
+      },
+      "KeyResponse": {
+        "description": "A key (without the secret)",
+        "properties": {
+          "createdAt": {
+            "description": "Creation timestamp",
+            "example": "2024-01-15T10:30:00Z",
+            "format": "date-time",
+            "type": "string"
+          },
+          "createdBy": {
+            "description": "Actor who created this key",
+            "example": "user@example.com",
+            "type": "string"
+          },
+          "expiresAt": {
+            "description": "Optional expiration timestamp",
+            "example": "2026-01-15T10:30:00Z",
+            "format": "date-time",
+            "type": "string"
+          },
+          "keyId": {
+            "description": "The API key ID",
+            "example": "key_01HQXYZ9ABC123DEF456GHI",
+            "type": "string"
+          },
+          "keyPrefix": {
+            "description": "Human-readable prefix for identification (first few characters of the API key)",
+            "example": "sk_1234",
+            "type": "string"
+          },
+          "lastUsedAt": {
+            "description": "Last usage timestamp",
+            "example": "2024-01-15T14:22:00Z",
+            "format": "date-time",
+            "type": "string"
+          },
+          "name": {
+            "description": "Human-readable name",
+            "example": "Production API Key",
+            "maxLength": 255,
+            "minLength": 1,
+            "type": "string"
+          },
+          "permissions": {
+            "description": "Effective permissions",
+            "items": {
+              "$ref": "#/components/schemas/Permission"
+            },
+            "maxItems": 12,
+            "minItems": 1,
+            "type": "array"
+          },
+          "updatedAt": {
+            "description": "Last update timestamp",
+            "example": "2024-01-15T10:30:00Z",
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "keyId",
+          "name",
+          "keyPrefix",
+          "createdBy",
+          "createdAt",
+          "updatedAt",
+          "permissions"
+        ],
+        "type": "object"
+      },
+      "ListKeysParams": {
+        "description": "Query parameters for listing keys",
+        "properties": {
+          "cursor": {
+            "description": "Optional cursor for pagination - the last API key ID from the previous page",
+            "example": "key_01HQXYZ9ABC124DEF456GHJ",
+            "type": "string"
+          },
+          "pageSize": {
+            "description": "Page size (default: 50, max: 100)",
+            "example": 20,
+            "format": "int32",
+            "maximum": 100,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "ListKeysResponse": {
+        "description": "Response for listing keys",
+        "properties": {
+          "keys": {
+            "description": "API keys (without secrets)",
+            "items": {
+              "$ref": "#/components/schemas/KeyResponse"
+            },
+            "type": "array"
+          },
+          "nextCursor": {
+            "description": "Cursor for next page (if more results available) - the last API key ID from this page",
+            "example": "key_01HQXYZ9ABC124DEF456GHJ",
+            "type": "string"
+          }
+        },
+        "required": [
+          "keys"
+        ],
+        "type": "object"
+      },
+      "ListSessionsParams": {
+        "description": "Query parameters for listing sessions",
+        "properties": {
+          "cursor": {
+            "description": "Cursor for pagination",
+            "example": "ses_01HM4X5N9JKQRT8WVYZ2B6EP",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "pageSize": {
+            "description": "Number of results per page (1-100, default: 50)",
+            "example": 50,
+            "format": "int32",
+            "minimum": 0,
+            "type": [
+              "integer",
+              "null"
+            ]
+          }
+        },
+        "type": "object"
+      },
+      "ListSessionsResponse": {
+        "description": "Response for listing recipient sessions",
+        "properties": {
+          "nextCursor": {
+            "description": "Cursor for next page (if more results exist)",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "sessions": {
+            "description": "List of sessions for the recipient",
+            "items": {
+              "$ref": "#/components/schemas/SessionRecord"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "sessions"
+        ],
+        "type": "object"
+      },
+      "Notification": {
+        "description": "Notification with content and metadata",
+        "properties": {
+          "actions": {
+            "description": "Action buttons for this notification",
+            "items": {
+              "$ref": "#/components/schemas/Action"
+            },
+            "type": "array"
+          },
+          "content": {
+            "description": "Notification content",
+            "example": "Your account has been successfully created. Welcome to our platform! You can now access all features and start managing your notifications.",
+            "type": "string"
+          },
+          "id": {
+            "description": "Notification identifier",
+            "example": "ntf_EQy9R3G1q1uJFmWa3QgEde",
+            "type": "string"
+          },
+          "interest": {
+            "description": "Relevance score (0.0-1.0)",
+            "example": 0.85,
+            "format": "double",
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "metadata": {
+            "description": "Custom metadata as JSON object",
+            "type": "object"
+          },
+          "occurredAt": {
+            "description": "When this notification occurred",
+            "example": "2024-01-15T10:30:00Z",
+            "type": "string"
+          },
+          "subject": {
+            "description": "Notification title",
+            "example": "Welcome to Beamform",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "subject",
+          "content",
+          "interest",
+          "occurredAt"
+        ],
+        "type": "object"
+      },
+      "NotificationId": {
+        "description": "NotificationId identifier",
+        "example": "ntf_8W7X9mEr5YqS2TzN6vCpKj",
+        "pattern": "^ntf_[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{22}$",
+        "type": "string"
+      },
+      "NotificationResponse": {
+        "description": "Response with notification ID",
+        "properties": {
+          "id": {
+            "description": "Notification ID",
+            "example": "ntf_EQy9R3G1q1uJFmWa3QgEde",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "type": "object"
+      },
+      "Permission": {
+        "description": "Permissions available in the system",
+        "enum": [
+          "inbox:read",
+          "notifications:create",
+          "notifications:delete",
+          "keys:create",
+          "keys:read",
+          "keys:list",
+          "keys:update",
+          "keys:delete",
+          "sessions:create",
+          "sessions:read",
+          "sessions:list",
+          "sessions:delete"
+        ],
+        "type": "string"
+      },
+      "PermissionSet": {
+        "description": "Set of permissions represented as an array",
+        "items": {
+          "$ref": "#/components/schemas/Permission"
+        },
+        "type": "array"
+      },
+      "Recipient": {
+        "description": "Notification recipient specification",
+        "oneOf": [
+          {
+            "description": "User ID",
+            "example": "user_123",
+            "type": "string"
+          },
+          {
+            "$ref": "#/components/schemas/User",
+            "description": "User with contact details"
+          }
+        ]
+      },
+      "RecipientId": {
+        "description": "RecipientId identifier",
+        "example": "rcp_4M9RtBz3Vx7YpF6qHsN5Ej",
+        "pattern": "^rcp_[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{22}$",
+        "type": "string"
+      },
+      "RefreshToken": {
+        "description": "RefreshToken identifier",
+        "example": "sr_123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkm",
+        "pattern": "^sr_[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{45}$",
+        "type": "string"
+      },
+      "RefreshTokenBody": {
+        "description": "Request body for token refresh",
+        "properties": {
+          "refreshToken": {
+            "description": "The refresh token",
+            "example": "sr_8vN2H3kL9mP4qR7sT1uX5yZ8bC6fG2hJ4kM7nQ9rS3vW",
+            "type": "string"
+          }
+        },
+        "required": [
+          "refreshToken"
+        ],
+        "type": "object"
+      },
+      "RefreshTokenResponse": {
+        "description": "Response for token refresh operations",
+        "properties": {
+          "expiresAt": {
+            "description": "When the session token expires (fixed lifetime)",
+            "example": "2024-01-01T12:00:00Z",
+            "format": "date-time",
+            "type": "string"
+          },
+          "refreshToken": {
+            "description": "The new refresh token (OAuth 2.1 token rotation - only returned once)\n\nThis replaces the old refresh token which is now invalidated.\nStore this token securely for future refresh operations.",
+            "example": "sr_3nL9wM6pQ8rU2xY5bA8dF1hK4jN7mP9qT3vX6zA2eG5j",
+            "type": "string"
+          },
+          "sessionToken": {
+            "description": "The new session token for API calls (only returned once)",
+            "example": "st_2mK8vL4pN6qS9tY3bX7cZ1eH5jM9nP2rT6uW8yA4dF7g",
+            "type": "string"
+          }
+        },
+        "required": [
+          "sessionToken",
+          "refreshToken",
+          "expiresAt"
+        ],
+        "type": "object"
+      },
+      "ReplaceKeyRequest": {
+        "description": "Request for completely replacing a key (PUT)",
+        "properties": {
+          "expiresAt": {
+            "description": "New expiration time (None means key never expires)",
+            "example": "2026-01-15T10:30:00Z",
+            "format": "date-time",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "name": {
+            "description": "New name for the API key",
+            "example": "Replaced Production API Key",
+            "maxLength": 255,
+            "minLength": 1,
+            "type": "string"
+          },
+          "permissions": {
+            "description": "New permissions to grant to this API key",
+            "items": {
+              "$ref": "#/components/schemas/Permission"
+            },
+            "maxItems": 12,
+            "minItems": 1,
+            "type": "array"
+          }
+        },
+        "required": [
+          "name",
+          "permissions"
+        ],
+        "type": "object"
+      },
+      "SessionId": {
+        "description": "SessionId identifier",
+        "example": "ses_8W7X9mEr5YqS2TzN6vCpKj",
+        "pattern": "^ses_[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{22}$",
+        "type": "string"
+      },
+      "SessionRecord": {
+        "description": "Session record for public listing APIs",
+        "properties": {
+          "createdAt": {
+            "description": "When the session was created (derived from `session_id` timestamp)",
+            "example": "2024-01-01T10:00:00Z",
+            "format": "date-time",
+            "type": "string"
+          },
+          "expiresAt": {
+            "description": "When the session expires",
+            "example": "2024-01-02T10:00:00Z",
+            "format": "date-time",
+            "type": "string"
+          },
+          "sessionId": {
+            "description": "Session identifier",
+            "example": "ses_01HM4X5N9JKQRT8WVYZ2B6EP",
+            "type": "string"
+          }
+        },
+        "required": [
+          "sessionId",
+          "createdAt",
+          "expiresAt"
+        ],
+        "type": "object"
+      },
+      "SessionToken": {
+        "description": "SessionToken identifier",
+        "example": "st_123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkm",
+        "pattern": "^st_[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{45}$",
+        "type": "string"
+      },
+      "UpdateKeyRequest": {
+        "description": "Request for partially updating a key (PATCH)\n\nFollows RFC 7396 JSON Merge Patch semantics:\n- Omitted fields: no change to existing value\n- Provided fields: update to new value\n- `null` values: clear the field (for `expires_at` only)",
+        "properties": {
+          "expiresAt": {
+            "description": "Optional new expiration time\n- Not provided: do not update expiration\n- `null`: clear expiration (key never expires)\n- ISO 8601 date: set new expiration",
+            "example": "2026-01-15T10:30:00Z",
+            "format": "date-time",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "name": {
+            "description": "Optional new name for the API key\n- Not provided: do not update name\n- Provided: set new name",
+            "example": "Updated Production API Key",
+            "maxLength": 255,
+            "minLength": 1,
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "permissions": {
+            "description": "Optional new permissions\n- Not provided: do not update permissions\n- Provided: replace all permissions with new set",
+            "items": {
+              "$ref": "#/components/schemas/Permission"
+            },
+            "maxItems": 12,
+            "minItems": 1,
+            "type": [
+              "array",
+              "null"
+            ]
+          }
+        },
+        "type": "object"
+      },
+      "User": {
+        "description": "User information for notification recipients",
+        "properties": {
+          "email": {
+            "description": "Email address",
+            "example": "john.doe@example.com",
+            "format": "email",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "id": {
+            "description": "User identifier",
+            "example": "user_123",
+            "maxLength": 1024,
+            "minLength": 1,
+            "type": "string"
+          },
+          "name": {
+            "description": "Display name",
+            "example": "John Doe",
+            "maxLength": 1024,
+            "minLength": 1,
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "timezone": {
+            "description": "Timezone ([IANA format](https://www.iana.org/time-zones))",
+            "example": "America/New_York",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "ApiKey": {
+        "bearerFormat": "opaque",
+        "description": "API key for server-to-server authentication. Use keys with `sk_` prefix.",
+        "scheme": "bearer",
+        "type": "http"
+      },
+      "SessionToken": {
+        "bearerFormat": "opaque",
+        "description": "Session token for recipient authentication in embedded widgets. Use tokens with `st_` prefix obtained via refresh endpoint.",
+        "scheme": "bearer",
+        "type": "http"
+      }
+    }
+  },
+  "info": {
+    "contact": {
+      "email": "support@beamform.ai",
+      "name": "Beamform Team"
+    },
+    "description": "Send notifications to users, retrieve their personalized inbox feeds, manage API keys, and create secure sessions for embedded widgets.\n\n## What is Beamform?\n\nBeamform delivers notifications at scale with automatic clustering and relevance ranking. Create notifications, retrieve personalized feeds, manage API keys, and authenticate embedded widgets through a unified API.\n\n## Quick Start\n\n**1. Create an API key:**\n```bash\ncurl -X POST /v1/auth/keys \\\n-H \"Content-Type: application/json\" \\\n-d '{\n\"name\": \"My App Key\",\n\"permissions\": [\"notifications:create\", \"inbox:read\"]\n}'\n```\n\n**2. Send a notification:**\n```bash\ncurl -X POST /v1/notifications \\\n-H \"Content-Type: application/json\" \\\n-H \"Authorization: Bearer YOUR_API_KEY\" \\\n-d '{\n\"subject\": \"Order Shipped\",\n\"content\": \"Your order will arrive tomorrow\",\n\"recipients\": [\"user_123\"]\n}'\n```\n\n**3. Get user's inbox (API key auth):**\n```bash\ncurl /v1/inbox/recipients/user_123?limit=20 \\\n-H \"Authorization: Bearer YOUR_API_KEY\"\n```\n\n**Or get current user's inbox (session auth):**\n```bash\ncurl /v1/inbox/current?limit=20 \\\n-H \"Authorization: Bearer YOUR_SESSION_TOKEN\"\n```\n\n## How It Works\n\n```\nYour App → Beamform API → Processing → Your App\n```\n\n**Flow:**\n\n1. **Authenticate** → Create API keys with specific permissions\n2. **Send notifications** → Get immediate notification IDs\n3. **Automatic processing** → Clustering and relevance calculation happens in the background\n4. **Retrieve feeds** → Get organized, personalized notification feeds\n5. **Display** → Show notifications in your application\n\n**API Organization:**\n- `/v1/auth/*` - API key management and session authentication\n- `/v1/notifications/*` - Create and manage notifications (API key required)\n- `/v1/inbox/recipients/*` - Retrieve inbox for specific recipients (API key required)\n- `/v1/inbox/current` - Retrieve current user's inbox (session token required)\n\n## Authentication\n\nBeamform supports two authentication methods depending on your use case:\n\n### API Key Authentication (Server-to-Server)\n\n**Use for:** Backend services, server-to-server integration\n\n**How it works:**\n1. Create an API key via `/v1/auth/keys` with required permissions\n2. Include in requests: `Authorization: Bearer YOUR_API_KEY`\n3. Keys are long-lived and can be managed (create, list, update, delete)\n4. Permissions control access: `notifications:create`, `inbox:read`, `sessions:create`, etc.\n\n**Example:**\n```bash\ncurl -X POST /v1/notifications \\\n-H \"Authorization: Bearer ak_1234567890abcdef\" \\\n-H \"Content-Type: application/json\" \\\n-d '{\"subject\": \"Hello\", \"recipients\": [\"user_123\"]}'\n```\n\n### Session Authentication (Embedded Widgets)\n\n**Use for:** Frontend widgets, recipient-scoped access, embedded components\n\n**How it works:**\n1. **Create session**: Backend calls `/v1/auth/recipients/{id}/sessions` with API key → gets `refreshToken`\n2. **Get session token**: Widget calls `/v1/auth/tokens/refresh` with `refreshToken` → gets short-lived `sessionToken`\n3. **Use session token**: Widget calls recipient APIs with `Authorization: Bearer SESSION_TOKEN`\n4. **Token refresh**: When session token expires, repeat step 2 with new refresh token\n5. **Logout**: Call `/v1/auth/session/current` DELETE to invalidate session\n\n**Session Flow:**\n```\nBackend (API Key) → Create Session → Refresh Token\nWidget (Refresh Token) → Get Session Token → Access APIs\nWidget (New Refresh Token) → Refresh Again → Continue...\n```\n\n**OAuth 2.1 Compliance**: Refresh tokens rotate on each use for security\n\n**Token Lifetimes:**\n- Session tokens: 2 hours (fixed, must refresh)\n- Refresh tokens: 24 hours (or until session expires)\n- Sessions: 24 hours total (configurable: 10s to 10 years)\n\n## Key Concepts\n\n**API Keys**: Long-lived server tokens with specific permissions (`ak_` prefix)\n\n**Sessions**: Short-term authentication contexts for recipients (`ses_` prefix)\n\n**Session Tokens**: Short-lived bearer tokens for widget API calls (`st_` prefix)\n\n**Refresh Tokens**: Medium-lived tokens for obtaining new session tokens (`sr_` prefix)\n\n**Permissions**: Fine-grained access controls (create notifications, read inbox, etc.)\n\n**Notifications**: Messages with subject, content, and optional action buttons\n\n**Recipients**: User ID strings or full user objects with contact details\n\n**Actions**: Clickable buttons in notifications (\"View Order\", \"Reply\")\n\n**Clustering**: Automatic grouping of similar notifications\n\n**Interest Scoring**: Relevance scores (0.0-1.0) for personalized ordering\n\n**Idempotency**: Safe retries using `Idempotency-Key` header\n\n## API Reference\n\nThe Beamform API is organized into logical endpoints:\n- **Authentication** (`/v1/auth/*`): Manage API keys and recipient sessions\n- **Notifications** (`/v1/notifications/*`): Create and manage notifications\n- **Inbox Recipients** (`/v1/inbox/recipients/*`): Organization-level inbox access\n- **Inbox Current** (`/v1/inbox/current`): Current user's inbox\n\n### Authentication Requirements\n\n**API Key Required:**\n- All `/v1/notifications/*` endpoints\n- All `/v1/inbox/recipients/*` endpoints\n- All `/v1/auth/keys/*` endpoints\n- All `/v1/auth/recipients/*/sessions` endpoints\n\n**Session Token Required:**\n- `/v1/inbox/current` - Get current user's inbox\n- `/v1/auth/tokens/refresh` - Refresh session tokens\n- `/v1/auth/sessions/current` - Manage current session",
+    "license": {
+      "identifier": "All rights reserved",
+      "name": "All rights reserved"
+    },
+    "title": "Beamform API",
+    "version": "1.0.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/v1/auth/keys": {
+      "get": {
+        "description": "Lists API keys for the organization with optional pagination.",
+        "operationId": "list_keys",
+        "parameters": [
+          {
+            "description": "Optional cursor for pagination - the last API key ID from the previous page",
+            "in": "path",
+            "name": "cursor",
+            "required": true,
+            "schema": {
+              "oneOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "$ref": "#/components/schemas/KeyId"
+                }
+              ]
+            }
+          },
+          {
+            "description": "Page size (default: 50, max: 100)",
+            "in": "path",
+            "name": "pageSize",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "minimum": 0,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "keys": [
+                    {
+                      "createdAt": "2024-01-15T10:30:00Z",
+                      "createdBy": "user@example.com",
+                      "expiresAt": "2025-01-15T10:30:00Z",
+                      "keyId": "key_01HQXYZ9ABC123DEF456GHI",
+                      "keyPrefix": "sk_1234",
+                      "name": "Production API Key",
+                      "permissions": [
+                        "notifications:create",
+                        "keys:read"
+                      ],
+                      "updatedAt": "2024-01-15T10:30:00Z"
+                    }
+                  ],
+                  "nextCursor": "key_01HQXYZ9ABC124DEF456GHJ"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ListKeysResponse"
+                }
+              }
+            },
+            "description": "List of keys"
+          }
+        },
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ],
+        "summary": "List API keys",
+        "tags": [
+          "auth"
+        ]
+      },
+      "post": {
+        "description": "Creates a new API key with specified permissions and metadata.",
+        "operationId": "create_key",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateKeyRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "apiKeySecret": "sk_test_1234567890abcdef1234567890abcdef12345678",
+                  "keyId": "key_01HQXYZ9ABC123DEF456GHI"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/CreateKeyResponse"
+                }
+              }
+            },
+            "description": "Key created successfully"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "invalid_name": {
+                    "summary": "Invalid name length",
+                    "value": {
+                      "error": "Invalid name length"
+                    }
+                  },
+                  "invalid_permissions": {
+                    "summary": "Invalid permissions",
+                    "value": {
+                      "error": "Invalid permissions specified"
+                    }
+                  },
+                  "past_expiration": {
+                    "summary": "Expiration date in the past",
+                    "value": {
+                      "error": "Expiration date must be in the future"
+                    }
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Invalid request data"
+          }
+        },
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ],
+        "summary": "Create API key",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/v1/auth/keys/{key_id}": {
+      "delete": {
+        "description": "Permanently deletes an API key. This action cannot be undone.",
+        "operationId": "delete_key",
+        "parameters": [
+          {
+            "description": "API key identifier",
+            "in": "path",
+            "name": "key_id",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/KeyId"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Key deleted successfully"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "API key not found"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "API key not found"
+          }
+        },
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ],
+        "summary": "Delete API key",
+        "tags": [
+          "auth"
+        ]
+      },
+      "get": {
+        "description": "Retrieves details for a specific API key (without the secret).",
+        "operationId": "get_key",
+        "parameters": [
+          {
+            "description": "API key identifier",
+            "in": "path",
+            "name": "key_id",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/KeyId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "createdAt": "2024-01-15T10:30:00Z",
+                  "createdBy": "user@example.com",
+                  "keyId": "key_01HQXYZ9ABC123DEF456GHI",
+                  "keyPrefix": "sk_1234",
+                  "lastUsedAt": "2024-01-15T14:22:00Z",
+                  "name": "Production API Key",
+                  "permissions": [
+                    "notifications:create",
+                    "keys:read"
+                  ],
+                  "updatedAt": "2024-01-15T10:30:00Z"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/KeyResponse"
+                }
+              }
+            },
+            "description": "Key details"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "API key not found"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "API key not found"
+          }
+        },
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ],
+        "summary": "Get API key",
+        "tags": [
+          "auth"
+        ]
+      },
+      "patch": {
+        "description": "Partially updates API key metadata and permissions using JSON Merge Patch semantics (RFC 7396). Only provided fields are updated, omitted fields remain unchanged. For expires_at: omit to keep current value, set to null to clear expiration, or provide ISO 8601 date to set new expiration. See: https://tools.ietf.org/html/rfc7396",
+        "operationId": "update_key",
+        "parameters": [
+          {
+            "description": "API key identifier",
+            "in": "path",
+            "name": "key_id",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/KeyId"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateKeyRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "Key updated successfully"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "invalid_name": {
+                    "summary": "Invalid name length",
+                    "value": {
+                      "error": "Invalid name length"
+                    }
+                  },
+                  "invalid_permissions": {
+                    "summary": "Invalid permissions",
+                    "value": {
+                      "error": "Invalid permissions specified"
+                    }
+                  },
+                  "past_expiration": {
+                    "summary": "Expiration date in the past",
+                    "value": {
+                      "error": "Expiration date must be in the future"
+                    }
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Invalid request data"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "API key not found"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "API key not found"
+          }
+        },
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ],
+        "summary": "Update API key",
+        "tags": [
+          "auth"
+        ]
+      },
+      "put": {
+        "description": "Completely replaces an API key with new metadata and permissions using PUT semantics. All fields are required and will overwrite the existing values. Use PATCH /keys/{key_id} for partial updates that only modify specified fields.",
+        "operationId": "replace_key",
+        "parameters": [
+          {
+            "description": "API key identifier",
+            "in": "path",
+            "name": "key_id",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/KeyId"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReplaceKeyRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "Key replaced successfully"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "invalid_name": {
+                    "summary": "Invalid name length",
+                    "value": {
+                      "error": "Invalid name length"
+                    }
+                  },
+                  "invalid_permissions": {
+                    "summary": "Invalid permissions",
+                    "value": {
+                      "error": "Invalid permissions specified"
+                    }
+                  },
+                  "past_expiration": {
+                    "summary": "Expiration date in the past",
+                    "value": {
+                      "error": "Expiration date must be in the future"
+                    }
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Invalid request data"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "API key not found"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "API key not found"
+          }
+        },
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ],
+        "summary": "Replace API key",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/v1/auth/keys/{key_id}/check": {
+      "get": {
+        "description": "Checks if an API key has a specific permission.",
+        "operationId": "check_permission",
+        "parameters": [
+          {
+            "description": "API key identifier",
+            "in": "path",
+            "name": "key_id",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/KeyId"
+            }
+          },
+          {
+            "description": "The permission to check",
+            "example": "keys:read",
+            "in": "query",
+            "name": "permission",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Permission"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "has_permission": {
+                    "summary": "API key has the permission",
+                    "value": {
+                      "hasPermission": true
+                    }
+                  },
+                  "no_permission": {
+                    "summary": "API key lacks the permission",
+                    "value": {
+                      "hasPermission": false
+                    }
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/CheckPermissionResponse"
+                }
+              }
+            },
+            "description": "Permission check result"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "API key not found"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "API key not found"
+          }
+        },
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ],
+        "summary": "Check permission",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/v1/auth/recipients/{recipient_id}/sessions": {
+      "delete": {
+        "description": "Permanently deletes all sessions for the specified recipient.",
+        "operationId": "delete_all_sessions",
+        "parameters": [
+          {
+            "description": "User identifier",
+            "example": "user_12345",
+            "in": "path",
+            "name": "recipient_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "All recipient sessions deleted successfully"
+          }
+        },
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ],
+        "summary": "Delete all recipient sessions",
+        "tags": [
+          "sessions"
+        ]
+      },
+      "get": {
+        "description": "Lists all active sessions for the specified recipient.",
+        "operationId": "list_sessions",
+        "parameters": [
+          {
+            "description": "User identifier",
+            "example": "user_12345",
+            "in": "path",
+            "name": "recipient_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Cursor for pagination",
+            "in": "path",
+            "name": "cursor",
+            "required": true,
+            "schema": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          {
+            "description": "Number of results per page (1-100, default: 50)",
+            "in": "path",
+            "name": "pageSize",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "minimum": 0,
+              "type": [
+                "integer",
+                "null"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "sessions": [
+                    {
+                      "createdAt": "2024-01-01T10:00:00Z",
+                      "expiresAt": "2024-01-02T10:00:00Z",
+                      "sessionId": "ses_01HM4X5N9JKQRT8WVYZ2B6EP"
+                    }
+                  ]
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ListSessionsResponse"
+                }
+              }
+            },
+            "description": "List of recipient sessions"
+          }
+        },
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ],
+        "summary": "List recipient sessions",
+        "tags": [
+          "sessions"
+        ]
+      },
+      "post": {
+        "description": "Creates a new session for a recipient with optional custom configuration parameters.",
+        "operationId": "create_session",
+        "parameters": [
+          {
+            "description": "User identifier",
+            "example": "user_12345",
+            "in": "path",
+            "name": "recipient_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSessionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "expiresAt": "2024-01-02T10:00:00Z",
+                  "refreshToken": "sr_8vN2H3kL9mP4qR7sT1uX5yZ8bC6fG2hJ4kM7nQ9rS3vW",
+                  "sessionId": "ses_01HM4X5N9JKQRT8WVYZ2B6EP"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/CreateSessionResponse"
+                }
+              }
+            },
+            "description": "Session created successfully"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "validation_failed": {
+                    "summary": "Parameter validation failed",
+                    "value": {
+                      "error": "Session token lifetime cannot exceed total session lifetime"
+                    }
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Invalid request data"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Request validation failed"
+          }
+        },
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ],
+        "summary": "Create recipient session",
+        "tags": [
+          "sessions"
+        ]
+      }
+    },
+    "/v1/auth/recipients/{recipient_id}/sessions/{session_id}": {
+      "delete": {
+        "description": "Permanently deletes a specific recipient session.",
+        "operationId": "delete_session",
+        "parameters": [
+          {
+            "description": "User identifier",
+            "example": "user_12345",
+            "in": "path",
+            "name": "recipient_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Session identifier",
+            "in": "path",
+            "name": "session_id",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/SessionId"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Session deleted successfully"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Session not found"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Session not found"
+          }
+        },
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ],
+        "summary": "Delete session",
+        "tags": [
+          "sessions"
+        ]
+      },
+      "get": {
+        "description": "Retrieves details for a specific recipient session.",
+        "operationId": "get_session",
+        "parameters": [
+          {
+            "description": "User identifier",
+            "example": "user_12345",
+            "in": "path",
+            "name": "recipient_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Session identifier",
+            "in": "path",
+            "name": "session_id",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/SessionId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "createdAt": "2024-01-01T10:00:00Z",
+                  "expiresAt": "2024-01-02T10:00:00Z",
+                  "sessionId": "ses_01HM4X5N9JKQRT8WVYZ2B6EP"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/CurrentSessionResponse"
+                }
+              }
+            },
+            "description": "Session details"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Session not found"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Session not found"
+          }
+        },
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ],
+        "summary": "Get session details",
+        "tags": [
+          "sessions"
+        ]
+      }
+    },
+    "/v1/auth/session/current": {
+      "delete": {
+        "description": "Deletes the current session, effectively logging out the recipient.",
+        "operationId": "delete_current_session",
+        "responses": {
+          "204": {
+            "description": "Session deleted successfully (logged out)"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Invalid session token"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Invalid or expired session token"
+          }
+        },
+        "security": [
+          {
+            "SessionToken": []
+          }
+        ],
+        "summary": "Delete current session (logout)",
+        "tags": [
+          "current-session"
+        ]
+      },
+      "get": {
+        "description": "Retrieves details about the current session using the session token.",
+        "operationId": "get_current_session",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "createdAt": "2024-01-01T10:00:00Z",
+                  "expiresAt": "2024-01-02T10:00:00Z",
+                  "sessionId": "ses_01HM4X5N9JKQRT8WVYZ2B6EP"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/CurrentSessionResponse"
+                }
+              }
+            },
+            "description": "Current session details"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Invalid session token"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Invalid or expired session token"
+          }
+        },
+        "security": [
+          {
+            "SessionToken": []
+          }
+        ],
+        "summary": "Get current session",
+        "tags": [
+          "current-session"
+        ]
+      }
+    },
+    "/v1/auth/tokens/refresh": {
+      "post": {
+        "description": "Exchanges a refresh token for a new session token. Implements OAuth 2.1 token rotation.",
+        "operationId": "refresh_token",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshTokenBody"
+              }
+            }
+          },
+          "description": "Refresh token",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "expiresAt": "2024-01-01T12:00:00Z",
+                  "refreshToken": "sr_3nL9wM6pQ8rU2xY5bA8dF1hK4jN7mP9qT3vX6zA2eG5j",
+                  "sessionToken": "st_2mK8vL4pN6qS9tY3bX7cZ1eH5jM9nP2rT6uW8yA4dF7g"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/RefreshTokenResponse"
+                }
+              }
+            },
+            "description": "Token refreshed successfully"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Invalid refresh token"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Invalid or expired refresh token"
+          }
+        },
+        "summary": "Refresh session token",
+        "tags": [
+          "tokens"
+        ]
+      }
+    },
+    "/v1/inbox/current": {
+      "get": {
+        "description": "Get all notifications for the currently authenticated recipient.\n\nRequires recipient-level authentication with inbox read permission.\n\nReturns individual notifications and clusters of related notifications, sorted by relevance score.",
+        "operationId": "get_current_inbox",
+        "parameters": [
+          {
+            "description": "Maximum number of items to return (1-500, default: 100)",
+            "example": 20,
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "format": "int32",
+              "maximum": 500,
+              "minimum": 1,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "items": [
+                    {
+                      "actions": [
+                        {
+                          "link": "https://app.beamform.ai/onboarding?welcome=true&source=notification",
+                          "title": "Get Started"
+                        }
+                      ],
+                      "content": "Your account has been successfully created. Welcome to our platform! You can now access all features and start managing your notifications.",
+                      "id": "ntf_EQy9R3G1q1uJFmWa3QgEde",
+                      "interest": 0.85,
+                      "metadata": {
+                        "campaign_id": "welcome_series",
+                        "priority": "high",
+                        "source": "onboarding",
+                        "user_segment": "new_customer"
+                      },
+                      "occurredAt": "2024-01-15T10:30:00Z",
+                      "subject": "Welcome to Beamform",
+                      "type": "notification"
+                    },
+                    {
+                      "content": "Updates related to your account settings, security changes, and profile modifications",
+                      "id": "cls_EQy9eND9ESLXNBwMDMuXqse",
+                      "interest": 0.92,
+                      "notifications": [
+                        {
+                          "actions": [],
+                          "content": "Your password was successfully updated for security reasons.",
+                          "id": "ntf_EQy9YY3XNKGjexnQzrn5AQ",
+                          "interest": 0.9,
+                          "occurredAt": "2024-01-15T09:15:00Z",
+                          "subject": "Password Changed"
+                        }
+                      ],
+                      "subject": "Account Updates",
+                      "type": "cluster"
+                    }
+                  ]
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/Inbox"
+                }
+              }
+            },
+            "description": "Current user's inbox items, sorted by relevance"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unauthorized - Session token missing or invalid"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Forbidden - Insufficient permissions"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "failed to load inbox"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Failed to load inbox data."
+          }
+        },
+        "security": [
+          {
+            "SessionToken": []
+          }
+        ],
+        "summary": "Get current user's inbox",
+        "tags": [
+          "inbox"
+        ]
+      }
+    },
+    "/v1/inbox/recipients/{recipient_id}": {
+      "get": {
+        "description": "Get all notifications for a specific recipient within your organization.\n\nRequires organization-level authentication with inbox read permission.\n\nReturns individual notifications and clusters of related notifications, sorted by relevance score.",
+        "operationId": "get_inbox_for_recipient",
+        "parameters": [
+          {
+            "description": "User identifier",
+            "example": "user_12345",
+            "in": "path",
+            "name": "recipient_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Maximum number of items to return (1-500, default: 100)",
+            "example": 20,
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "format": "int32",
+              "maximum": 500,
+              "minimum": 1,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "items": [
+                    {
+                      "actions": [
+                        {
+                          "link": "https://app.beamform.ai/onboarding?welcome=true&source=notification",
+                          "title": "Get Started"
+                        }
+                      ],
+                      "content": "Your account has been successfully created. Welcome to our platform! You can now access all features and start managing your notifications.",
+                      "id": "ntf_EQy9R3G1q1uJFmWa3QgEde",
+                      "interest": 0.85,
+                      "metadata": {
+                        "campaign_id": "welcome_series",
+                        "priority": "high",
+                        "source": "onboarding",
+                        "user_segment": "new_customer"
+                      },
+                      "occurredAt": "2024-01-15T10:30:00Z",
+                      "subject": "Welcome to Beamform",
+                      "type": "notification"
+                    },
+                    {
+                      "content": "Updates related to your account settings, security changes, and profile modifications",
+                      "id": "cls_EQy9eND9ESLXNBwMDMuXqse",
+                      "interest": 0.92,
+                      "notifications": [
+                        {
+                          "actions": [],
+                          "content": "Your password was successfully updated for security reasons.",
+                          "id": "ntf_EQy9YY3XNKGjexnQzrn5AQ",
+                          "interest": 0.9,
+                          "occurredAt": "2024-01-15T09:15:00Z",
+                          "subject": "Password Changed"
+                        }
+                      ],
+                      "subject": "Account Updates",
+                      "type": "cluster"
+                    }
+                  ]
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/Inbox"
+                }
+              }
+            },
+            "description": "User's inbox items, sorted by relevance"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unauthorized - API key missing or invalid"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Forbidden - Insufficient permissions"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "failed to load inbox"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Failed to load inbox data."
+          }
+        },
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ],
+        "summary": "Get inbox for a specific recipient",
+        "tags": [
+          "inbox"
+        ]
+      }
+    },
+    "/v1/notifications": {
+      "post": {
+        "description": "Creates and queues a notification for processing.\n\n## Safe Retries with Idempotency\n\nThis endpoint supports safe retries using the `Idempotency-Key` header ([RFC 9563](https://datatracker.ietf.org/doc/html/rfc9563)). This prevents accidentally creating duplicate notifications when network issues cause timeouts or connection failures.\n\n**How it works:**\n1. Include an `Idempotency-Key` header with a unique value (like a UUID)\n2. If the request fails or times out, retry with the same key\n3. The server will return the same response without creating duplicates\n\n**Response behavior:**\n- First request with key: Creates notification, returns 202\n- Retry with same key + same body: Returns cached 202 response\n- Same key + different body: Returns 422 (key already used)\n- Same key while original still processing: Returns 409 (try again later)\n\n**Example:**\n```\nPOST /notifications\nIdempotency-Key: 550e8400-e29b-41d4-a716-446655440000\n```",
+        "operationId": "create_notification",
+        "parameters": [
+          {
+            "description": "Optional unique identifier for safe request retries. Use a UUID or similar unique value. Same key with same request body will return cached response instead of creating duplicates.",
+            "example": "550e8400-e29b-41d4-a716-446655440000",
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": false,
+            "schema": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "examples": {
+                "complete": {
+                  "description": "Example with all available fields",
+                  "summary": "All features",
+                  "value": {
+                    "actions": [
+                      {
+                        "link": "https://app.beamform.ai/onboarding",
+                        "title": "Get Started"
+                      },
+                      {
+                        "link": "https://docs.beamform.ai",
+                        "title": "View Documentation"
+                      }
+                    ],
+                    "content": "Your account has been successfully created. Welcome to our platform!",
+                    "deliverWithin": "1h",
+                    "metadata": {
+                      "campaign_id": "welcome_series",
+                      "source": "onboarding",
+                      "user_segment": "enterprise"
+                    },
+                    "recipients": [
+                      {
+                        "email": "john.doe@example.com",
+                        "id": "user_789",
+                        "name": "John Doe",
+                        "timezone": "America/New_York"
+                      }
+                    ],
+                    "subject": "Welcome to Beamform"
+                  }
+                },
+                "simple": {
+                  "description": "Minimal required fields",
+                  "summary": "Basic notification",
+                  "value": {
+                    "content": "Click the link below to reset your password. This link expires in 24 hours.",
+                    "recipients": [
+                      "user_123"
+                    ],
+                    "subject": "Password Reset Request"
+                  }
+                },
+                "with_actions": {
+                  "description": "Include clickable actions",
+                  "summary": "With action button",
+                  "value": {
+                    "actions": [
+                      {
+                        "link": "https://example.com/track/12345",
+                        "title": "Track Order"
+                      }
+                    ],
+                    "content": "Your order #12345 has been shipped and will arrive in 2-3 business days.",
+                    "recipients": [
+                      "user_456"
+                    ],
+                    "subject": "Order Shipped"
+                  }
+                }
+              },
+              "schema": {
+                "$ref": "#/components/schemas/CreateRequest"
+              }
+            }
+          },
+          "description": "Notification data",
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": "ntf_EQy9R3G1q1uJFmWa3QgEde"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/NotificationResponse"
+                }
+              }
+            },
+            "description": "Notification created and queued",
+            "headers": {
+              "Idempotent-Replayed": {
+                "description": "True if response was cached",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "metadata is not valid JSON"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Invalid request data or malformed JSON."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "a request is outstanding for this Idempotency-Key"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Idempotency key conflict - request still processing."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "idempotency_reused": {
+                    "description": "Same idempotency key used with different request body",
+                    "summary": "Idempotency key reused with different request",
+                    "value": {
+                      "error": "Idempotency-Key was already used"
+                    }
+                  },
+                  "timestamp_too_old": {
+                    "description": "Notification timestamp exceeds configured TTL limit",
+                    "summary": "Notification timestamp too old",
+                    "value": {
+                      "error": "notification timestamp is too old to be accepted"
+                    }
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Idempotency key reused with different data, or timestamp too old."
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "contact_update_failure": {
+                    "description": "Failed to update recipient contact information",
+                    "summary": "Contact update failure",
+                    "value": {
+                      "error": "failed to update contact information"
+                    }
+                  },
+                  "create_failure": {
+                    "description": "Failed to process notification creation request",
+                    "summary": "Notification creation failure",
+                    "value": {
+                      "error": "failed to create notification"
+                    }
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service temporarily unavailable."
+          }
+        },
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ],
+        "summary": "Create notification",
+        "tags": [
+          "notifications"
+        ]
+      }
+    },
+    "/v1/notifications/{id}": {
+      "delete": {
+        "description": "Delete a notification from all recipient inboxes and stop processing.\n\n## Safe Retries with Idempotency\n\nThis endpoint supports safe retries using the `Idempotency-Key` header ([RFC 9563](https://datatracker.ietf.org/doc/html/rfc9563)). Include a unique key to safely retry delete requests without side effects.\n\n**Response behavior:**\n- First request with key: Deletes notification, returns 202\n- Retry with same key: Returns cached 202 response (even if already deleted)\n- Same key + different notification ID: Returns 422 (key already used)",
+        "operationId": "delete_notification",
+        "parameters": [
+          {
+            "description": "Notification identifier",
+            "example": "ntf_EQy9R3G1q1uJFmWa3QgEde",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/NotificationId"
+            }
+          },
+          {
+            "description": "Optional unique identifier for safe request retries. Use a UUID or similar unique value. Same key with same request body will return cached response instead of creating duplicates.",
+            "example": "550e8400-e29b-41d4-a716-446655440000",
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": false,
+            "schema": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": "ntf_EQy9R3G1q1uJFmWa3QgEde"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/NotificationResponse"
+                }
+              }
+            },
+            "description": "Notification deletion queued",
+            "headers": {
+              "Idempotent-Replayed": {
+                "description": "True if response was cached",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "notification not found"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Notification not found."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "a request is outstanding for this Idempotency-Key"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Idempotency key conflict - request still processing."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Idempotency-Key was already used"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Idempotency key reused with different data."
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "failed to delete notification"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service temporarily unavailable."
+          }
+        },
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ],
+        "summary": "Delete notification",
+        "tags": [
+          "notifications"
+        ]
+      }
+    }
+  },
+  "servers": [
+    {
+      "description": "Current server",
+      "url": ""
+    }
+  ],
+  "tags": [
+    {
+      "description": "Create and delete notifications",
+      "name": "notifications"
+    },
+    {
+      "description": "Retrieve personalized notification feeds",
+      "name": "inbox"
+    },
+    {
+      "description": "Manage API keys and permissions",
+      "name": "auth"
+    },
+    {
+      "description": "Manage recipient sessions for embedded widgets",
+      "name": "sessions"
+    },
+    {
+      "description": "Refresh and manage session tokens",
+      "name": "tokens"
+    },
+    {
+      "description": "Manage the current authenticated session",
+      "name": "current-session"
+    }
+  ]
+}
