@@ -23,14 +23,13 @@
     "generate:types": "openapi-typescript ./openapi.json -o ./src/generated/schema.d.ts",
     "lint": "biome check",
     "format": "biome format --write && biome check --write",
-    "check": "biome check",
     "pretest": "pnpm generate:types",
     "test": "vitest run",
     "pretest:watch": "pnpm generate:types",
     "test:watch": "vitest",
     "pretypecheck": "pnpm generate:types",
     "typecheck": "tsc --noEmit",
-    "quality": "pnpm typecheck && pnpm check"
+    "quality": "pnpm typecheck && pnpm lint"
   },
   "keywords": [
     "beamform",
