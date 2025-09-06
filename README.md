@@ -1,1 +1,1 @@
-# js-sdk
+# Beamform JS SDK
