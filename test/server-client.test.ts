@@ -75,111 +75,39 @@ describe("createServerClient - Client Creation", () => {
   });
 
   describe("Authentication Headers", () => {
-    describe("Sets Authorization Bearer header", () => {
-      it("should set Authorization header with Bearer prefix", () => {
-        const config: ServerClientConfig = {
-          apiKey: "sk_test_12345",
-        };
+    it("should set Authorization header with Bearer prefix", () => {
+      const config: ServerClientConfig = {
+        apiKey: "sk_test_12345",
+      };
 
-        createServerClient(config);
+      createServerClient(config);
 
-        expect(mockOpenApiClient).toHaveBeenCalledWith(
-          expect.objectContaining({
-            headers: expect.objectContaining({
-              Authorization: "Bearer sk_test_12345",
-            }),
-          }),
-        );
+      expect(mockOpenApiClient).toHaveBeenCalledWith({
+        baseUrl: expect.any(String),
+        headers: {
+          Authorization: "Bearer sk_test_12345",
+        },
       });
+    });
 
-      it("should work with different apiKey formats", () => {
-        const testCases = [
-          "sk_test_short",
-          "sk_live_very_long_api_key_with_underscores_and_numbers_123456789",
-          "sk_test_with-dashes-and_underscores_123",
-        ];
+    it("should work with different apiKey formats", () => {
+      const testCases = [
+        "sk_test_short",
+        "sk_live_very_long_api_key_with_underscores_and_numbers_123456789",
+        "sk_test_with-dashes-and_underscores_123",
+      ];
 
-        testCases.forEach((apiKey) => {
-          vi.clearAllMocks();
+      testCases.forEach((apiKey) => {
+        vi.clearAllMocks();
 
-          createServerClient({ apiKey });
+        createServerClient({ apiKey });
 
-          expect(mockOpenApiClient).toHaveBeenCalledWith(
-            expect.objectContaining({
-              headers: expect.objectContaining({
-                Authorization: `Bearer ${apiKey}`,
-              }),
-            }),
-          );
+        expect(mockOpenApiClient).toHaveBeenCalledWith({
+          baseUrl: expect.any(String),
+          headers: {
+            Authorization: `Bearer ${apiKey}`,
+          },
         });
-      });
-    });
-
-    describe("Preserves custom headers alongside auth", () => {
-      it("should include both Authorization and custom headers", () => {
-        const config: ServerClientConfig = {
-          apiKey: "sk_test_key",
-          headers: {
-            "X-Custom-Header": "custom-value",
-            "User-Agent": "My-App/1.0",
-            Accept: "application/json",
-          },
-        };
-
-        createServerClient(config);
-
-        expect(mockOpenApiClient).toHaveBeenCalledWith(
-          expect.objectContaining({
-            headers: {
-              Authorization: "Bearer sk_test_key",
-              "X-Custom-Header": "custom-value",
-              "User-Agent": "My-App/1.0",
-              Accept: "application/json",
-            },
-          }),
-        );
-      });
-
-      it("should handle empty custom headers object", () => {
-        const config: ServerClientConfig = {
-          apiKey: "sk_test_key",
-          headers: {},
-        };
-
-        createServerClient(config);
-
-        expect(mockOpenApiClient).toHaveBeenCalledWith(
-          expect.objectContaining({
-            headers: {
-              Authorization: "Bearer sk_test_key",
-            },
-          }),
-        );
-      });
-    });
-
-    describe("Authorization header protection", () => {
-      it("should preserve other custom headers while protecting Authorization", () => {
-        const config: ServerClientConfig = {
-          apiKey: "sk_correct_key",
-          headers: {
-            Authorization: "Bearer sk_attempt_override",
-            "X-Custom-Header": "should-be-preserved",
-            "User-Agent": "MyApp/1.0",
-          },
-        };
-
-        createServerClient(config);
-
-        expect(mockOpenApiClient).toHaveBeenCalledWith(
-          expect.objectContaining({
-            headers: {
-              Authorization: "Bearer sk_correct_key", // Protected
-              "X-Custom-Header": "should-be-preserved", // Preserved
-              "User-Agent": "MyApp/1.0", // Preserved
-            },
-          }),
-        );
       });
     });
   });

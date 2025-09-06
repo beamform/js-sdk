@@ -4,7 +4,6 @@ import type { ServerPaths } from './path-filters'
 interface ServerClientConfig {
   baseUrl?: string
   apiKey: string
-  headers?: Record<string, string>
 }
 
 const DEFAULT_BASE_URL = 'https://api.beamform.com'
@@ -37,12 +36,10 @@ const DEFAULT_BASE_URL = 'https://api.beamform.com'
  */
 const createServerClient = (config: ServerClientConfig): Client<ServerPaths> => {
   const baseUrl = config.baseUrl ?? DEFAULT_BASE_URL
-  const customHeaders = config.headers ?? {}
   
   return openApiClient<ServerPaths>({
     baseUrl,
     headers: {
-      ...customHeaders,
       Authorization: `Bearer ${config.apiKey}`
     }
   })
