@@ -11,8 +11,8 @@ export {
 export type { components, paths } from "./generated/schema";
 // Path filtering types (useful for custom implementations)
 export type { ClientPaths, ServerPaths } from "./path-filters";
-export type { BeamformServerClientConfig } from "./server-client";
+export type { ServerClientConfig } from "./server-client";
 // Server-side - API key authentication
-export { BeamformServerClient } from "./server-client";
+export { createServerClient } from "./server-client";
 // Utility functions
 export { formatError } from "./utils";
