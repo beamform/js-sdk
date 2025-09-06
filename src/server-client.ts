@@ -42,8 +42,8 @@ const createServerClient = (config: ServerClientConfig): Client<ServerPaths> => 
   return openApiClient<ServerPaths>({
     baseUrl,
     headers: {
-      Authorization: `Bearer ${config.apiKey}`,
-      ...customHeaders
+      ...customHeaders,
+      Authorization: `Bearer ${config.apiKey}`
     }
   })
 }
