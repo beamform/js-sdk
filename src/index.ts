@@ -9,5 +9,8 @@ export type { BeamformServerClientConfig } from './server-client'
 // Path filtering types (useful for custom implementations)
 export type { ClientPaths, ServerPaths } from './path-filters'
 
+// Utility functions
+export { formatError } from './utils'
+
 // Generated OpenAPI types
 export type { paths, components } from './generated/schema'

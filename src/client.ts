@@ -1,5 +1,6 @@
 import createClient, { type Client } from 'openapi-fetch'
 import type { ClientPaths } from './path-filters'
+import { formatError } from './utils'
 
 export interface BeamformClientConfig {
   baseUrl?: string
@@ -67,7 +68,7 @@ export class BeamformClient {
           url = input.url
           options = {
             method: input.method,
-            headers: input.headers,
+            headers: Object.fromEntries((input.headers as any).entries()),
             body: input.body,
             ...options
           }
@@ -125,18 +126,6 @@ export class BeamformClient {
   /**
    * Refresh tokens using current refresh token.
    */
-  private formatError(error: unknown): string {
-    if (typeof error === 'object' && error !== null) {
-      if ('status' in error && 'statusText' in error) {
-        return `${error.status} ${error.statusText}`
-      }
-      if ('message' in error && typeof error.message === 'string') {
-        return error.message
-      }
-    }
-    return String(error)
-  }
-
   private async refreshTokens(refreshToken: string): Promise<void> {
     const tempClient = createClient<ClientPaths>({
       baseUrl: this.baseUrl,
@@ -148,7 +137,7 @@ export class BeamformClient {
     })
 
     if (error) {
-      throw new Error(`Token refresh failed: ${this.formatError(error)}`)
+      throw new Error(`Token refresh failed: ${formatError(error)}`)
     }
 
     this.tokens = {
@@ -244,4 +233,5 @@ export class BeamformClient {
   getSessionExpiresAt(): Date | undefined {
     return this.tokens?.expiresAt
   }
+
 }
