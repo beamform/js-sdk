@@ -4,8 +4,6 @@ export type { ClientConfig as BeamformClientConfig } from "./client";
 export {
 	clear,
 	createClient,
-	getRefreshToken,
-	isAuthenticated,
 } from "./client";
 // Generated OpenAPI types
 export type { components, paths } from "./generated/schema";

@@ -1,11 +1,13 @@
 import openApiClient, { type Client } from 'openapi-fetch'
 import type { ServerPaths } from './path-filters'
 
-export interface ServerClientConfig {
+interface ServerClientConfig {
   baseUrl?: string
   apiKey: string
   headers?: Record<string, string>
 }
+
+const DEFAULT_BASE_URL = 'https://api.beamform.com'
 
 /**
  * Create a server-side Beamform client for API key authentication.
@@ -34,7 +36,7 @@ export interface ServerClientConfig {
  * ```
  */
 const createServerClient = (config: ServerClientConfig): Client<ServerPaths> => {
-  const baseUrl = config.baseUrl ?? 'https://api.beamform.com'
+  const baseUrl = config.baseUrl ?? DEFAULT_BASE_URL
   const customHeaders = config.headers ?? {}
   
   return openApiClient<ServerPaths>({
@@ -46,4 +48,5 @@ const createServerClient = (config: ServerClientConfig): Client<ServerPaths> => 
   })
 }
 
-export { createServerClient }
+export { createServerClient, DEFAULT_BASE_URL }
+export type { ServerClientConfig }
