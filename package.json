@@ -48,5 +48,6 @@
   },
   "dependencies": {
     "openapi-fetch": "^0.14.0"
-  }
+  },
+  "packageManager": "pnpm@10.14.0"
 }
