@@ -34,6 +34,8 @@ interface TokenData {
  * ```
  */
 export class BeamformClient {
+  private static readonly TOKEN_REFRESH_BUFFER_MS = 5 * 60 * 1000 // 5 minutes
+  
   private tokens?: TokenData
   private refreshTimer?: ReturnType<typeof setTimeout>
   private autoRefresh: boolean
@@ -117,13 +119,24 @@ export class BeamformClient {
     if (!this.tokens) return true
     
     const now = new Date()
-    const bufferMs = 5 * 60 * 1000 // 5 minutes buffer
-    return now.getTime() + bufferMs >= this.tokens.expiresAt.getTime()
+    return now.getTime() + BeamformClient.TOKEN_REFRESH_BUFFER_MS >= this.tokens.expiresAt.getTime()
   }
 
   /**
    * Refresh tokens using current refresh token.
    */
+  private formatError(error: unknown): string {
+    if (typeof error === 'object' && error !== null) {
+      if ('status' in error && 'statusText' in error) {
+        return `${error.status} ${error.statusText}`
+      }
+      if ('message' in error && typeof error.message === 'string') {
+        return error.message
+      }
+    }
+    return String(error)
+  }
+
   private async refreshTokens(refreshToken: string): Promise<void> {
     const tempClient = createClient<ClientPaths>({
       baseUrl: this.baseUrl,
@@ -135,7 +148,7 @@ export class BeamformClient {
     })
 
     if (error) {
-      throw new Error(`Token refresh failed: ${JSON.stringify(error)}`)
+      throw new Error(`Token refresh failed: ${this.formatError(error)}`)
     }
 
     this.tokens = {
@@ -157,8 +170,7 @@ export class BeamformClient {
     if (!this.tokens) return
 
     const now = new Date()
-    const bufferMs = 5 * 60 * 1000 // 5 minutes buffer
-    const refreshTime = this.tokens.expiresAt.getTime() - bufferMs
+    const refreshTime = this.tokens.expiresAt.getTime() - BeamformClient.TOKEN_REFRESH_BUFFER_MS
     const delay = Math.max(0, refreshTime - now.getTime())
 
     if (delay <= 0) return
@@ -170,7 +182,7 @@ export class BeamformClient {
           this.scheduleTokenRefresh()
         }
       } catch (error) {
-        console.warn('Proactive token refresh failed:', error)
+        console.warn('Proactive token refresh failed. Token will be refreshed on next API call. Error:', error)
       }
       this.refreshTimer = undefined
     }, delay)
