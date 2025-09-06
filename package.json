@@ -1,43 +1,49 @@
 {
-	"name": "@beamformio/sdk",
-	"version": "0.1.0",
-	"description": "TypeScript SDK for Beamform API",
-	"main": "./dist/index.js",
-	"module": "./dist/index.mjs",
-	"types": "./dist/index.d.ts",
-	"exports": {
-		".": {
-			"types": "./dist/index.d.ts",
-			"import": "./dist/index.mjs",
-			"require": "./dist/index.js"
-		}
-	},
-	"files": [
-		"dist"
-	],
-	"scripts": {
-		"build": "tsup",
-		"dev": "tsup --watch",
-		"generate:types": "openapi-typescript ./schema.yaml -o ./src/generated/schema.d.ts",
-		"generate:types:remote": "openapi-typescript http://localhost:8000/docs/openapi.json -o ./src/generated/schema.d.ts",
-		"test": "vitest run",
-		"test:watch": "vitest"
-	},
-	"keywords": [
-		"beamform",
-		"sdk",
-		"typescript",
-		"api"
-	],
-	"author": "Beamform",
-	"license": "MIT",
-	"devDependencies": {
-		"openapi-typescript": "^7.9.1",
-		"tsup": "^8.5.0",
-		"typescript": "^5.9.2",
-		"vitest": "^3.2.4"
-	},
-	"dependencies": {
-		"openapi-fetch": "^0.14.0"
-	}
+  "name": "@beamformio/sdk",
+  "version": "0.1.0",
+  "description": "TypeScript SDK for Beamform API",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "generate:types": "openapi-typescript ./schema.yaml -o ./src/generated/schema.d.ts",
+    "generate:types:remote": "openapi-typescript http://localhost:8000/docs/openapi.json -o ./src/generated/schema.d.ts",
+    "lint": "biome check",
+    "format": "biome format --write && biome check --write",
+    "check": "biome check",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "quality": "pnpm typecheck && pnpm check"
+  },
+  "keywords": [
+    "beamform",
+    "sdk",
+    "typescript",
+    "api"
+  ],
+  "author": "Beamform",
+  "license": "MIT",
+  "devDependencies": {
+    "@biomejs/biome": "^2.2.3",
+    "openapi-typescript": "^7.9.1",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  },
+  "dependencies": {
+    "openapi-fetch": "^0.14.0"
+  }
 }

@@ -2,8 +2,8 @@
 
 export type { ClientConfig as BeamformClientConfig } from "./client";
 export {
-	clear,
-	createClient,
+  clear,
+  createClient,
 } from "./client";
 // Generated OpenAPI types
 export type { components, paths } from "./generated/schema";

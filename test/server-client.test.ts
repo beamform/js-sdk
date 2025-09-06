@@ -52,7 +52,7 @@ describe("createServerClient - Client Creation", () => {
       expect(mockOpenApiClient).toHaveBeenCalledWith(
         expect.objectContaining({
           baseUrl: DEFAULT_BASE_URL,
-        }),
+        })
       );
     });
   });
@@ -69,7 +69,7 @@ describe("createServerClient - Client Creation", () => {
       expect(mockOpenApiClient).toHaveBeenCalledWith(
         expect.objectContaining({
           baseUrl: "https://custom.api.com",
-        }),
+        })
       );
     });
   });

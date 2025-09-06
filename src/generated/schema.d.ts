@@ -4,1796 +4,1810 @@
  */
 
 export interface paths {
-    "/v1/auth/keys": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * List API keys
-         * @description Lists API keys for the organization with optional pagination.
-         */
-        get: operations["list_keys"];
-        put?: never;
-        /**
-         * Create API key
-         * @description Creates a new API key with specified permissions and metadata.
-         */
-        post: operations["create_key"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+  "/v1/auth/keys": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/v1/auth/keys/{key_id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get API key
-         * @description Retrieves details for a specific API key (without the secret).
-         */
-        get: operations["get_key"];
-        /**
-         * Replace API key
-         * @description Completely replaces an API key with new metadata and permissions using PUT semantics. All fields are required and will overwrite the existing values. Use PATCH /keys/{key_id} for partial updates that only modify specified fields.
-         */
-        put: operations["replace_key"];
-        post?: never;
-        /**
-         * Delete API key
-         * @description Permanently deletes an API key. This action cannot be undone.
-         */
-        delete: operations["delete_key"];
-        options?: never;
-        head?: never;
-        /**
-         * Update API key
-         * @description Partially updates API key metadata and permissions using JSON Merge Patch semantics (RFC 7396). Only provided fields are updated, omitted fields remain unchanged. For expires_at: omit to keep current value, set to null to clear expiration, or provide ISO 8601 date to set new expiration. See: https://tools.ietf.org/html/rfc7396
-         */
-        patch: operations["update_key"];
-        trace?: never;
+    /**
+     * List API keys
+     * @description Lists API keys for the organization with optional pagination.
+     */
+    get: operations["list_keys"];
+    put?: never;
+    /**
+     * Create API key
+     * @description Creates a new API key with specified permissions and metadata.
+     */
+    post: operations["create_key"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/v1/auth/keys/{key_id}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/v1/auth/keys/{key_id}/check": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Check permission
-         * @description Checks if an API key has a specific permission.
-         */
-        get: operations["check_permission"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    /**
+     * Get API key
+     * @description Retrieves details for a specific API key (without the secret).
+     */
+    get: operations["get_key"];
+    /**
+     * Replace API key
+     * @description Completely replaces an API key with new metadata and permissions using PUT semantics. All fields are required and will overwrite the existing values. Use PATCH /keys/{key_id} for partial updates that only modify specified fields.
+     */
+    put: operations["replace_key"];
+    post?: never;
+    /**
+     * Delete API key
+     * @description Permanently deletes an API key. This action cannot be undone.
+     */
+    delete: operations["delete_key"];
+    options?: never;
+    head?: never;
+    /**
+     * Update API key
+     * @description Partially updates API key metadata and permissions using JSON Merge Patch semantics (RFC 7396). Only provided fields are updated, omitted fields remain unchanged. For expires_at: omit to keep current value, set to null to clear expiration, or provide ISO 8601 date to set new expiration. See: https://tools.ietf.org/html/rfc7396
+     */
+    patch: operations["update_key"];
+    trace?: never;
+  };
+  "/v1/auth/keys/{key_id}/check": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/v1/auth/recipients/{recipient_id}/sessions": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * List recipient sessions
-         * @description Lists all active sessions for the specified recipient.
-         */
-        get: operations["list_sessions"];
-        put?: never;
-        /**
-         * Create recipient session
-         * @description Creates a new session for a recipient with optional custom configuration parameters.
-         */
-        post: operations["create_session"];
-        /**
-         * Delete all recipient sessions
-         * @description Permanently deletes all sessions for the specified recipient.
-         */
-        delete: operations["delete_all_sessions"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    /**
+     * Check permission
+     * @description Checks if an API key has a specific permission.
+     */
+    get: operations["check_permission"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/v1/auth/recipients/{recipient_id}/sessions": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/v1/auth/recipients/{recipient_id}/sessions/{session_id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get session details
-         * @description Retrieves details for a specific recipient session.
-         */
-        get: operations["get_session"];
-        put?: never;
-        post?: never;
-        /**
-         * Delete session
-         * @description Permanently deletes a specific recipient session.
-         */
-        delete: operations["delete_session"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    /**
+     * List recipient sessions
+     * @description Lists all active sessions for the specified recipient.
+     */
+    get: operations["list_sessions"];
+    put?: never;
+    /**
+     * Create recipient session
+     * @description Creates a new session for a recipient with optional custom configuration parameters.
+     */
+    post: operations["create_session"];
+    /**
+     * Delete all recipient sessions
+     * @description Permanently deletes all sessions for the specified recipient.
+     */
+    delete: operations["delete_all_sessions"];
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/v1/auth/recipients/{recipient_id}/sessions/{session_id}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/v1/auth/session/current": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get current session
-         * @description Retrieves details about the current session using the session token.
-         */
-        get: operations["get_current_session"];
-        put?: never;
-        post?: never;
-        /**
-         * Delete current session (logout)
-         * @description Deletes the current session, effectively logging out the recipient.
-         */
-        delete: operations["delete_current_session"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    /**
+     * Get session details
+     * @description Retrieves details for a specific recipient session.
+     */
+    get: operations["get_session"];
+    put?: never;
+    post?: never;
+    /**
+     * Delete session
+     * @description Permanently deletes a specific recipient session.
+     */
+    delete: operations["delete_session"];
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/v1/auth/session/current": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/v1/auth/tokens/refresh": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Refresh session token
-         * @description Exchanges a refresh token for a new session token. Implements OAuth 2.1 token rotation.
-         */
-        post: operations["refresh_token"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    /**
+     * Get current session
+     * @description Retrieves details about the current session using the session token.
+     */
+    get: operations["get_current_session"];
+    put?: never;
+    post?: never;
+    /**
+     * Delete current session (logout)
+     * @description Deletes the current session, effectively logging out the recipient.
+     */
+    delete: operations["delete_current_session"];
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/v1/auth/tokens/refresh": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/v1/inbox/current": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get current user's inbox
-         * @description Get all notifications for the currently authenticated recipient.
-         *
-         *     Requires recipient-level authentication with inbox read permission.
-         *
-         *     Returns individual notifications and clusters of related notifications, sorted by relevance score.
-         */
-        get: operations["get_current_inbox"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get?: never;
+    put?: never;
+    /**
+     * Refresh session token
+     * @description Exchanges a refresh token for a new session token. Implements OAuth 2.1 token rotation.
+     */
+    post: operations["refresh_token"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/v1/inbox/current": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/v1/inbox/recipients/{recipient_id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get inbox for a specific recipient
-         * @description Get all notifications for a specific recipient within your organization.
-         *
-         *     Requires organization-level authentication with inbox read permission.
-         *
-         *     Returns individual notifications and clusters of related notifications, sorted by relevance score.
-         */
-        get: operations["get_inbox_for_recipient"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    /**
+     * Get current user's inbox
+     * @description Get all notifications for the currently authenticated recipient.
+     *
+     *     Requires recipient-level authentication with inbox read permission.
+     *
+     *     Returns individual notifications and clusters of related notifications, sorted by relevance score.
+     */
+    get: operations["get_current_inbox"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/v1/inbox/recipients/{recipient_id}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/v1/notifications": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Create notification
-         * @description Creates and queues a notification for processing.
-         *
-         *     ## Safe Retries with Idempotency
-         *
-         *     This endpoint supports safe retries using the `Idempotency-Key` header ([RFC 9563](https://datatracker.ietf.org/doc/html/rfc9563)). This prevents accidentally creating duplicate notifications when network issues cause timeouts or connection failures.
-         *
-         *     **How it works:**
-         *     1. Include an `Idempotency-Key` header with a unique value (like a UUID)
-         *     2. If the request fails or times out, retry with the same key
-         *     3. The server will return the same response without creating duplicates
-         *
-         *     **Response behavior:**
-         *     - First request with key: Creates notification, returns 202
-         *     - Retry with same key + same body: Returns cached 202 response
-         *     - Same key + different body: Returns 422 (key already used)
-         *     - Same key while original still processing: Returns 409 (try again later)
-         *
-         *     **Example:**
-         *     ```
-         *     POST /notifications
-         *     Idempotency-Key: 550e8400-e29b-41d4-a716-446655440000
-         *     ```
-         */
-        post: operations["create_notification"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    /**
+     * Get inbox for a specific recipient
+     * @description Get all notifications for a specific recipient within your organization.
+     *
+     *     Requires organization-level authentication with inbox read permission.
+     *
+     *     Returns individual notifications and clusters of related notifications, sorted by relevance score.
+     */
+    get: operations["get_inbox_for_recipient"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/v1/notifications": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/v1/notifications/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        /**
-         * Delete notification
-         * @description Delete a notification from all recipient inboxes and stop processing.
-         *
-         *     ## Safe Retries with Idempotency
-         *
-         *     This endpoint supports safe retries using the `Idempotency-Key` header ([RFC 9563](https://datatracker.ietf.org/doc/html/rfc9563)). Include a unique key to safely retry delete requests without side effects.
-         *
-         *     **Response behavior:**
-         *     - First request with key: Deletes notification, returns 202
-         *     - Retry with same key: Returns cached 202 response (even if already deleted)
-         *     - Same key + different notification ID: Returns 422 (key already used)
-         */
-        delete: operations["delete_notification"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get?: never;
+    put?: never;
+    /**
+     * Create notification
+     * @description Creates and queues a notification for processing.
+     *
+     *     ## Safe Retries with Idempotency
+     *
+     *     This endpoint supports safe retries using the `Idempotency-Key` header ([RFC 9563](https://datatracker.ietf.org/doc/html/rfc9563)). This prevents accidentally creating duplicate notifications when network issues cause timeouts or connection failures.
+     *
+     *     **How it works:**
+     *     1. Include an `Idempotency-Key` header with a unique value (like a UUID)
+     *     2. If the request fails or times out, retry with the same key
+     *     3. The server will return the same response without creating duplicates
+     *
+     *     **Response behavior:**
+     *     - First request with key: Creates notification, returns 202
+     *     - Retry with same key + same body: Returns cached 202 response
+     *     - Same key + different body: Returns 422 (key already used)
+     *     - Same key while original still processing: Returns 409 (try again later)
+     *
+     *     **Example:**
+     *     ```
+     *     POST /notifications
+     *     Idempotency-Key: 550e8400-e29b-41d4-a716-446655440000
+     *     ```
+     */
+    post: operations["create_notification"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/v1/notifications/{id}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
+    get?: never;
+    put?: never;
+    post?: never;
+    /**
+     * Delete notification
+     * @description Delete a notification from all recipient inboxes and stop processing.
+     *
+     *     ## Safe Retries with Idempotency
+     *
+     *     This endpoint supports safe retries using the `Idempotency-Key` header ([RFC 9563](https://datatracker.ietf.org/doc/html/rfc9563)). Include a unique key to safely retry delete requests without side effects.
+     *
+     *     **Response behavior:**
+     *     - First request with key: Deletes notification, returns 202
+     *     - Retry with same key: Returns cached 202 response (even if already deleted)
+     *     - Same key + different notification ID: Returns 422 (key already used)
+     */
+    delete: operations["delete_notification"];
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
 }
 export type webhooks = Record<string, never>;
 export interface components {
-    schemas: {
-        /** @description Action button for notifications */
-        Action: {
-            /**
-             * @description URL to open when button is clicked
-             * @example https://app.beamform.ai/onboarding?welcome=true&source=notification
-             */
-            link: string;
-            /**
-             * @description Button text
-             * @example Get Started
-             */
-            title: string;
-        };
-        /** @description Standard API error response used across all services */
-        ApiError: {
-            /**
-             * @description Machine-readable error code
-             * @example INVALID_REQUEST
-             */
-            code: string;
-            /** @description Additional error context */
-            details?: unknown;
-            /**
-             * @description Human-readable error message
-             * @example Invalid request format
-             */
-            message: string;
-        };
-        /**
-         * @description ApiKey identifier
-         * @example sk_123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkm
-         */
-        ApiKey: string;
-        /** @description Query parameters for checking API key permissions */
-        CheckPermissionParams: {
-            /** @description The permission to check */
-            permission: components["schemas"]["Permission"];
-        };
-        /** @description Response for permission check */
-        CheckPermissionResponse: {
-            /**
-             * @description Whether the API key has the required permission
-             * @example true
-             */
-            hasPermission: boolean;
-        };
-        /** @description Cluster of related notifications */
-        Cluster: {
-            /**
-             * @description Cluster summary description
-             * @example Updates related to your account settings, security changes, and profile modifications
-             */
-            content: string;
-            /**
-             * @description Cluster identifier
-             * @example cls_EQy9eND9ESLXNBwMDMuXqse
-             */
-            id: string;
-            /**
-             * Format: double
-             * @description Cluster relevance score (0.0-1.0)
-             * @example 0.92
-             */
-            interest: number;
-            /** @description Notifications in this cluster */
-            notifications: components["schemas"]["Notification"][];
-            /**
-             * @description Cluster title
-             * @example Account Updates
-             */
-            subject: string;
-        };
-        /** @description Request for creating a new key */
-        CreateKeyRequest: {
-            /**
-             * Format: date-time
-             * @description Optional expiration time (ISO 8601 format)
-             * @example 2026-01-15T10:30:00Z
-             */
-            expiresAt?: string;
-            /**
-             * @description Human-readable name for the API key
-             * @example Production API Key
-             */
-            name: string;
-            /** @description Permissions to grant to this API key */
-            permissions: components["schemas"]["Permission"][];
-        };
-        /** @description Response for key creation */
-        CreateKeyResponse: {
-            /**
-             * @description The generated API key ID
-             * @example key_01HQXYZ9ABC123DEF456GHI
-             */
-            keyId: string;
-            /**
-             * @description The actual API key secret (only returned once)
-             * @example sk_test_1234567890abcdef1234567890abcdef12345678
-             */
-            keySecret: string;
-        };
-        /** @description Request payload for creating a new notification */
-        CreateRequest: {
-            /** @description Action buttons for this notification */
-            actions?: components["schemas"]["Action"][];
-            /**
-             * @description Message content
-             * @example Your account has been successfully created. Welcome to our platform!
-             */
-            content: string;
-            /**
-             * @description Delivery deadline as duration from now (e.g. "1h", "24h")
-             * @example 1h
-             */
-            deliverWithin?: string;
-            /** @description Custom JSON data (max 10KB) */
-            metadata?: Record<string, never>;
-            /** @description Who should receive this notification */
-            recipients: components["schemas"]["Recipient"][];
-            /**
-             * @description Notification title
-             * @example Welcome to Beamform
-             */
-            subject: string;
-            /**
-             * Format: date-time
-             * @description When this notification was created. Defaults to current time.
-             * @example 2024-01-15T10:30:00Z
-             */
-            timestamp?: string;
-        };
-        /** @description Request for creating a new recipient session
-         *
-         *     All parameters are optional and use smart defaults optimized for embedded widget authentication.
-         *     Duration fields use human-readable strings like "24h", "2h", "30m" for easy configuration. */
-        CreateSessionRequest: {
-            /**
-             * @description Maximum total session lifetime before forced expiration
-             *
-             *     Examples: "24h", "8h", "7d"
-             *     Default: 24 hours
-             *     Range: 10 seconds to 10 years
-             * @example 24h
-             */
-            sessionLifetime?: string;
-            /**
-             * @description Individual session token validity period
-             *
-             *     Session tokens have fixed lifetimes and must be refreshed when they expire.
-             *     Examples: "2h", "1h", "30m"
-             *     Default: 2 hours
-             *     Range: 10 seconds to 7 days
-             * @example 2h
-             */
-            sessionTokenLifetime?: string;
-        };
-        /** @description Response for session creation */
-        CreateSessionResponse: {
-            /**
-             * Format: date-time
-             * @description When the session expires (absolute deadline)
-             * @example 2024-01-02T10:00:00Z
-             */
-            expiresAt: string;
-            /**
-             * @description The refresh token for this session (only returned once)
-             *
-             *     This token should be embedded in the client HTML and used by the widget
-             *     to obtain session tokens for API calls.
-             * @example sr_8vN2H3kL9mP4qR7sT1uX5yZ8bC6fG2hJ4kM7nQ9rS3vW
-             */
-            refreshToken: string;
-            /**
-             * @description The generated session identifier
-             * @example ses_01HM4X5N9JKQRT8WVYZ2B6EP
-             */
-            sessionId: string;
-        };
-        /** @description Response for current session details (recipient-accessible) */
-        CurrentSessionResponse: {
-            /**
-             * Format: date-time
-             * @description When the session was created (derived from `session_id` timestamp)
-             * @example 2024-01-01T10:00:00Z
-             */
-            createdAt: string;
-            /**
-             * Format: date-time
-             * @description When the session expires
-             * @example 2024-01-02T10:00:00Z
-             */
-            expiresAt: string;
-            /**
-             * @description Current session identifier
-             * @example ses_01HM4X5N9JKQRT8WVYZ2B6EP
-             */
-            sessionId: string;
-        };
-        /** @description Standard error response format used across all endpoints
-         *
-         *     All HTTP error responses follow this simple format. The error message provides
-         *     human-readable details about what went wrong. Engineers should parse this format
-         *     and handle specific error conditions based on HTTP status codes. */
-        ErrorResponse: {
-            /**
-             * @description Human-readable error message describing what went wrong
-             * @example metadata is not valid JSON
-             */
-            error: string;
-        };
-        /** @description Query parameters for inbox requests */
-        FeedOptions: {
-            /**
-             * Format: int32
-             * @description Maximum items to return (1-500, default: 100)
-             * @example 20
-             */
-            limit?: number | null;
-        };
-        /** @description Inbox response */
-        Inbox: {
-            /** @description Inbox items sorted by relevance */
-            items: components["schemas"]["InboxItem"][];
-        };
-        /** @description Inbox item - either a notification or cluster */
-        InboxItem: (components["schemas"]["Notification"] & {
-            /** @enum {string} */
-            type: "notification";
-        }) | (components["schemas"]["Cluster"] & {
-            /** @enum {string} */
-            type: "cluster";
-        });
-        /**
-         * @description KeyId identifier
-         * @example key_8W7X9mEr5YqS2TzN6vCpKj
-         */
-        KeyId: string;
-        /** @description A key (without the secret) */
-        KeyResponse: {
-            /**
-             * Format: date-time
-             * @description Creation timestamp
-             * @example 2024-01-15T10:30:00Z
-             */
-            createdAt: string;
-            /**
-             * @description Actor who created this key
-             * @example user@example.com
-             */
-            createdBy: string;
-            /**
-             * Format: date-time
-             * @description Optional expiration timestamp
-             * @example 2026-01-15T10:30:00Z
-             */
-            expiresAt?: string;
-            /**
-             * @description The API key ID
-             * @example key_01HQXYZ9ABC123DEF456GHI
-             */
-            keyId: string;
-            /**
-             * @description Human-readable prefix for identification (first few characters of the API key)
-             * @example sk_1234
-             */
-            keyPrefix: string;
-            /**
-             * Format: date-time
-             * @description Last usage timestamp
-             * @example 2024-01-15T14:22:00Z
-             */
-            lastUsedAt?: string;
-            /**
-             * @description Human-readable name
-             * @example Production API Key
-             */
-            name: string;
-            /** @description Effective permissions */
-            permissions: components["schemas"]["Permission"][];
-            /**
-             * Format: date-time
-             * @description Last update timestamp
-             * @example 2024-01-15T10:30:00Z
-             */
-            updatedAt: string;
-        };
-        /** @description Query parameters for listing keys */
-        ListKeysParams: {
-            /**
-             * @description Optional cursor for pagination - the last API key ID from the previous page
-             * @example key_01HQXYZ9ABC124DEF456GHJ
-             */
-            cursor?: string;
-            /**
-             * Format: int32
-             * @description Page size (default: 50, max: 100)
-             * @example 20
-             */
-            pageSize?: number;
-        };
-        /** @description Response for listing keys */
-        ListKeysResponse: {
-            /** @description API keys (without secrets) */
-            keys: components["schemas"]["KeyResponse"][];
-            /**
-             * @description Cursor for next page (if more results available) - the last API key ID from this page
-             * @example key_01HQXYZ9ABC124DEF456GHJ
-             */
-            nextCursor?: string;
-        };
-        /** @description Query parameters for listing sessions */
-        ListSessionsParams: {
-            /**
-             * @description Cursor for pagination
-             * @example ses_01HM4X5N9JKQRT8WVYZ2B6EP
-             */
-            cursor?: string | null;
-            /**
-             * Format: int32
-             * @description Number of results per page (1-100, default: 50)
-             * @example 50
-             */
-            pageSize?: number | null;
-        };
-        /** @description Response for listing recipient sessions */
-        ListSessionsResponse: {
-            /** @description Cursor for next page (if more results exist) */
-            nextCursor?: string | null;
-            /** @description List of sessions for the recipient */
-            sessions: components["schemas"]["SessionRecord"][];
-        };
-        /** @description Notification with content and metadata */
-        Notification: {
-            /** @description Action buttons for this notification */
-            actions?: components["schemas"]["Action"][];
-            /**
-             * @description Notification content
-             * @example Your account has been successfully created. Welcome to our platform! You can now access all features and start managing your notifications.
-             */
-            content: string;
-            /**
-             * @description Notification identifier
-             * @example ntf_EQy9R3G1q1uJFmWa3QgEde
-             */
-            id: string;
-            /**
-             * Format: double
-             * @description Relevance score (0.0-1.0)
-             * @example 0.85
-             */
-            interest: number;
-            /** @description Custom metadata as JSON object */
-            metadata?: Record<string, never>;
-            /**
-             * @description When this notification occurred
-             * @example 2024-01-15T10:30:00Z
-             */
-            occurredAt: string;
-            /**
-             * @description Notification title
-             * @example Welcome to Beamform
-             */
-            subject: string;
-        };
-        /**
-         * @description NotificationId identifier
-         * @example ntf_8W7X9mEr5YqS2TzN6vCpKj
-         */
-        NotificationId: string;
-        /** @description Response with notification ID */
-        NotificationResponse: {
-            /**
-             * @description Notification ID
-             * @example ntf_EQy9R3G1q1uJFmWa3QgEde
-             */
-            id: string;
-        };
-        /**
-         * @description Permissions available in the system
-         * @enum {string}
-         */
-        Permission: "inbox:read" | "notifications:create" | "notifications:delete" | "keys:create" | "keys:read" | "keys:list" | "keys:update" | "keys:delete" | "sessions:create" | "sessions:read" | "sessions:list" | "sessions:delete";
-        /** @description Set of permissions represented as an array */
-        PermissionSet: components["schemas"]["Permission"][];
-        /** @description Notification recipient specification */
-        Recipient: string | components["schemas"]["User"];
-        /**
-         * @description RecipientId identifier
-         * @example rcp_4M9RtBz3Vx7YpF6qHsN5Ej
-         */
-        RecipientId: string;
-        /**
-         * @description RefreshToken identifier
-         * @example sr_123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkm
-         */
-        RefreshToken: string;
-        /** @description Request body for token refresh */
-        RefreshTokenBody: {
-            /**
-             * @description The refresh token
-             * @example sr_8vN2H3kL9mP4qR7sT1uX5yZ8bC6fG2hJ4kM7nQ9rS3vW
-             */
-            refreshToken: string;
-        };
-        /** @description Response for token refresh operations */
-        RefreshTokenResponse: {
-            /**
-             * Format: date-time
-             * @description When the session token expires (fixed lifetime)
-             * @example 2024-01-01T12:00:00Z
-             */
-            expiresAt: string;
-            /**
-             * @description The new refresh token (OAuth 2.1 token rotation - only returned once)
-             *
-             *     This replaces the old refresh token which is now invalidated.
-             *     Store this token securely for future refresh operations.
-             * @example sr_3nL9wM6pQ8rU2xY5bA8dF1hK4jN7mP9qT3vX6zA2eG5j
-             */
-            refreshToken: string;
-            /**
-             * @description The new session token for API calls (only returned once)
-             * @example st_2mK8vL4pN6qS9tY3bX7cZ1eH5jM9nP2rT6uW8yA4dF7g
-             */
-            sessionToken: string;
-        };
-        /** @description Request for completely replacing a key (PUT) */
-        ReplaceKeyRequest: {
-            /**
-             * Format: date-time
-             * @description New expiration time (None means key never expires)
-             * @example 2026-01-15T10:30:00Z
-             */
-            expiresAt?: string | null;
-            /**
-             * @description New name for the API key
-             * @example Replaced Production API Key
-             */
-            name: string;
-            /** @description New permissions to grant to this API key */
-            permissions: components["schemas"]["Permission"][];
-        };
-        /**
-         * @description SessionId identifier
-         * @example ses_8W7X9mEr5YqS2TzN6vCpKj
-         */
-        SessionId: string;
-        /** @description Session record for public listing APIs */
-        SessionRecord: {
-            /**
-             * Format: date-time
-             * @description When the session was created (derived from `session_id` timestamp)
-             * @example 2024-01-01T10:00:00Z
-             */
-            createdAt: string;
-            /**
-             * Format: date-time
-             * @description When the session expires
-             * @example 2024-01-02T10:00:00Z
-             */
-            expiresAt: string;
-            /**
-             * @description Session identifier
-             * @example ses_01HM4X5N9JKQRT8WVYZ2B6EP
-             */
-            sessionId: string;
-        };
-        /**
-         * @description SessionToken identifier
-         * @example st_123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkm
-         */
-        SessionToken: string;
-        /** @description Request for partially updating a key (PATCH)
-         *
-         *     Follows RFC 7396 JSON Merge Patch semantics:
-         *     - Omitted fields: no change to existing value
-         *     - Provided fields: update to new value
-         *     - `null` values: clear the field (for `expires_at` only) */
-        UpdateKeyRequest: {
-            /**
-             * Format: date-time
-             * @description Optional new expiration time
-             *     - Not provided: do not update expiration
-             *     - `null`: clear expiration (key never expires)
-             *     - ISO 8601 date: set new expiration
-             * @example 2026-01-15T10:30:00Z
-             */
-            expiresAt?: string | null;
-            /**
-             * @description Optional new name for the API key
-             *     - Not provided: do not update name
-             *     - Provided: set new name
-             * @example Updated Production API Key
-             */
-            name?: string | null;
-            /** @description Optional new permissions
-             *     - Not provided: do not update permissions
-             *     - Provided: replace all permissions with new set */
-            permissions?: components["schemas"]["Permission"][] | null;
-        };
-        /** @description User information for notification recipients */
-        User: {
-            /**
-             * Format: email
-             * @description Email address
-             * @example john.doe@example.com
-             */
-            email?: string | null;
-            /**
-             * @description User identifier
-             * @example user_123
-             */
-            id: string;
-            /**
-             * @description Display name
-             * @example John Doe
-             */
-            name?: string | null;
-            /**
-             * @description Timezone ([IANA format](https://www.iana.org/time-zones))
-             * @example America/New_York
-             */
-            timezone?: string;
-        };
+  schemas: {
+    /** @description Action button for notifications */
+    Action: {
+      /**
+       * @description URL to open when button is clicked
+       * @example https://app.beamform.ai/onboarding?welcome=true&source=notification
+       */
+      link: string;
+      /**
+       * @description Button text
+       * @example Get Started
+       */
+      title: string;
     };
-    responses: never;
-    parameters: never;
-    requestBodies: never;
-    headers: never;
-    pathItems: never;
+    /** @description Standard API error response used across all services */
+    ApiError: {
+      /**
+       * @description Machine-readable error code
+       * @example INVALID_REQUEST
+       */
+      code: string;
+      /** @description Additional error context */
+      details?: unknown;
+      /**
+       * @description Human-readable error message
+       * @example Invalid request format
+       */
+      message: string;
+    };
+    /**
+     * @description ApiKey identifier
+     * @example sk_123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkm
+     */
+    ApiKey: string;
+    /** @description Query parameters for checking API key permissions */
+    CheckPermissionParams: {
+      /** @description The permission to check */
+      permission: components["schemas"]["Permission"];
+    };
+    /** @description Response for permission check */
+    CheckPermissionResponse: {
+      /**
+       * @description Whether the API key has the required permission
+       * @example true
+       */
+      hasPermission: boolean;
+    };
+    /** @description Cluster of related notifications */
+    Cluster: {
+      /**
+       * @description Cluster summary description
+       * @example Updates related to your account settings, security changes, and profile modifications
+       */
+      content: string;
+      /**
+       * @description Cluster identifier
+       * @example cls_EQy9eND9ESLXNBwMDMuXqse
+       */
+      id: string;
+      /**
+       * Format: double
+       * @description Cluster relevance score (0.0-1.0)
+       * @example 0.92
+       */
+      interest: number;
+      /** @description Notifications in this cluster */
+      notifications: components["schemas"]["Notification"][];
+      /**
+       * @description Cluster title
+       * @example Account Updates
+       */
+      subject: string;
+    };
+    /** @description Request for creating a new key */
+    CreateKeyRequest: {
+      /**
+       * Format: date-time
+       * @description Optional expiration time (ISO 8601 format)
+       * @example 2026-01-15T10:30:00Z
+       */
+      expiresAt?: string;
+      /**
+       * @description Human-readable name for the API key
+       * @example Production API Key
+       */
+      name: string;
+      /** @description Permissions to grant to this API key */
+      permissions: components["schemas"]["Permission"][];
+    };
+    /** @description Response for key creation */
+    CreateKeyResponse: {
+      /**
+       * @description The generated API key ID
+       * @example key_01HQXYZ9ABC123DEF456GHI
+       */
+      keyId: string;
+      /**
+       * @description The actual API key secret (only returned once)
+       * @example sk_test_1234567890abcdef1234567890abcdef12345678
+       */
+      keySecret: string;
+    };
+    /** @description Request payload for creating a new notification */
+    CreateRequest: {
+      /** @description Action buttons for this notification */
+      actions?: components["schemas"]["Action"][];
+      /**
+       * @description Message content
+       * @example Your account has been successfully created. Welcome to our platform!
+       */
+      content: string;
+      /**
+       * @description Delivery deadline as duration from now (e.g. "1h", "24h")
+       * @example 1h
+       */
+      deliverWithin?: string;
+      /** @description Custom JSON data (max 10KB) */
+      metadata?: Record<string, never>;
+      /** @description Who should receive this notification */
+      recipients: components["schemas"]["Recipient"][];
+      /**
+       * @description Notification title
+       * @example Welcome to Beamform
+       */
+      subject: string;
+      /**
+       * Format: date-time
+       * @description When this notification was created. Defaults to current time.
+       * @example 2024-01-15T10:30:00Z
+       */
+      timestamp?: string;
+    };
+    /** @description Request for creating a new recipient session
+     *
+     *     All parameters are optional and use smart defaults optimized for embedded widget authentication.
+     *     Duration fields use human-readable strings like "24h", "2h", "30m" for easy configuration. */
+    CreateSessionRequest: {
+      /**
+       * @description Maximum total session lifetime before forced expiration
+       *
+       *     Examples: "24h", "8h", "7d"
+       *     Default: 24 hours
+       *     Range: 10 seconds to 10 years
+       * @example 24h
+       */
+      sessionLifetime?: string;
+      /**
+       * @description Individual session token validity period
+       *
+       *     Session tokens have fixed lifetimes and must be refreshed when they expire.
+       *     Examples: "2h", "1h", "30m"
+       *     Default: 2 hours
+       *     Range: 10 seconds to 7 days
+       * @example 2h
+       */
+      sessionTokenLifetime?: string;
+    };
+    /** @description Response for session creation */
+    CreateSessionResponse: {
+      /**
+       * Format: date-time
+       * @description When the session expires (absolute deadline)
+       * @example 2024-01-02T10:00:00Z
+       */
+      expiresAt: string;
+      /**
+       * @description The refresh token for this session (only returned once)
+       *
+       *     This token should be embedded in the client HTML and used by the widget
+       *     to obtain session tokens for API calls.
+       * @example sr_8vN2H3kL9mP4qR7sT1uX5yZ8bC6fG2hJ4kM7nQ9rS3vW
+       */
+      refreshToken: string;
+      /**
+       * @description The generated session identifier
+       * @example ses_01HM4X5N9JKQRT8WVYZ2B6EP
+       */
+      sessionId: string;
+    };
+    /** @description Response for current session details (recipient-accessible) */
+    CurrentSessionResponse: {
+      /**
+       * Format: date-time
+       * @description When the session was created (derived from `session_id` timestamp)
+       * @example 2024-01-01T10:00:00Z
+       */
+      createdAt: string;
+      /**
+       * Format: date-time
+       * @description When the session expires
+       * @example 2024-01-02T10:00:00Z
+       */
+      expiresAt: string;
+      /**
+       * @description Current session identifier
+       * @example ses_01HM4X5N9JKQRT8WVYZ2B6EP
+       */
+      sessionId: string;
+    };
+    /** @description Standard error response format used across all endpoints
+     *
+     *     All HTTP error responses follow this simple format. The error message provides
+     *     human-readable details about what went wrong. Engineers should parse this format
+     *     and handle specific error conditions based on HTTP status codes. */
+    ErrorResponse: {
+      /**
+       * @description Human-readable error message describing what went wrong
+       * @example metadata is not valid JSON
+       */
+      error: string;
+    };
+    /** @description Query parameters for inbox requests */
+    FeedOptions: {
+      /**
+       * Format: int32
+       * @description Maximum items to return (1-500, default: 100)
+       * @example 20
+       */
+      limit?: number | null;
+    };
+    /** @description Inbox response */
+    Inbox: {
+      /** @description Inbox items sorted by relevance */
+      items: components["schemas"]["InboxItem"][];
+    };
+    /** @description Inbox item - either a notification or cluster */
+    InboxItem:
+      | (components["schemas"]["Notification"] & {
+          /** @enum {string} */
+          type: "notification";
+        })
+      | (components["schemas"]["Cluster"] & {
+          /** @enum {string} */
+          type: "cluster";
+        });
+    /**
+     * @description KeyId identifier
+     * @example key_8W7X9mEr5YqS2TzN6vCpKj
+     */
+    KeyId: string;
+    /** @description A key (without the secret) */
+    KeyResponse: {
+      /**
+       * Format: date-time
+       * @description Creation timestamp
+       * @example 2024-01-15T10:30:00Z
+       */
+      createdAt: string;
+      /**
+       * @description Actor who created this key
+       * @example user@example.com
+       */
+      createdBy: string;
+      /**
+       * Format: date-time
+       * @description Optional expiration timestamp
+       * @example 2026-01-15T10:30:00Z
+       */
+      expiresAt?: string;
+      /**
+       * @description The API key ID
+       * @example key_01HQXYZ9ABC123DEF456GHI
+       */
+      keyId: string;
+      /**
+       * @description Human-readable prefix for identification (first few characters of the API key)
+       * @example sk_1234
+       */
+      keyPrefix: string;
+      /**
+       * Format: date-time
+       * @description Last usage timestamp
+       * @example 2024-01-15T14:22:00Z
+       */
+      lastUsedAt?: string;
+      /**
+       * @description Human-readable name
+       * @example Production API Key
+       */
+      name: string;
+      /** @description Effective permissions */
+      permissions: components["schemas"]["Permission"][];
+      /**
+       * Format: date-time
+       * @description Last update timestamp
+       * @example 2024-01-15T10:30:00Z
+       */
+      updatedAt: string;
+    };
+    /** @description Query parameters for listing keys */
+    ListKeysParams: {
+      /**
+       * @description Optional cursor for pagination - the last API key ID from the previous page
+       * @example key_01HQXYZ9ABC124DEF456GHJ
+       */
+      cursor?: string;
+      /**
+       * Format: int32
+       * @description Page size (default: 50, max: 100)
+       * @example 20
+       */
+      pageSize?: number;
+    };
+    /** @description Response for listing keys */
+    ListKeysResponse: {
+      /** @description API keys (without secrets) */
+      keys: components["schemas"]["KeyResponse"][];
+      /**
+       * @description Cursor for next page (if more results available) - the last API key ID from this page
+       * @example key_01HQXYZ9ABC124DEF456GHJ
+       */
+      nextCursor?: string;
+    };
+    /** @description Query parameters for listing sessions */
+    ListSessionsParams: {
+      /**
+       * @description Cursor for pagination
+       * @example ses_01HM4X5N9JKQRT8WVYZ2B6EP
+       */
+      cursor?: string | null;
+      /**
+       * Format: int32
+       * @description Number of results per page (1-100, default: 50)
+       * @example 50
+       */
+      pageSize?: number | null;
+    };
+    /** @description Response for listing recipient sessions */
+    ListSessionsResponse: {
+      /** @description Cursor for next page (if more results exist) */
+      nextCursor?: string | null;
+      /** @description List of sessions for the recipient */
+      sessions: components["schemas"]["SessionRecord"][];
+    };
+    /** @description Notification with content and metadata */
+    Notification: {
+      /** @description Action buttons for this notification */
+      actions?: components["schemas"]["Action"][];
+      /**
+       * @description Notification content
+       * @example Your account has been successfully created. Welcome to our platform! You can now access all features and start managing your notifications.
+       */
+      content: string;
+      /**
+       * @description Notification identifier
+       * @example ntf_EQy9R3G1q1uJFmWa3QgEde
+       */
+      id: string;
+      /**
+       * Format: double
+       * @description Relevance score (0.0-1.0)
+       * @example 0.85
+       */
+      interest: number;
+      /** @description Custom metadata as JSON object */
+      metadata?: Record<string, never>;
+      /**
+       * @description When this notification occurred
+       * @example 2024-01-15T10:30:00Z
+       */
+      occurredAt: string;
+      /**
+       * @description Notification title
+       * @example Welcome to Beamform
+       */
+      subject: string;
+    };
+    /**
+     * @description NotificationId identifier
+     * @example ntf_8W7X9mEr5YqS2TzN6vCpKj
+     */
+    NotificationId: string;
+    /** @description Response with notification ID */
+    NotificationResponse: {
+      /**
+       * @description Notification ID
+       * @example ntf_EQy9R3G1q1uJFmWa3QgEde
+       */
+      id: string;
+    };
+    /**
+     * @description Permissions available in the system
+     * @enum {string}
+     */
+    Permission:
+      | "inbox:read"
+      | "notifications:create"
+      | "notifications:delete"
+      | "keys:create"
+      | "keys:read"
+      | "keys:list"
+      | "keys:update"
+      | "keys:delete"
+      | "sessions:create"
+      | "sessions:read"
+      | "sessions:list"
+      | "sessions:delete";
+    /** @description Set of permissions represented as an array */
+    PermissionSet: components["schemas"]["Permission"][];
+    /** @description Notification recipient specification */
+    Recipient: string | components["schemas"]["User"];
+    /**
+     * @description RecipientId identifier
+     * @example rcp_4M9RtBz3Vx7YpF6qHsN5Ej
+     */
+    RecipientId: string;
+    /**
+     * @description RefreshToken identifier
+     * @example sr_123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkm
+     */
+    RefreshToken: string;
+    /** @description Request body for token refresh */
+    RefreshTokenBody: {
+      /**
+       * @description The refresh token
+       * @example sr_8vN2H3kL9mP4qR7sT1uX5yZ8bC6fG2hJ4kM7nQ9rS3vW
+       */
+      refreshToken: string;
+    };
+    /** @description Response for token refresh operations */
+    RefreshTokenResponse: {
+      /**
+       * Format: date-time
+       * @description When the session token expires (fixed lifetime)
+       * @example 2024-01-01T12:00:00Z
+       */
+      expiresAt: string;
+      /**
+       * @description The new refresh token (OAuth 2.1 token rotation - only returned once)
+       *
+       *     This replaces the old refresh token which is now invalidated.
+       *     Store this token securely for future refresh operations.
+       * @example sr_3nL9wM6pQ8rU2xY5bA8dF1hK4jN7mP9qT3vX6zA2eG5j
+       */
+      refreshToken: string;
+      /**
+       * @description The new session token for API calls (only returned once)
+       * @example st_2mK8vL4pN6qS9tY3bX7cZ1eH5jM9nP2rT6uW8yA4dF7g
+       */
+      sessionToken: string;
+    };
+    /** @description Request for completely replacing a key (PUT) */
+    ReplaceKeyRequest: {
+      /**
+       * Format: date-time
+       * @description New expiration time (None means key never expires)
+       * @example 2026-01-15T10:30:00Z
+       */
+      expiresAt?: string | null;
+      /**
+       * @description New name for the API key
+       * @example Replaced Production API Key
+       */
+      name: string;
+      /** @description New permissions to grant to this API key */
+      permissions: components["schemas"]["Permission"][];
+    };
+    /**
+     * @description SessionId identifier
+     * @example ses_8W7X9mEr5YqS2TzN6vCpKj
+     */
+    SessionId: string;
+    /** @description Session record for public listing APIs */
+    SessionRecord: {
+      /**
+       * Format: date-time
+       * @description When the session was created (derived from `session_id` timestamp)
+       * @example 2024-01-01T10:00:00Z
+       */
+      createdAt: string;
+      /**
+       * Format: date-time
+       * @description When the session expires
+       * @example 2024-01-02T10:00:00Z
+       */
+      expiresAt: string;
+      /**
+       * @description Session identifier
+       * @example ses_01HM4X5N9JKQRT8WVYZ2B6EP
+       */
+      sessionId: string;
+    };
+    /**
+     * @description SessionToken identifier
+     * @example st_123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkm
+     */
+    SessionToken: string;
+    /** @description Request for partially updating a key (PATCH)
+     *
+     *     Follows RFC 7396 JSON Merge Patch semantics:
+     *     - Omitted fields: no change to existing value
+     *     - Provided fields: update to new value
+     *     - `null` values: clear the field (for `expires_at` only) */
+    UpdateKeyRequest: {
+      /**
+       * Format: date-time
+       * @description Optional new expiration time
+       *     - Not provided: do not update expiration
+       *     - `null`: clear expiration (key never expires)
+       *     - ISO 8601 date: set new expiration
+       * @example 2026-01-15T10:30:00Z
+       */
+      expiresAt?: string | null;
+      /**
+       * @description Optional new name for the API key
+       *     - Not provided: do not update name
+       *     - Provided: set new name
+       * @example Updated Production API Key
+       */
+      name?: string | null;
+      /** @description Optional new permissions
+       *     - Not provided: do not update permissions
+       *     - Provided: replace all permissions with new set */
+      permissions?: components["schemas"]["Permission"][] | null;
+    };
+    /** @description User information for notification recipients */
+    User: {
+      /**
+       * Format: email
+       * @description Email address
+       * @example john.doe@example.com
+       */
+      email?: string | null;
+      /**
+       * @description User identifier
+       * @example user_123
+       */
+      id: string;
+      /**
+       * @description Display name
+       * @example John Doe
+       */
+      name?: string | null;
+      /**
+       * @description Timezone ([IANA format](https://www.iana.org/time-zones))
+       * @example America/New_York
+       */
+      timezone?: string;
+    };
+  };
+  responses: never;
+  parameters: never;
+  requestBodies: never;
+  headers: never;
+  pathItems: never;
 }
 export type $defs = Record<string, never>;
 export interface operations {
-    list_keys: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Optional cursor for pagination - the last API key ID from the previous page */
-                cursor: null | components["schemas"]["KeyId"];
-                /** @description Page size (default: 50, max: 100) */
-                pageSize: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description List of keys */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "keys": [
-                     *         {
-                     *           "createdAt": "2024-01-15T10:30:00Z",
-                     *           "createdBy": "user@example.com",
-                     *           "expiresAt": "2025-01-15T10:30:00Z",
-                     *           "keyId": "key_01HQXYZ9ABC123DEF456GHI",
-                     *           "keyPrefix": "sk_1234",
-                     *           "name": "Production API Key",
-                     *           "permissions": [
-                     *             "notifications:create",
-                     *             "keys:read"
-                     *           ],
-                     *           "updatedAt": "2024-01-15T10:30:00Z"
-                     *         }
-                     *       ],
-                     *       "nextCursor": "key_01HQXYZ9ABC124DEF456GHJ"
-                     *     } */
-                    "application/json": components["schemas"]["ListKeysResponse"];
-                };
-            };
-        };
+  list_keys: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** @description Optional cursor for pagination - the last API key ID from the previous page */
+        cursor: null | components["schemas"]["KeyId"];
+        /** @description Page size (default: 50, max: 100) */
+        pageSize: number;
+      };
+      cookie?: never;
     };
-    create_key: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
+    requestBody?: never;
+    responses: {
+      /** @description List of keys */
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateKeyRequest"];
-            };
+        content: {
+          /** @example {
+           *       "keys": [
+           *         {
+           *           "createdAt": "2024-01-15T10:30:00Z",
+           *           "createdBy": "user@example.com",
+           *           "expiresAt": "2025-01-15T10:30:00Z",
+           *           "keyId": "key_01HQXYZ9ABC123DEF456GHI",
+           *           "keyPrefix": "sk_1234",
+           *           "name": "Production API Key",
+           *           "permissions": [
+           *             "notifications:create",
+           *             "keys:read"
+           *           ],
+           *           "updatedAt": "2024-01-15T10:30:00Z"
+           *         }
+           *       ],
+           *       "nextCursor": "key_01HQXYZ9ABC124DEF456GHJ"
+           *     } */
+          "application/json": components["schemas"]["ListKeysResponse"];
         };
-        responses: {
-            /** @description Key created successfully */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "apiKeySecret": "sk_test_1234567890abcdef1234567890abcdef12345678",
-                     *       "keyId": "key_01HQXYZ9ABC123DEF456GHI"
-                     *     } */
-                    "application/json": components["schemas"]["CreateKeyResponse"];
-                };
-            };
-            /** @description Invalid request data */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
+      };
     };
-    get_key: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description API key identifier */
-                key_id: components["schemas"]["KeyId"];
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Key details */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "createdAt": "2024-01-15T10:30:00Z",
-                     *       "createdBy": "user@example.com",
-                     *       "keyId": "key_01HQXYZ9ABC123DEF456GHI",
-                     *       "keyPrefix": "sk_1234",
-                     *       "lastUsedAt": "2024-01-15T14:22:00Z",
-                     *       "name": "Production API Key",
-                     *       "permissions": [
-                     *         "notifications:create",
-                     *         "keys:read"
-                     *       ],
-                     *       "updatedAt": "2024-01-15T10:30:00Z"
-                     *     } */
-                    "application/json": components["schemas"]["KeyResponse"];
-                };
-            };
-            /** @description API key not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "error": "API key not found"
-                     *     } */
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
+  };
+  create_key: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    replace_key: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description API key identifier */
-                key_id: components["schemas"]["KeyId"];
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ReplaceKeyRequest"];
-            };
-        };
-        responses: {
-            /** @description Key replaced successfully */
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Invalid request data */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description API key not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "error": "API key not found"
-                     *     } */
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["CreateKeyRequest"];
+      };
     };
-    delete_key: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description API key identifier */
-                key_id: components["schemas"]["KeyId"];
-            };
-            cookie?: never;
+    responses: {
+      /** @description Key created successfully */
+      201: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            /** @description Key deleted successfully */
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description API key not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "error": "API key not found"
-                     *     } */
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
+        content: {
+          /** @example {
+           *       "apiKeySecret": "sk_test_1234567890abcdef1234567890abcdef12345678",
+           *       "keyId": "key_01HQXYZ9ABC123DEF456GHI"
+           *     } */
+          "application/json": components["schemas"]["CreateKeyResponse"];
         };
+      };
+      /** @description Invalid request data */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
     };
-    update_key: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description API key identifier */
-                key_id: components["schemas"]["KeyId"];
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["UpdateKeyRequest"];
-            };
-        };
-        responses: {
-            /** @description Key updated successfully */
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Invalid request data */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description API key not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "error": "API key not found"
-                     *     } */
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
+  };
+  get_key: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** @description API key identifier */
+        key_id: components["schemas"]["KeyId"];
+      };
+      cookie?: never;
     };
-    check_permission: {
-        parameters: {
-            query: {
-                /**
-                 * @description The permission to check
-                 * @example keys:read
-                 */
-                permission: components["schemas"]["Permission"];
-            };
-            header?: never;
-            path: {
-                /** @description API key identifier */
-                key_id: components["schemas"]["KeyId"];
-            };
-            cookie?: never;
+    requestBody?: never;
+    responses: {
+      /** @description Key details */
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            /** @description Permission check result */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["CheckPermissionResponse"];
-                };
-            };
-            /** @description API key not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "error": "API key not found"
-                     *     } */
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
+        content: {
+          /** @example {
+           *       "createdAt": "2024-01-15T10:30:00Z",
+           *       "createdBy": "user@example.com",
+           *       "keyId": "key_01HQXYZ9ABC123DEF456GHI",
+           *       "keyPrefix": "sk_1234",
+           *       "lastUsedAt": "2024-01-15T14:22:00Z",
+           *       "name": "Production API Key",
+           *       "permissions": [
+           *         "notifications:create",
+           *         "keys:read"
+           *       ],
+           *       "updatedAt": "2024-01-15T10:30:00Z"
+           *     } */
+          "application/json": components["schemas"]["KeyResponse"];
         };
+      };
+      /** @description API key not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /** @example {
+           *       "error": "API key not found"
+           *     } */
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
     };
-    list_sessions: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /**
-                 * @description User identifier
-                 * @example user_12345
-                 */
-                recipient_id: string;
-                /** @description Cursor for pagination */
-                cursor: string | null;
-                /** @description Number of results per page (1-100, default: 50) */
-                pageSize: number | null;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description List of recipient sessions */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "sessions": [
-                     *         {
-                     *           "createdAt": "2024-01-01T10:00:00Z",
-                     *           "expiresAt": "2024-01-02T10:00:00Z",
-                     *           "sessionId": "ses_01HM4X5N9JKQRT8WVYZ2B6EP"
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": components["schemas"]["ListSessionsResponse"];
-                };
-            };
-        };
+  };
+  replace_key: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** @description API key identifier */
+        key_id: components["schemas"]["KeyId"];
+      };
+      cookie?: never;
     };
-    create_session: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /**
-                 * @description User identifier
-                 * @example user_12345
-                 */
-                recipient_id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateSessionRequest"];
-            };
-        };
-        responses: {
-            /** @description Session created successfully */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "expiresAt": "2024-01-02T10:00:00Z",
-                     *       "refreshToken": "sr_8vN2H3kL9mP4qR7sT1uX5yZ8bC6fG2hJ4kM7nQ9rS3vW",
-                     *       "sessionId": "ses_01HM4X5N9JKQRT8WVYZ2B6EP"
-                     *     } */
-                    "application/json": components["schemas"]["CreateSessionResponse"];
-                };
-            };
-            /** @description Invalid request data */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Request validation failed */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["ReplaceKeyRequest"];
+      };
     };
-    delete_all_sessions: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /**
-                 * @description User identifier
-                 * @example user_12345
-                 */
-                recipient_id: string;
-            };
-            cookie?: never;
+    responses: {
+      /** @description Key replaced successfully */
+      204: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            /** @description All recipient sessions deleted successfully */
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
+        content?: never;
+      };
+      /** @description Invalid request data */
+      400: {
+        headers: {
+          [name: string]: unknown;
         };
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /** @description API key not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /** @example {
+           *       "error": "API key not found"
+           *     } */
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
     };
-    get_session: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /**
-                 * @description User identifier
-                 * @example user_12345
-                 */
-                recipient_id: string;
-                /** @description Session identifier */
-                session_id: components["schemas"]["SessionId"];
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Session details */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "createdAt": "2024-01-01T10:00:00Z",
-                     *       "expiresAt": "2024-01-02T10:00:00Z",
-                     *       "sessionId": "ses_01HM4X5N9JKQRT8WVYZ2B6EP"
-                     *     } */
-                    "application/json": components["schemas"]["CurrentSessionResponse"];
-                };
-            };
-            /** @description Session not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "error": "Session not found"
-                     *     } */
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
+  };
+  delete_key: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** @description API key identifier */
+        key_id: components["schemas"]["KeyId"];
+      };
+      cookie?: never;
     };
-    delete_session: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /**
-                 * @description User identifier
-                 * @example user_12345
-                 */
-                recipient_id: string;
-                /** @description Session identifier */
-                session_id: components["schemas"]["SessionId"];
-            };
-            cookie?: never;
+    requestBody?: never;
+    responses: {
+      /** @description Key deleted successfully */
+      204: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            /** @description Session deleted successfully */
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Session not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "error": "Session not found"
-                     *     } */
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
+        content?: never;
+      };
+      /** @description API key not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
         };
+        content: {
+          /** @example {
+           *       "error": "API key not found"
+           *     } */
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
     };
-    get_current_session: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Current session details */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "createdAt": "2024-01-01T10:00:00Z",
-                     *       "expiresAt": "2024-01-02T10:00:00Z",
-                     *       "sessionId": "ses_01HM4X5N9JKQRT8WVYZ2B6EP"
-                     *     } */
-                    "application/json": components["schemas"]["CurrentSessionResponse"];
-                };
-            };
-            /** @description Invalid or expired session token */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "error": "Invalid session token"
-                     *     } */
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
+  };
+  update_key: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** @description API key identifier */
+        key_id: components["schemas"]["KeyId"];
+      };
+      cookie?: never;
     };
-    delete_current_session: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Session deleted successfully (logged out) */
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Invalid or expired session token */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "error": "Invalid session token"
-                     *     } */
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["UpdateKeyRequest"];
+      };
     };
-    refresh_token: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
+    responses: {
+      /** @description Key updated successfully */
+      204: {
+        headers: {
+          [name: string]: unknown;
         };
-        /** @description Refresh token */
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["RefreshTokenBody"];
-            };
+        content?: never;
+      };
+      /** @description Invalid request data */
+      400: {
+        headers: {
+          [name: string]: unknown;
         };
-        responses: {
-            /** @description Token refreshed successfully */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "expiresAt": "2024-01-01T12:00:00Z",
-                     *       "refreshToken": "sr_3nL9wM6pQ8rU2xY5bA8dF1hK4jN7mP9qT3vX6zA2eG5j",
-                     *       "sessionToken": "st_2mK8vL4pN6qS9tY3bX7cZ1eH5jM9nP2rT6uW8yA4dF7g"
-                     *     } */
-                    "application/json": components["schemas"]["RefreshTokenResponse"];
-                };
-            };
-            /** @description Invalid or expired refresh token */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "error": "Invalid refresh token"
-                     *     } */
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
         };
+      };
+      /** @description API key not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /** @example {
+           *       "error": "API key not found"
+           *     } */
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
     };
-    get_current_inbox: {
-        parameters: {
-            query?: {
-                /**
-                 * @description Maximum number of items to return (1-500, default: 100)
-                 * @example 20
-                 */
-                limit?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Current user's inbox items, sorted by relevance */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "items": [
-                     *         {
-                     *           "actions": [
-                     *             {
-                     *               "link": "https://app.beamform.ai/onboarding?welcome=true&source=notification",
-                     *               "title": "Get Started"
-                     *             }
-                     *           ],
-                     *           "content": "Your account has been successfully created. Welcome to our platform! You can now access all features and start managing your notifications.",
-                     *           "id": "ntf_EQy9R3G1q1uJFmWa3QgEde",
-                     *           "interest": 0.85,
-                     *           "metadata": {
-                     *             "campaign_id": "welcome_series",
-                     *             "priority": "high",
-                     *             "source": "onboarding",
-                     *             "user_segment": "new_customer"
-                     *           },
-                     *           "occurredAt": "2024-01-15T10:30:00Z",
-                     *           "subject": "Welcome to Beamform",
-                     *           "type": "notification"
-                     *         },
-                     *         {
-                     *           "content": "Updates related to your account settings, security changes, and profile modifications",
-                     *           "id": "cls_EQy9eND9ESLXNBwMDMuXqse",
-                     *           "interest": 0.92,
-                     *           "notifications": [
-                     *             {
-                     *               "actions": [],
-                     *               "content": "Your password was successfully updated for security reasons.",
-                     *               "id": "ntf_EQy9YY3XNKGjexnQzrn5AQ",
-                     *               "interest": 0.9,
-                     *               "occurredAt": "2024-01-15T09:15:00Z",
-                     *               "subject": "Password Changed"
-                     *             }
-                     *           ],
-                     *           "subject": "Account Updates",
-                     *           "type": "cluster"
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": components["schemas"]["Inbox"];
-                };
-            };
-            /** @description Unauthorized - Session token missing or invalid */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Forbidden - Insufficient permissions */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Failed to load inbox data. */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "error": "failed to load inbox"
-                     *     } */
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
+  };
+  check_permission: {
+    parameters: {
+      query: {
+        /**
+         * @description The permission to check
+         * @example keys:read
+         */
+        permission: components["schemas"]["Permission"];
+      };
+      header?: never;
+      path: {
+        /** @description API key identifier */
+        key_id: components["schemas"]["KeyId"];
+      };
+      cookie?: never;
     };
-    get_inbox_for_recipient: {
-        parameters: {
-            query?: {
-                /**
-                 * @description Maximum number of items to return (1-500, default: 100)
-                 * @example 20
-                 */
-                limit?: number;
-            };
-            header?: never;
-            path: {
-                /**
-                 * @description User identifier
-                 * @example user_12345
-                 */
-                recipient_id: string;
-            };
-            cookie?: never;
+    requestBody?: never;
+    responses: {
+      /** @description Permission check result */
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            /** @description User's inbox items, sorted by relevance */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "items": [
-                     *         {
-                     *           "actions": [
-                     *             {
-                     *               "link": "https://app.beamform.ai/onboarding?welcome=true&source=notification",
-                     *               "title": "Get Started"
-                     *             }
-                     *           ],
-                     *           "content": "Your account has been successfully created. Welcome to our platform! You can now access all features and start managing your notifications.",
-                     *           "id": "ntf_EQy9R3G1q1uJFmWa3QgEde",
-                     *           "interest": 0.85,
-                     *           "metadata": {
-                     *             "campaign_id": "welcome_series",
-                     *             "priority": "high",
-                     *             "source": "onboarding",
-                     *             "user_segment": "new_customer"
-                     *           },
-                     *           "occurredAt": "2024-01-15T10:30:00Z",
-                     *           "subject": "Welcome to Beamform",
-                     *           "type": "notification"
-                     *         },
-                     *         {
-                     *           "content": "Updates related to your account settings, security changes, and profile modifications",
-                     *           "id": "cls_EQy9eND9ESLXNBwMDMuXqse",
-                     *           "interest": 0.92,
-                     *           "notifications": [
-                     *             {
-                     *               "actions": [],
-                     *               "content": "Your password was successfully updated for security reasons.",
-                     *               "id": "ntf_EQy9YY3XNKGjexnQzrn5AQ",
-                     *               "interest": 0.9,
-                     *               "occurredAt": "2024-01-15T09:15:00Z",
-                     *               "subject": "Password Changed"
-                     *             }
-                     *           ],
-                     *           "subject": "Account Updates",
-                     *           "type": "cluster"
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": components["schemas"]["Inbox"];
-                };
-            };
-            /** @description Unauthorized - API key missing or invalid */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Forbidden - Insufficient permissions */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Failed to load inbox data. */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "error": "failed to load inbox"
-                     *     } */
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
+        content: {
+          "application/json": components["schemas"]["CheckPermissionResponse"];
         };
+      };
+      /** @description API key not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /** @example {
+           *       "error": "API key not found"
+           *     } */
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
     };
-    create_notification: {
-        parameters: {
-            query?: never;
-            header?: {
-                /**
-                 * @description Optional unique identifier for safe request retries. Use a UUID or similar unique value. Same key with same request body will return cached response instead of creating duplicates.
-                 * @example 550e8400-e29b-41d4-a716-446655440000
-                 */
-                "Idempotency-Key"?: string | null;
-            };
-            path?: never;
-            cookie?: never;
-        };
-        /** @description Notification data */
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateRequest"];
-            };
-        };
-        responses: {
-            /** @description Notification created and queued */
-            202: {
-                headers: {
-                    /** @description True if response was cached */
-                    "Idempotent-Replayed"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "id": "ntf_EQy9R3G1q1uJFmWa3QgEde"
-                     *     } */
-                    "application/json": components["schemas"]["NotificationResponse"];
-                };
-            };
-            /** @description Invalid request data or malformed JSON. */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "error": "metadata is not valid JSON"
-                     *     } */
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Idempotency key conflict - request still processing. */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "error": "a request is outstanding for this Idempotency-Key"
-                     *     } */
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Idempotency key reused with different data, or timestamp too old. */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Service temporarily unavailable. */
-            503: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
+  };
+  list_sessions: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /**
+         * @description User identifier
+         * @example user_12345
+         */
+        recipient_id: string;
+        /** @description Cursor for pagination */
+        cursor: string | null;
+        /** @description Number of results per page (1-100, default: 50) */
+        pageSize: number | null;
+      };
+      cookie?: never;
     };
-    delete_notification: {
-        parameters: {
-            query?: never;
-            header?: {
-                /**
-                 * @description Optional unique identifier for safe request retries. Use a UUID or similar unique value. Same key with same request body will return cached response instead of creating duplicates.
-                 * @example 550e8400-e29b-41d4-a716-446655440000
-                 */
-                "Idempotency-Key"?: string | null;
-            };
-            path: {
-                /**
-                 * @description Notification identifier
-                 * @example ntf_EQy9R3G1q1uJFmWa3QgEde
-                 */
-                id: components["schemas"]["NotificationId"];
-            };
-            cookie?: never;
+    requestBody?: never;
+    responses: {
+      /** @description List of recipient sessions */
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            /** @description Notification deletion queued */
-            202: {
-                headers: {
-                    /** @description True if response was cached */
-                    "Idempotent-Replayed"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "id": "ntf_EQy9R3G1q1uJFmWa3QgEde"
-                     *     } */
-                    "application/json": components["schemas"]["NotificationResponse"];
-                };
-            };
-            /** @description Notification not found. */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "error": "notification not found"
-                     *     } */
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Idempotency key conflict - request still processing. */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "error": "a request is outstanding for this Idempotency-Key"
-                     *     } */
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Idempotency key reused with different data. */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "error": "Idempotency-Key was already used"
-                     *     } */
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Service temporarily unavailable. */
-            503: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "error": "failed to delete notification"
-                     *     } */
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
+        content: {
+          /** @example {
+           *       "sessions": [
+           *         {
+           *           "createdAt": "2024-01-01T10:00:00Z",
+           *           "expiresAt": "2024-01-02T10:00:00Z",
+           *           "sessionId": "ses_01HM4X5N9JKQRT8WVYZ2B6EP"
+           *         }
+           *       ]
+           *     } */
+          "application/json": components["schemas"]["ListSessionsResponse"];
         };
+      };
     };
+  };
+  create_session: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /**
+         * @description User identifier
+         * @example user_12345
+         */
+        recipient_id: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["CreateSessionRequest"];
+      };
+    };
+    responses: {
+      /** @description Session created successfully */
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /** @example {
+           *       "expiresAt": "2024-01-02T10:00:00Z",
+           *       "refreshToken": "sr_8vN2H3kL9mP4qR7sT1uX5yZ8bC6fG2hJ4kM7nQ9rS3vW",
+           *       "sessionId": "ses_01HM4X5N9JKQRT8WVYZ2B6EP"
+           *     } */
+          "application/json": components["schemas"]["CreateSessionResponse"];
+        };
+      };
+      /** @description Invalid request data */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /** @description Request validation failed */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+    };
+  };
+  delete_all_sessions: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /**
+         * @description User identifier
+         * @example user_12345
+         */
+        recipient_id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description All recipient sessions deleted successfully */
+      204: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  get_session: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /**
+         * @description User identifier
+         * @example user_12345
+         */
+        recipient_id: string;
+        /** @description Session identifier */
+        session_id: components["schemas"]["SessionId"];
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Session details */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /** @example {
+           *       "createdAt": "2024-01-01T10:00:00Z",
+           *       "expiresAt": "2024-01-02T10:00:00Z",
+           *       "sessionId": "ses_01HM4X5N9JKQRT8WVYZ2B6EP"
+           *     } */
+          "application/json": components["schemas"]["CurrentSessionResponse"];
+        };
+      };
+      /** @description Session not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /** @example {
+           *       "error": "Session not found"
+           *     } */
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+    };
+  };
+  delete_session: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /**
+         * @description User identifier
+         * @example user_12345
+         */
+        recipient_id: string;
+        /** @description Session identifier */
+        session_id: components["schemas"]["SessionId"];
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Session deleted successfully */
+      204: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Session not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /** @example {
+           *       "error": "Session not found"
+           *     } */
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+    };
+  };
+  get_current_session: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Current session details */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /** @example {
+           *       "createdAt": "2024-01-01T10:00:00Z",
+           *       "expiresAt": "2024-01-02T10:00:00Z",
+           *       "sessionId": "ses_01HM4X5N9JKQRT8WVYZ2B6EP"
+           *     } */
+          "application/json": components["schemas"]["CurrentSessionResponse"];
+        };
+      };
+      /** @description Invalid or expired session token */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /** @example {
+           *       "error": "Invalid session token"
+           *     } */
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+    };
+  };
+  delete_current_session: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Session deleted successfully (logged out) */
+      204: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Invalid or expired session token */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /** @example {
+           *       "error": "Invalid session token"
+           *     } */
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+    };
+  };
+  refresh_token: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** @description Refresh token */
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["RefreshTokenBody"];
+      };
+    };
+    responses: {
+      /** @description Token refreshed successfully */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /** @example {
+           *       "expiresAt": "2024-01-01T12:00:00Z",
+           *       "refreshToken": "sr_3nL9wM6pQ8rU2xY5bA8dF1hK4jN7mP9qT3vX6zA2eG5j",
+           *       "sessionToken": "st_2mK8vL4pN6qS9tY3bX7cZ1eH5jM9nP2rT6uW8yA4dF7g"
+           *     } */
+          "application/json": components["schemas"]["RefreshTokenResponse"];
+        };
+      };
+      /** @description Invalid or expired refresh token */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /** @example {
+           *       "error": "Invalid refresh token"
+           *     } */
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+    };
+  };
+  get_current_inbox: {
+    parameters: {
+      query?: {
+        /**
+         * @description Maximum number of items to return (1-500, default: 100)
+         * @example 20
+         */
+        limit?: number;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Current user's inbox items, sorted by relevance */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /** @example {
+           *       "items": [
+           *         {
+           *           "actions": [
+           *             {
+           *               "link": "https://app.beamform.ai/onboarding?welcome=true&source=notification",
+           *               "title": "Get Started"
+           *             }
+           *           ],
+           *           "content": "Your account has been successfully created. Welcome to our platform! You can now access all features and start managing your notifications.",
+           *           "id": "ntf_EQy9R3G1q1uJFmWa3QgEde",
+           *           "interest": 0.85,
+           *           "metadata": {
+           *             "campaign_id": "welcome_series",
+           *             "priority": "high",
+           *             "source": "onboarding",
+           *             "user_segment": "new_customer"
+           *           },
+           *           "occurredAt": "2024-01-15T10:30:00Z",
+           *           "subject": "Welcome to Beamform",
+           *           "type": "notification"
+           *         },
+           *         {
+           *           "content": "Updates related to your account settings, security changes, and profile modifications",
+           *           "id": "cls_EQy9eND9ESLXNBwMDMuXqse",
+           *           "interest": 0.92,
+           *           "notifications": [
+           *             {
+           *               "actions": [],
+           *               "content": "Your password was successfully updated for security reasons.",
+           *               "id": "ntf_EQy9YY3XNKGjexnQzrn5AQ",
+           *               "interest": 0.9,
+           *               "occurredAt": "2024-01-15T09:15:00Z",
+           *               "subject": "Password Changed"
+           *             }
+           *           ],
+           *           "subject": "Account Updates",
+           *           "type": "cluster"
+           *         }
+           *       ]
+           *     } */
+          "application/json": components["schemas"]["Inbox"];
+        };
+      };
+      /** @description Unauthorized - Session token missing or invalid */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /** @description Forbidden - Insufficient permissions */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /** @description Failed to load inbox data. */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /** @example {
+           *       "error": "failed to load inbox"
+           *     } */
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+    };
+  };
+  get_inbox_for_recipient: {
+    parameters: {
+      query?: {
+        /**
+         * @description Maximum number of items to return (1-500, default: 100)
+         * @example 20
+         */
+        limit?: number;
+      };
+      header?: never;
+      path: {
+        /**
+         * @description User identifier
+         * @example user_12345
+         */
+        recipient_id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description User's inbox items, sorted by relevance */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /** @example {
+           *       "items": [
+           *         {
+           *           "actions": [
+           *             {
+           *               "link": "https://app.beamform.ai/onboarding?welcome=true&source=notification",
+           *               "title": "Get Started"
+           *             }
+           *           ],
+           *           "content": "Your account has been successfully created. Welcome to our platform! You can now access all features and start managing your notifications.",
+           *           "id": "ntf_EQy9R3G1q1uJFmWa3QgEde",
+           *           "interest": 0.85,
+           *           "metadata": {
+           *             "campaign_id": "welcome_series",
+           *             "priority": "high",
+           *             "source": "onboarding",
+           *             "user_segment": "new_customer"
+           *           },
+           *           "occurredAt": "2024-01-15T10:30:00Z",
+           *           "subject": "Welcome to Beamform",
+           *           "type": "notification"
+           *         },
+           *         {
+           *           "content": "Updates related to your account settings, security changes, and profile modifications",
+           *           "id": "cls_EQy9eND9ESLXNBwMDMuXqse",
+           *           "interest": 0.92,
+           *           "notifications": [
+           *             {
+           *               "actions": [],
+           *               "content": "Your password was successfully updated for security reasons.",
+           *               "id": "ntf_EQy9YY3XNKGjexnQzrn5AQ",
+           *               "interest": 0.9,
+           *               "occurredAt": "2024-01-15T09:15:00Z",
+           *               "subject": "Password Changed"
+           *             }
+           *           ],
+           *           "subject": "Account Updates",
+           *           "type": "cluster"
+           *         }
+           *       ]
+           *     } */
+          "application/json": components["schemas"]["Inbox"];
+        };
+      };
+      /** @description Unauthorized - API key missing or invalid */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /** @description Forbidden - Insufficient permissions */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /** @description Failed to load inbox data. */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /** @example {
+           *       "error": "failed to load inbox"
+           *     } */
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+    };
+  };
+  create_notification: {
+    parameters: {
+      query?: never;
+      header?: {
+        /**
+         * @description Optional unique identifier for safe request retries. Use a UUID or similar unique value. Same key with same request body will return cached response instead of creating duplicates.
+         * @example 550e8400-e29b-41d4-a716-446655440000
+         */
+        "Idempotency-Key"?: string | null;
+      };
+      path?: never;
+      cookie?: never;
+    };
+    /** @description Notification data */
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["CreateRequest"];
+      };
+    };
+    responses: {
+      /** @description Notification created and queued */
+      202: {
+        headers: {
+          /** @description True if response was cached */
+          "Idempotent-Replayed"?: string;
+          [name: string]: unknown;
+        };
+        content: {
+          /** @example {
+           *       "id": "ntf_EQy9R3G1q1uJFmWa3QgEde"
+           *     } */
+          "application/json": components["schemas"]["NotificationResponse"];
+        };
+      };
+      /** @description Invalid request data or malformed JSON. */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /** @example {
+           *       "error": "metadata is not valid JSON"
+           *     } */
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /** @description Idempotency key conflict - request still processing. */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /** @example {
+           *       "error": "a request is outstanding for this Idempotency-Key"
+           *     } */
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /** @description Idempotency key reused with different data, or timestamp too old. */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /** @description Service temporarily unavailable. */
+      503: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+    };
+  };
+  delete_notification: {
+    parameters: {
+      query?: never;
+      header?: {
+        /**
+         * @description Optional unique identifier for safe request retries. Use a UUID or similar unique value. Same key with same request body will return cached response instead of creating duplicates.
+         * @example 550e8400-e29b-41d4-a716-446655440000
+         */
+        "Idempotency-Key"?: string | null;
+      };
+      path: {
+        /**
+         * @description Notification identifier
+         * @example ntf_EQy9R3G1q1uJFmWa3QgEde
+         */
+        id: components["schemas"]["NotificationId"];
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Notification deletion queued */
+      202: {
+        headers: {
+          /** @description True if response was cached */
+          "Idempotent-Replayed"?: string;
+          [name: string]: unknown;
+        };
+        content: {
+          /** @example {
+           *       "id": "ntf_EQy9R3G1q1uJFmWa3QgEde"
+           *     } */
+          "application/json": components["schemas"]["NotificationResponse"];
+        };
+      };
+      /** @description Notification not found. */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /** @example {
+           *       "error": "notification not found"
+           *     } */
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /** @description Idempotency key conflict - request still processing. */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /** @example {
+           *       "error": "a request is outstanding for this Idempotency-Key"
+           *     } */
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /** @description Idempotency key reused with different data. */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /** @example {
+           *       "error": "Idempotency-Key was already used"
+           *     } */
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /** @description Service temporarily unavailable. */
+      503: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /** @example {
+           *       "error": "failed to delete notification"
+           *     } */
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+    };
+  };
 }
