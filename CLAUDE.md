@@ -1,3 +1,3 @@
 # Code Standards
 
-- always run quality checks and tests before comitting
+- always run code formatter, quality checks, and tests before comitting
