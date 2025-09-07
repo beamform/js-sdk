@@ -3,7 +3,7 @@ import {
   createServerClient,
   DEFAULT_BASE_URL,
   type ServerClientConfig,
-} from "../src/server-client";
+} from "../../src/server/index";
 
 vi.mock("openapi-fetch");
 

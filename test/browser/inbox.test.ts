@@ -1,9 +1,8 @@
 import type { Client } from "openapi-fetch";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { createInboxMethods } from "../../src/inbox";
+import { createInboxMethods } from "../../src/browser/inbox";
 import type { ClientPaths } from "../../src/path-filters";
 
-// Mock client
 const mockClient = {
   GET: vi.fn(),
 } as unknown as Client<ClientPaths>;

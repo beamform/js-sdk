@@ -1,7 +1,7 @@
 import type { Client } from "openapi-fetch";
-import type { paths } from "./generated/schema";
-import type { ClientPaths } from "./path-filters";
-import { formatError } from "./utils";
+import type { paths } from "../generated/schema";
+import type { ClientPaths } from "../path-filters";
+import { formatError } from "../utils";
 
 type CurrentSessionResponse =
   paths["/v1/auth/session/current"]["get"]["responses"]["200"]["content"]["application/json"];

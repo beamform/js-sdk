@@ -3,7 +3,6 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { ServerPaths } from "../../src/path-filters";
 import { createServerAuthMethods } from "../../src/server/auth";
 
-// Mock client
 const mockClient = {
   POST: vi.fn(),
   GET: vi.fn(),

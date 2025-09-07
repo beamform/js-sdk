@@ -1,8 +1,8 @@
 import openApiClient from "openapi-fetch";
+import type { ClientPaths } from "../path-filters";
+import { formatError } from "../utils";
 import { type AuthMethods, createAuthMethods } from "./auth";
 import { createInboxMethods, type InboxMethods } from "./inbox";
-import type { ClientPaths } from "./path-filters";
-import { formatError } from "./utils";
 
 export interface ClientConfig {
   baseUrl?: string;

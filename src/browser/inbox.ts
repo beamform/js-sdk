@@ -1,7 +1,7 @@
 import type { Client } from "openapi-fetch";
-import type { paths } from "./generated/schema";
-import type { ClientPaths } from "./path-filters";
-import { formatError } from "./utils";
+import type { paths } from "../generated/schema";
+import type { ClientPaths } from "../path-filters";
+import { formatError } from "../utils";
 
 type InboxResponse =
   paths["/v1/inbox/current"]["get"]["responses"]["200"]["content"]["application/json"];

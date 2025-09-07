@@ -1,9 +1,8 @@
 import type { Client } from "openapi-fetch";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { createAuthMethods } from "../../src/auth";
+import { createAuthMethods } from "../../src/browser/auth";
 import type { ClientPaths } from "../../src/path-filters";
 
-// Mock client
 const mockClient = {
   GET: vi.fn(),
   DELETE: vi.fn(),

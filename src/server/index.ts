@@ -1,6 +1,6 @@
 import openApiClient from "openapi-fetch";
-import type { ServerPaths } from "./path-filters";
-import { createServerAuthMethods, type ServerAuthMethods } from "./server/auth";
+import type { ServerPaths } from "../path-filters";
+import { createServerAuthMethods, type ServerAuthMethods } from "./auth";
 
 interface ServerClientConfig {
   baseUrl?: string;
