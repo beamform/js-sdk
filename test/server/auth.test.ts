@@ -7,6 +7,8 @@ const mockClient = {
   POST: vi.fn(),
   GET: vi.fn(),
   PATCH: vi.fn(),
+  PUT: vi.fn(),
+  DELETE: vi.fn(),
 } as unknown as Client<ServerPaths>;
 
 describe("server auth", () => {
@@ -210,6 +212,79 @@ describe("server auth", () => {
           permission: "keys:read",
         })
       ).rejects.toThrow("Failed to check permission: Key not found");
+    });
+  });
+
+  describe("replaceKey", () => {
+    const serverAuthMethods = createAuthMethods(mockClient);
+
+    it("should call correct endpoint on success", async () => {
+      const keyId = "key_123";
+      const replaceData = {
+        name: "Replaced Key",
+        permissions: ["keys:read" as const, "keys:update" as const],
+        expiresAt: "2026-01-15T10:30:00Z",
+      };
+
+      mockClient.PUT = vi.fn().mockResolvedValue({
+        error: null,
+      });
+
+      await serverAuthMethods.replaceKey({ key_id: keyId, data: replaceData });
+
+      expect(mockClient.PUT).toHaveBeenCalledWith("/v1/auth/keys/{key_id}", {
+        params: { path: { key_id: keyId } },
+        body: replaceData,
+      });
+      expect(mockClient.PUT).toHaveBeenCalledTimes(1);
+    });
+
+    it("should throw formatted error when API returns error", async () => {
+      const apiError = { message: "Key not found" };
+
+      mockClient.PUT = vi.fn().mockResolvedValue({
+        data: null,
+        error: apiError,
+      });
+
+      await expect(
+        serverAuthMethods.replaceKey({
+          key_id: "nonexistent",
+          data: { name: "Replaced", permissions: ["keys:read" as const] },
+        })
+      ).rejects.toThrow("Failed to replace key: Key not found");
+    });
+  });
+
+  describe("deleteKey", () => {
+    const serverAuthMethods = createAuthMethods(mockClient);
+
+    it("should call correct endpoint on success", async () => {
+      const keyId = "key_123";
+
+      mockClient.DELETE = vi.fn().mockResolvedValue({
+        error: null,
+      });
+
+      await serverAuthMethods.deleteKey({ key_id: keyId });
+
+      expect(mockClient.DELETE).toHaveBeenCalledWith("/v1/auth/keys/{key_id}", {
+        params: { path: { key_id: keyId } },
+      });
+      expect(mockClient.DELETE).toHaveBeenCalledTimes(1);
+    });
+
+    it("should throw formatted error when API returns error", async () => {
+      const apiError = { message: "Key not found" };
+
+      mockClient.DELETE = vi.fn().mockResolvedValue({
+        data: null,
+        error: apiError,
+      });
+
+      await expect(serverAuthMethods.deleteKey({ key_id: "nonexistent" })).rejects.toThrow(
+        "Failed to delete key: Key not found"
+      );
     });
   });
 });

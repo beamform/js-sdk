@@ -31,11 +31,20 @@ type CheckPermissionParams = paths["/v1/auth/keys/{key_id}/check"]["get"]["param
 
 type CheckPermissionQuery = paths["/v1/auth/keys/{key_id}/check"]["get"]["parameters"]["query"];
 
+type ReplaceKeyRequest =
+  paths["/v1/auth/keys/{key_id}"]["put"]["requestBody"]["content"]["application/json"];
+
+type ReplaceKeyParams = paths["/v1/auth/keys/{key_id}"]["put"]["parameters"]["path"];
+
+type DeleteKeyParams = paths["/v1/auth/keys/{key_id}"]["delete"]["parameters"]["path"];
+
 export interface AuthMethods {
   createKey(params: { data: CreateKeyRequest }): Promise<CreateKeyResponse>;
   listKeys(params?: ListKeysParams): Promise<ListKeysResponse>;
   getKey(params: GetKeyParams): Promise<GetKeyResponse>;
   updateKey(params: UpdateKeyParams & { data: UpdateKeyRequest }): Promise<void>;
+  replaceKey(params: ReplaceKeyParams & { data: ReplaceKeyRequest }): Promise<void>;
+  deleteKey(params: DeleteKeyParams): Promise<void>;
   checkPermission(
     params: CheckPermissionParams & CheckPermissionQuery
   ): Promise<CheckPermissionResponse>;
@@ -93,6 +102,28 @@ export const createAuthMethods = (client: Client<ServerPaths>): AuthMethods => {
 
       if (error) {
         throw new Error(`Failed to update key: ${formatError(error)}`);
+      }
+    },
+
+    async replaceKey(params: ReplaceKeyParams & { data: ReplaceKeyRequest }): Promise<void> {
+      const { data, ...pathParams } = params;
+      const { error } = await client.PUT("/v1/auth/keys/{key_id}", {
+        params: { path: pathParams },
+        body: data,
+      });
+
+      if (error) {
+        throw new Error(`Failed to replace key: ${formatError(error)}`);
+      }
+    },
+
+    async deleteKey(params: DeleteKeyParams): Promise<void> {
+      const { error } = await client.DELETE("/v1/auth/keys/{key_id}", {
+        params: { path: params },
+      });
+
+      if (error) {
+        throw new Error(`Failed to delete key: ${formatError(error)}`);
       }
     },
 
