@@ -1,7 +1,11 @@
-# Audit OpenAPI Endpoint Wrappers
+---
+description: Dynamic audit of OpenAPI wrapper endpoint implementations
+argument-hint: [filter]
+allowed-tools: Bash(just generate:*), Read(*), Grep(*), Glob(*)
+model: claude-opus-4-1-20250805
+---
 
-**Name**: `/audit-endpoints`
-**Description**: Dynamic audit of OpenAPI wrapper endpoint implementations
+# Audit OpenAPI Endpoint Wrappers
 
 ## Usage
 
