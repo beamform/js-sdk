@@ -93,7 +93,7 @@ describe("auth", () => {
         error: null,
       });
 
-      const result = await authMethods.refreshSessionToken(refreshToken);
+      const result = await authMethods.refreshSessionToken({ refreshToken });
 
       expect(mockClient.POST).toHaveBeenCalledWith("/v1/auth/tokens/refresh", {
         body: { refreshToken },
@@ -110,7 +110,7 @@ describe("auth", () => {
         error: apiError,
       });
 
-      await expect(authMethods.refreshSessionToken("invalid_token")).rejects.toThrow(
+      await expect(authMethods.refreshSessionToken({ refreshToken: "invalid_token" })).rejects.toThrow(
         "Failed to refresh session token: Invalid refresh token"
       );
     });

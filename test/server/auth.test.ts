@@ -31,7 +31,7 @@ describe("server auth", () => {
         error: null,
       });
 
-      const result = await serverAuthMethods.createKey(requestData);
+      const result = await serverAuthMethods.createKey({ data: requestData });
 
       expect(mockClient.POST).toHaveBeenCalledWith("/v1/auth/keys", {
         body: requestData,
@@ -48,7 +48,7 @@ describe("server auth", () => {
         error: apiError,
       });
 
-      await expect(serverAuthMethods.createKey({ name: "Test", permissions: [] })).rejects.toThrow(
+      await expect(serverAuthMethods.createKey({ data: { name: "Test", permissions: [] } })).rejects.toThrow(
         "Failed to create key: Invalid permissions"
       );
     });
@@ -110,7 +110,7 @@ describe("server auth", () => {
         error: null,
       });
 
-      const result = await serverAuthMethods.getKey(keyId);
+      const result = await serverAuthMethods.getKey({ key_id: keyId });
 
       expect(mockClient.GET).toHaveBeenCalledWith("/v1/auth/keys/{key_id}", {
         params: { path: { key_id: keyId } },
@@ -127,7 +127,7 @@ describe("server auth", () => {
         error: apiError,
       });
 
-      await expect(serverAuthMethods.getKey("nonexistent")).rejects.toThrow(
+      await expect(serverAuthMethods.getKey({ key_id: "nonexistent" })).rejects.toThrow(
         "Failed to get key: Key not found"
       );
     });
@@ -144,7 +144,7 @@ describe("server auth", () => {
         error: null,
       });
 
-      await serverAuthMethods.updateKey(keyId, updateData);
+      await serverAuthMethods.updateKey({ key_id: keyId, data: updateData });
 
       expect(mockClient.PATCH).toHaveBeenCalledWith("/v1/auth/keys/{key_id}", {
         params: { path: { key_id: keyId } },
@@ -161,7 +161,7 @@ describe("server auth", () => {
         error: apiError,
       });
 
-      await expect(serverAuthMethods.updateKey("nonexistent", { name: "Updated" })).rejects.toThrow(
+      await expect(serverAuthMethods.updateKey({ key_id: "nonexistent", data: { name: "Updated" } })).rejects.toThrow(
         "Failed to update key: Key not found"
       );
     });

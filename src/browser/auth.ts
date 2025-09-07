@@ -12,7 +12,7 @@ type RefreshTokenResponse =
 export interface AuthMethods {
   getCurrentSession(): Promise<CurrentSessionResponse>;
   deleteCurrentSession(): Promise<void>;
-  refreshSessionToken(refreshToken: string): Promise<RefreshTokenResponse>;
+  refreshSessionToken(params: { refreshToken: string }): Promise<RefreshTokenResponse>;
 }
 
 export const createAuthMethods = (client: Client<ClientPaths>): AuthMethods => {
@@ -35,9 +35,9 @@ export const createAuthMethods = (client: Client<ClientPaths>): AuthMethods => {
       }
     },
 
-    async refreshSessionToken(refreshToken: string): Promise<RefreshTokenResponse> {
+    async refreshSessionToken(params: { refreshToken: string }): Promise<RefreshTokenResponse> {
       const { data, error } = await client.POST("/v1/auth/tokens/refresh", {
-        body: { refreshToken },
+        body: { refreshToken: params.refreshToken },
       });
 
       if (error) {

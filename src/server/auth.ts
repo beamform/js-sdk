@@ -12,24 +12,33 @@ type CreateKeyRequest =
 type ListKeysResponse =
   paths["/v1/auth/keys"]["get"]["responses"]["200"]["content"]["application/json"];
 
+type ListKeysParams = 
+  paths["/v1/auth/keys"]["get"]["parameters"]["path"];
+
 type GetKeyResponse =
   paths["/v1/auth/keys/{key_id}"]["get"]["responses"]["200"]["content"]["application/json"];
+
+type GetKeyParams =
+  paths["/v1/auth/keys/{key_id}"]["get"]["parameters"]["path"];
 
 type UpdateKeyRequest =
   paths["/v1/auth/keys/{key_id}"]["patch"]["requestBody"]["content"]["application/json"];
 
+type UpdateKeyParams =
+  paths["/v1/auth/keys/{key_id}"]["patch"]["parameters"]["path"];
+
 export interface ServerAuthMethods {
-  createKey(data: CreateKeyRequest): Promise<CreateKeyResponse>;
-  listKeys(cursor?: string | null, pageSize?: number): Promise<ListKeysResponse>;
-  getKey(keyId: string): Promise<GetKeyResponse>;
-  updateKey(keyId: string, data: UpdateKeyRequest): Promise<void>;
+  createKey(params: { data: CreateKeyRequest }): Promise<CreateKeyResponse>;
+  listKeys(params?: ListKeysParams): Promise<ListKeysResponse>;
+  getKey(params: GetKeyParams): Promise<GetKeyResponse>;
+  updateKey(params: UpdateKeyParams & { data: UpdateKeyRequest }): Promise<void>;
 }
 
 export const createServerAuthMethods = (client: Client<ServerPaths>): ServerAuthMethods => {
   return {
-    async createKey(data: CreateKeyRequest): Promise<CreateKeyResponse> {
+    async createKey(params: { data: CreateKeyRequest }): Promise<CreateKeyResponse> {
       const { data: responseData, error } = await client.POST("/v1/auth/keys", {
-        body: data,
+        body: params.data,
       });
 
       if (error) {
@@ -39,12 +48,12 @@ export const createServerAuthMethods = (client: Client<ServerPaths>): ServerAuth
       return responseData;
     },
 
-    async listKeys(cursor?: string | null, pageSize?: number): Promise<ListKeysResponse> {
+    async listKeys(params?: ListKeysParams): Promise<ListKeysResponse> {
       const { data, error } = await client.GET("/v1/auth/keys", {
         params: {
           path: {
-            cursor: cursor ?? null,
-            pageSize: pageSize ?? 20,
+            cursor: params?.cursor ?? null,
+            pageSize: params?.pageSize ?? 20,
           },
         },
       });
@@ -56,9 +65,9 @@ export const createServerAuthMethods = (client: Client<ServerPaths>): ServerAuth
       return data;
     },
 
-    async getKey(keyId: string): Promise<GetKeyResponse> {
+    async getKey(params: GetKeyParams): Promise<GetKeyResponse> {
       const { data, error } = await client.GET("/v1/auth/keys/{key_id}", {
-        params: { path: { key_id: keyId } },
+        params: { path: params },
       });
 
       if (error) {
@@ -68,9 +77,10 @@ export const createServerAuthMethods = (client: Client<ServerPaths>): ServerAuth
       return data;
     },
 
-    async updateKey(keyId: string, data: UpdateKeyRequest): Promise<void> {
+    async updateKey(params: UpdateKeyParams & { data: UpdateKeyRequest }): Promise<void> {
+      const { data, ...pathParams } = params;
       const { error } = await client.PATCH("/v1/auth/keys/{key_id}", {
-        params: { path: { key_id: keyId } },
+        params: { path: pathParams },
         body: data,
       });
 
