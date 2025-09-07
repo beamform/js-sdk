@@ -7,23 +7,32 @@ import {
 
 vi.mock("openapi-fetch");
 
-describe("createServerClient - Client Creation", () => {
+describe("createServerClient", () => {
   let mockOpenApiClient: ReturnType<typeof vi.fn>;
+  let mockRawClient: {
+    GET: ReturnType<typeof vi.fn>;
+    POST: ReturnType<typeof vi.fn>;
+    PATCH: ReturnType<typeof vi.fn>;
+    DELETE: ReturnType<typeof vi.fn>;
+  };
 
   beforeEach(async () => {
     vi.clearAllMocks();
     const openApiFetch = await import("openapi-fetch");
     mockOpenApiClient = vi.mocked(openApiFetch.default);
-    mockOpenApiClient.mockReturnValue({
+
+    mockRawClient = {
       GET: vi.fn(),
       POST: vi.fn(),
-      PUT: vi.fn(),
+      PATCH: vi.fn(),
       DELETE: vi.fn(),
-    });
+    };
+
+    mockOpenApiClient.mockReturnValue(mockRawClient);
   });
 
-  describe("Creates client with required apiKey", () => {
-    it("should create client successfully with minimal config", () => {
+  describe("client creation", () => {
+    it("should create client with wrapper methods", () => {
       const config: ServerClientConfig = {
         apiKey: "sk_test_key",
       };
@@ -31,9 +40,12 @@ describe("createServerClient - Client Creation", () => {
       const client = createServerClient(config);
 
       expect(client).toBeDefined();
+      expect(client.createKey).toBeInstanceOf(Function);
+      expect(client.listKeys).toBeInstanceOf(Function);
+      expect(client.getKey).toBeInstanceOf(Function);
       expect(mockOpenApiClient).toHaveBeenCalledTimes(1);
       expect(mockOpenApiClient).toHaveBeenCalledWith({
-        baseUrl: expect.any(String),
+        baseUrl: DEFAULT_BASE_URL,
         headers: {
           Authorization: "Bearer sk_test_key",
         },
@@ -41,8 +53,8 @@ describe("createServerClient - Client Creation", () => {
     });
   });
 
-  describe("Uses default baseUrl when not provided", () => {
-    it("should use the exported DEFAULT_BASE_URL", () => {
+  describe("configuration", () => {
+    it("should use default baseUrl when not provided", () => {
       const config: ServerClientConfig = {
         apiKey: "sk_test_key",
       };
@@ -55,9 +67,7 @@ describe("createServerClient - Client Creation", () => {
         })
       );
     });
-  });
 
-  describe("Uses custom baseUrl when provided", () => {
     it("should respect custom baseUrl in config", () => {
       const config: ServerClientConfig = {
         apiKey: "sk_test_key",
@@ -72,9 +82,7 @@ describe("createServerClient - Client Creation", () => {
         })
       );
     });
-  });
 
-  describe("Authentication Headers", () => {
     it("should set Authorization header with Bearer prefix", () => {
       const config: ServerClientConfig = {
         apiKey: "sk_test_12345",
@@ -83,32 +91,30 @@ describe("createServerClient - Client Creation", () => {
       createServerClient(config);
 
       expect(mockOpenApiClient).toHaveBeenCalledWith({
-        baseUrl: expect.any(String),
+        baseUrl: DEFAULT_BASE_URL,
         headers: {
           Authorization: "Bearer sk_test_12345",
         },
       });
     });
+  });
 
-    it("should work with different apiKey formats", () => {
-      const testCases = [
-        "sk_test_short",
-        "sk_live_very_long_api_key_with_underscores_and_numbers_123456789",
-        "sk_test_with-dashes-and_underscores_123",
-      ];
+  describe("wrapper functionality", () => {
+    it("should call underlying auth methods correctly", async () => {
+      const config: ServerClientConfig = {
+        apiKey: "sk_test_key",
+      };
 
-      testCases.forEach((apiKey) => {
-        vi.clearAllMocks();
+      const mockKeyData = { keyId: "key_123", name: "Test Key" };
+      mockRawClient.POST.mockResolvedValue({ data: mockKeyData, error: null });
 
-        createServerClient({ apiKey });
+      const client = createServerClient(config);
+      const result = await client.createKey({ name: "Test Key", permissions: ["read"] });
 
-        expect(mockOpenApiClient).toHaveBeenCalledWith({
-          baseUrl: expect.any(String),
-          headers: {
-            Authorization: `Bearer ${apiKey}`,
-          },
-        });
+      expect(mockRawClient.POST).toHaveBeenCalledWith("/v1/auth/keys", {
+        body: { name: "Test Key", permissions: ["read"] },
       });
+      expect(result).toEqual(mockKeyData);
     });
   });
 });

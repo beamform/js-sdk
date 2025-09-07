@@ -1,10 +1,13 @@
-import openApiClient, { type Client } from "openapi-fetch";
+import openApiClient from "openapi-fetch";
 import type { ServerPaths } from "./path-filters";
+import { createServerAuthMethods, type ServerAuthMethods } from "./server/auth";
 
 interface ServerClientConfig {
   baseUrl?: string;
   apiKey: string;
 }
+
+export interface BeamformServerClient extends ServerAuthMethods {}
 
 const DEFAULT_BASE_URL = "https://api.beamform.com";
 
@@ -23,26 +26,31 @@ const DEFAULT_BASE_URL = "https://api.beamform.com";
  *
  * const client = createServerClient({ apiKey: 'sk_your_api_key' })
  *
- * // Create a notification
- * const { data } = await client.POST('/v1/notifications', {
- *   body: { subject: 'Hello', content: 'World', recipients: ['user_123'] }
- * })
+ * // Create an API key
+ * const key = await client.createKey({ name: 'My Key', permissions: ['read'] })
  *
- * // Create a session for a recipient
- * const { data: session } = await client.POST('/v1/auth/recipients/{recipient_id}/sessions', {
- *   params: { path: { recipient_id: 'user_123' } }
- * })
+ * // List API keys
+ * const keys = await client.listKeys()
+ *
+ * // Get an API key
+ * const key = await client.getKey('key_123')
  * ```
  */
-const createServerClient = (config: ServerClientConfig): Client<ServerPaths> => {
+const createServerClient = (config: ServerClientConfig): BeamformServerClient => {
   const baseUrl = config.baseUrl ?? DEFAULT_BASE_URL;
 
-  return openApiClient<ServerPaths>({
+  const rawClient = openApiClient<ServerPaths>({
     baseUrl,
     headers: {
       Authorization: `Bearer ${config.apiKey}`,
     },
   });
+
+  const authMethods = createServerAuthMethods(rawClient);
+
+  return {
+    ...authMethods,
+  };
 };
 
 export { createServerClient, DEFAULT_BASE_URL };
