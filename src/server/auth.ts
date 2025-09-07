@@ -24,11 +24,21 @@ type UpdateKeyRequest =
 
 type UpdateKeyParams = paths["/v1/auth/keys/{key_id}"]["patch"]["parameters"]["path"];
 
+type CheckPermissionResponse =
+  paths["/v1/auth/keys/{key_id}/check"]["get"]["responses"]["200"]["content"]["application/json"];
+
+type CheckPermissionParams = paths["/v1/auth/keys/{key_id}/check"]["get"]["parameters"]["path"];
+
+type CheckPermissionQuery = paths["/v1/auth/keys/{key_id}/check"]["get"]["parameters"]["query"];
+
 export interface AuthMethods {
   createKey(params: { data: CreateKeyRequest }): Promise<CreateKeyResponse>;
   listKeys(params?: ListKeysParams): Promise<ListKeysResponse>;
   getKey(params: GetKeyParams): Promise<GetKeyResponse>;
   updateKey(params: UpdateKeyParams & { data: UpdateKeyRequest }): Promise<void>;
+  checkPermission(
+    params: CheckPermissionParams & CheckPermissionQuery
+  ): Promise<CheckPermissionResponse>;
 }
 
 export const createAuthMethods = (client: Client<ServerPaths>): AuthMethods => {
@@ -84,6 +94,24 @@ export const createAuthMethods = (client: Client<ServerPaths>): AuthMethods => {
       if (error) {
         throw new Error(`Failed to update key: ${formatError(error)}`);
       }
+    },
+
+    async checkPermission(
+      params: CheckPermissionParams & CheckPermissionQuery
+    ): Promise<CheckPermissionResponse> {
+      const { key_id, permission } = params;
+      const { data, error } = await client.GET("/v1/auth/keys/{key_id}/check", {
+        params: {
+          path: { key_id },
+          query: { permission },
+        },
+      });
+
+      if (error) {
+        throw new Error(`Failed to check permission: ${formatError(error)}`);
+      }
+
+      return data;
     },
   };
 };

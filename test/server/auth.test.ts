@@ -166,4 +166,50 @@ describe("server auth", () => {
       ).rejects.toThrow("Failed to update key: Key not found");
     });
   });
+
+  describe("checkPermission", () => {
+    const serverAuthMethods = createAuthMethods(mockClient);
+
+    it("should call correct endpoint and return permission check result", async () => {
+      const keyId = "key_123";
+      const mockResponseData = {
+        hasPermission: true,
+      };
+
+      mockClient.GET = vi.fn().mockResolvedValue({
+        data: mockResponseData,
+        error: null,
+      });
+
+      const result = await serverAuthMethods.checkPermission({
+        key_id: keyId,
+        permission: "keys:read",
+      });
+
+      expect(mockClient.GET).toHaveBeenCalledWith("/v1/auth/keys/{key_id}/check", {
+        params: {
+          path: { key_id: keyId },
+          query: { permission: "keys:read" },
+        },
+      });
+      expect(mockClient.GET).toHaveBeenCalledTimes(1);
+      expect(result).toEqual(mockResponseData);
+    });
+
+    it("should throw formatted error when API returns error", async () => {
+      const apiError = { message: "Key not found" };
+
+      mockClient.GET = vi.fn().mockResolvedValue({
+        data: null,
+        error: apiError,
+      });
+
+      await expect(
+        serverAuthMethods.checkPermission({
+          key_id: "nonexistent",
+          permission: "keys:read",
+        })
+      ).rejects.toThrow("Failed to check permission: Key not found");
+    });
+  });
 });
