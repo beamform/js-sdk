@@ -1,11 +1,12 @@
 import type { Client } from "openapi-fetch";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { ServerPaths } from "../../src/path-filters";
-import { createServerAuthMethods } from "../../src/server-auth";
+import { createServerAuthMethods } from "../../src/server/auth";
 
 // Mock client
 const mockClient = {
   POST: vi.fn(),
+  GET: vi.fn(),
 } as unknown as Client<ServerPaths>;
 
 describe("server auth", () => {
@@ -49,6 +50,45 @@ describe("server auth", () => {
 
       await expect(serverAuthMethods.createKey({ name: "Test", permissions: [] })).rejects.toThrow(
         "Failed to create key: Invalid permissions"
+      );
+    });
+  });
+
+  describe("listKeys", () => {
+    const serverAuthMethods = createServerAuthMethods(mockClient);
+
+    it("should call correct endpoint and return data on success", async () => {
+      const mockKeysData = {
+        keys: [
+          { keyId: "key_1", name: "Key 1", permissions: ["read"] },
+          { keyId: "key_2", name: "Key 2", permissions: ["write"] },
+        ],
+      };
+
+      mockClient.GET = vi.fn().mockResolvedValue({
+        data: mockKeysData,
+        error: null,
+      });
+
+      const result = await serverAuthMethods.listKeys();
+
+      expect(mockClient.GET).toHaveBeenCalledWith("/v1/auth/keys", {
+        params: { path: { cursor: null, pageSize: 20 } },
+      });
+      expect(mockClient.GET).toHaveBeenCalledTimes(1);
+      expect(result).toEqual(mockKeysData);
+    });
+
+    it("should throw formatted error when API returns error", async () => {
+      const apiError = { message: "Unauthorized" };
+
+      mockClient.GET = vi.fn().mockResolvedValue({
+        data: null,
+        error: apiError,
+      });
+
+      await expect(serverAuthMethods.listKeys()).rejects.toThrow(
+        "Failed to list keys: Unauthorized"
       );
     });
   });
