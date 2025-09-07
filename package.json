@@ -22,7 +22,7 @@
     "dev": "tsup --watch",
     "generate:types": "openapi-typescript ./openapi.json -o ./src/generated/schema.d.ts",
     "lint": "biome check",
-    "format": "biome format --write && biome check --write",
+    "format": "biome check --write",
     "pretest": "pnpm generate:types",
     "test": "vitest run",
     "pretest:watch": "pnpm generate:types",

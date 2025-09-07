@@ -431,7 +431,7 @@
           "cursor": {
             "description": "Optional cursor for pagination - the last API key ID from the previous page",
             "example": "key_01HQXYZ9ABC124DEF456GHJ",
-            "type": "string"
+            "type": ["string", "null"]
           },
           "pageSize": {
             "description": "Page size (default: 50, max: 100)",
@@ -467,16 +467,17 @@
         "description": "Query parameters for listing sessions",
         "properties": {
           "cursor": {
-            "description": "Cursor for pagination",
+            "description": "Optional cursor for pagination",
             "example": "ses_01HM4X5N9JKQRT8WVYZ2B6EP",
-            "type": ["string", "null"]
+            "type": "string"
           },
           "pageSize": {
-            "description": "Number of results per page (1-100, default: 50)",
-            "example": 50,
+            "description": "Number of results per page (1-100, default: 50 via `default_page_size` function)",
+            "example": 20,
             "format": "int32",
-            "minimum": 0,
-            "type": ["integer", "null"]
+            "maximum": 100,
+            "minimum": 1,
+            "type": "integer"
           }
         },
         "type": "object"
@@ -812,28 +813,24 @@
         "parameters": [
           {
             "description": "Optional cursor for pagination - the last API key ID from the previous page",
-            "in": "path",
+            "example": "key_01HQXYZ9ABC124DEF456GHJ",
+            "in": "query",
             "name": "cursor",
-            "required": true,
+            "required": false,
             "schema": {
-              "oneOf": [
-                {
-                  "type": "null"
-                },
-                {
-                  "$ref": "#/components/schemas/KeyId"
-                }
-              ]
+              "$ref": "#/components/schemas/KeyId"
             }
           },
           {
             "description": "Page size (default: 50, max: 100)",
-            "in": "path",
+            "example": 20,
+            "in": "query",
             "name": "pageSize",
             "required": true,
             "schema": {
               "format": "int32",
-              "minimum": 0,
+              "maximum": 100,
+              "minimum": 1,
               "type": "integer"
             }
           }
@@ -1317,23 +1314,26 @@
             }
           },
           {
-            "description": "Cursor for pagination",
-            "in": "path",
+            "description": "Optional cursor for pagination - the last session ID from the previous page",
+            "example": "ses_01HM4X5N9JKQRT8WVYZ2B6EP",
+            "in": "query",
             "name": "cursor",
-            "required": true,
+            "required": false,
             "schema": {
-              "type": ["string", "null"]
+              "type": "string"
             }
           },
           {
-            "description": "Number of results per page (1-100, default: 50)",
-            "in": "path",
+            "description": "Page size (default: 50 via `default_page_size` function, max: 100)",
+            "example": 20,
+            "in": "query",
             "name": "pageSize",
             "required": true,
             "schema": {
               "format": "int32",
-              "minimum": 0,
-              "type": ["integer", "null"]
+              "maximum": 100,
+              "minimum": 1,
+              "type": "integer"
             }
           }
         ],

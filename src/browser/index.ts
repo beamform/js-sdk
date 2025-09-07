@@ -1,6 +1,8 @@
-import openApiClient, { type Client } from "openapi-fetch";
-import type { ClientPaths } from "./path-filters";
-import { formatError } from "./utils";
+import openApiClient from "openapi-fetch";
+import type { ClientPaths } from "../path-filters";
+import { formatError } from "../utils";
+import { type AuthMethods, createAuthMethods } from "./auth";
+import { createInboxMethods, type InboxMethods } from "./inbox";
 
 export interface ClientConfig {
   baseUrl?: string;
@@ -22,6 +24,8 @@ let baseUrl: string = "https://api.beamform.com";
 let customHeaders: Record<string, string> = {};
 let autoRefresh: boolean = true;
 
+export interface BeamformClient extends InboxMethods, AuthMethods {}
+
 /**
  * Create an authenticated Beamform client with automatic token management.
  *
@@ -34,13 +38,16 @@ let autoRefresh: boolean = true;
  *   headers: { 'Custom-Header': 'value' }
  * })
  *
- * const { data: inbox } = await client.GET('/v1/inbox/current')
+ * // Use clean wrapper methods
+ * const inbox = await client.getCurrentInbox()
+ * const session = await client.getCurrentSession()
+ * await client.deleteCurrentSession()
  * ```
  */
 const createClient = async (
   refreshToken: string,
   config: ClientConfig = {}
-): Promise<Client<ClientPaths>> => {
+): Promise<BeamformClient> => {
   baseUrl = config.baseUrl ?? "https://api.beamform.com";
   customHeaders = config.headers ?? {};
   autoRefresh = config.autoRefresh ?? true;
@@ -51,7 +58,7 @@ const createClient = async (
     scheduleTokenRefresh();
   }
 
-  return openApiClient<ClientPaths>({
+  const rawClient = openApiClient<ClientPaths>({
     baseUrl,
     headers: customHeaders,
     fetch: async (input: Request | string | URL, init?: RequestInit) => {
@@ -85,6 +92,14 @@ const createClient = async (
       });
     },
   });
+
+  const inboxMethods = createInboxMethods(rawClient);
+  const authMethods = createAuthMethods(rawClient);
+
+  return {
+    ...inboxMethods,
+    ...authMethods,
+  };
 };
 
 const getValidSessionToken = async (): Promise<string> => {
