@@ -15,10 +15,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "title",
-          "link"
-        ],
+        "required": ["title", "link"],
         "type": "object"
       },
       "ApiError": {
@@ -38,10 +35,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "message",
-          "code"
-        ],
+        "required": ["message", "code"],
         "type": "object"
       },
       "ApiKey": {
@@ -58,9 +52,7 @@
             "description": "The permission to check"
           }
         },
-        "required": [
-          "permission"
-        ],
+        "required": ["permission"],
         "type": "object"
       },
       "CheckPermissionResponse": {
@@ -72,9 +64,7 @@
             "type": "boolean"
           }
         },
-        "required": [
-          "hasPermission"
-        ],
+        "required": ["hasPermission"],
         "type": "object"
       },
       "Cluster": {
@@ -111,13 +101,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "id",
-          "subject",
-          "content",
-          "interest",
-          "notifications"
-        ],
+        "required": ["id", "subject", "content", "interest", "notifications"],
         "type": "object"
       },
       "CreateKeyRequest": {
@@ -146,10 +130,7 @@
             "type": "array"
           }
         },
-        "required": [
-          "name",
-          "permissions"
-        ],
+        "required": ["name", "permissions"],
         "type": "object"
       },
       "CreateKeyResponse": {
@@ -166,10 +147,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "keyId",
-          "keySecret"
-        ],
+        "required": ["keyId", "keySecret"],
         "type": "object"
       },
       "CreateRequest": {
@@ -222,11 +200,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "subject",
-          "content",
-          "recipients"
-        ],
+        "required": ["subject", "content", "recipients"],
         "type": "object"
       },
       "CreateSessionRequest": {
@@ -265,11 +239,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "sessionId",
-          "refreshToken",
-          "expiresAt"
-        ],
+        "required": ["sessionId", "refreshToken", "expiresAt"],
         "type": "object"
       },
       "CurrentSessionResponse": {
@@ -293,11 +263,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "sessionId",
-          "createdAt",
-          "expiresAt"
-        ],
+        "required": ["sessionId", "createdAt", "expiresAt"],
         "type": "object"
       },
       "ErrorResponse": {
@@ -309,9 +275,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "error"
-        ],
+        "required": ["error"],
         "type": "object"
       },
       "FeedOptions": {
@@ -323,10 +287,7 @@
             "format": "int32",
             "maximum": 500,
             "minimum": 1,
-            "type": [
-              "integer",
-              "null"
-            ]
+            "type": ["integer", "null"]
           }
         },
         "type": "object"
@@ -342,9 +303,7 @@
             "type": "array"
           }
         },
-        "required": [
-          "items"
-        ],
+        "required": ["items"],
         "type": "object"
       },
       "InboxItem": {
@@ -359,15 +318,11 @@
               {
                 "properties": {
                   "type": {
-                    "enum": [
-                      "notification"
-                    ],
+                    "enum": ["notification"],
                     "type": "string"
                   }
                 },
-                "required": [
-                  "type"
-                ],
+                "required": ["type"],
                 "type": "object"
               }
             ],
@@ -382,15 +337,11 @@
               {
                 "properties": {
                   "type": {
-                    "enum": [
-                      "cluster"
-                    ],
+                    "enum": ["cluster"],
                     "type": "string"
                   }
                 },
-                "required": [
-                  "type"
-                ],
+                "required": ["type"],
                 "type": "object"
               }
             ],
@@ -509,9 +460,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "keys"
-        ],
+        "required": ["keys"],
         "type": "object"
       },
       "ListSessionsParams": {
@@ -520,20 +469,14 @@
           "cursor": {
             "description": "Cursor for pagination",
             "example": "ses_01HM4X5N9JKQRT8WVYZ2B6EP",
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "pageSize": {
             "description": "Number of results per page (1-100, default: 50)",
             "example": 50,
             "format": "int32",
             "minimum": 0,
-            "type": [
-              "integer",
-              "null"
-            ]
+            "type": ["integer", "null"]
           }
         },
         "type": "object"
@@ -543,10 +486,7 @@
         "properties": {
           "nextCursor": {
             "description": "Cursor for next page (if more results exist)",
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "sessions": {
             "description": "List of sessions for the recipient",
@@ -556,9 +496,7 @@
             "type": "array"
           }
         },
-        "required": [
-          "sessions"
-        ],
+        "required": ["sessions"],
         "type": "object"
       },
       "Notification": {
@@ -604,13 +542,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "id",
-          "subject",
-          "content",
-          "interest",
-          "occurredAt"
-        ],
+        "required": ["id", "subject", "content", "interest", "occurredAt"],
         "type": "object"
       },
       "NotificationId": {
@@ -628,9 +560,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "id"
-        ],
+        "required": ["id"],
         "type": "object"
       },
       "Permission": {
@@ -693,9 +623,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "refreshToken"
-        ],
+        "required": ["refreshToken"],
         "type": "object"
       },
       "RefreshTokenResponse": {
@@ -718,11 +646,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "sessionToken",
-          "refreshToken",
-          "expiresAt"
-        ],
+        "required": ["sessionToken", "refreshToken", "expiresAt"],
         "type": "object"
       },
       "ReplaceKeyRequest": {
@@ -732,10 +656,7 @@
             "description": "New expiration time (None means key never expires)",
             "example": "2026-01-15T10:30:00Z",
             "format": "date-time",
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "name": {
             "description": "New name for the API key",
@@ -754,10 +675,7 @@
             "type": "array"
           }
         },
-        "required": [
-          "name",
-          "permissions"
-        ],
+        "required": ["name", "permissions"],
         "type": "object"
       },
       "SessionId": {
@@ -787,11 +705,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "sessionId",
-          "createdAt",
-          "expiresAt"
-        ],
+        "required": ["sessionId", "createdAt", "expiresAt"],
         "type": "object"
       },
       "SessionToken": {
@@ -807,20 +721,14 @@
             "description": "Optional new expiration time\n- Not provided: do not update expiration\n- `null`: clear expiration (key never expires)\n- ISO 8601 date: set new expiration",
             "example": "2026-01-15T10:30:00Z",
             "format": "date-time",
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "name": {
             "description": "Optional new name for the API key\n- Not provided: do not update name\n- Provided: set new name",
             "example": "Updated Production API Key",
             "maxLength": 255,
             "minLength": 1,
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "permissions": {
             "description": "Optional new permissions\n- Not provided: do not update permissions\n- Provided: replace all permissions with new set",
@@ -829,10 +737,7 @@
             },
             "maxItems": 12,
             "minItems": 1,
-            "type": [
-              "array",
-              "null"
-            ]
+            "type": ["array", "null"]
           }
         },
         "type": "object"
@@ -844,10 +749,7 @@
             "description": "Email address",
             "example": "john.doe@example.com",
             "format": "email",
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "id": {
             "description": "User identifier",
@@ -861,10 +763,7 @@
             "example": "John Doe",
             "maxLength": 1024,
             "minLength": 1,
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "timezone": {
             "description": "Timezone ([IANA format](https://www.iana.org/time-zones))",
@@ -872,9 +771,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "id"
-        ],
+        "required": ["id"],
         "type": "object"
       }
     },
@@ -954,10 +851,7 @@
                       "keyId": "key_01HQXYZ9ABC123DEF456GHI",
                       "keyPrefix": "sk_1234",
                       "name": "Production API Key",
-                      "permissions": [
-                        "notifications:create",
-                        "keys:read"
-                      ],
+                      "permissions": ["notifications:create", "keys:read"],
                       "updatedAt": "2024-01-15T10:30:00Z"
                     }
                   ],
@@ -977,9 +871,7 @@
           }
         ],
         "summary": "List API keys",
-        "tags": [
-          "auth"
-        ]
+        "tags": ["auth"]
       },
       "post": {
         "description": "Creates a new API key with specified permissions and metadata.",
@@ -1046,9 +938,7 @@
           }
         ],
         "summary": "Create API key",
-        "tags": [
-          "auth"
-        ]
+        "tags": ["auth"]
       }
     },
     "/v1/auth/keys/{key_id}": {
@@ -1090,9 +980,7 @@
           }
         ],
         "summary": "Delete API key",
-        "tags": [
-          "auth"
-        ]
+        "tags": ["auth"]
       },
       "get": {
         "description": "Retrieves details for a specific API key (without the secret).",
@@ -1119,10 +1007,7 @@
                   "keyPrefix": "sk_1234",
                   "lastUsedAt": "2024-01-15T14:22:00Z",
                   "name": "Production API Key",
-                  "permissions": [
-                    "notifications:create",
-                    "keys:read"
-                  ],
+                  "permissions": ["notifications:create", "keys:read"],
                   "updatedAt": "2024-01-15T10:30:00Z"
                 },
                 "schema": {
@@ -1152,9 +1037,7 @@
           }
         ],
         "summary": "Get API key",
-        "tags": [
-          "auth"
-        ]
+        "tags": ["auth"]
       },
       "patch": {
         "description": "Partially updates API key metadata and permissions using JSON Merge Patch semantics (RFC 7396). Only provided fields are updated, omitted fields remain unchanged. For expires_at: omit to keep current value, set to null to clear expiration, or provide ISO 8601 date to set new expiration. See: https://tools.ietf.org/html/rfc7396",
@@ -1234,9 +1117,7 @@
           }
         ],
         "summary": "Update API key",
-        "tags": [
-          "auth"
-        ]
+        "tags": ["auth"]
       },
       "put": {
         "description": "Completely replaces an API key with new metadata and permissions using PUT semantics. All fields are required and will overwrite the existing values. Use PATCH /keys/{key_id} for partial updates that only modify specified fields.",
@@ -1316,9 +1197,7 @@
           }
         ],
         "summary": "Replace API key",
-        "tags": [
-          "auth"
-        ]
+        "tags": ["auth"]
       }
     },
     "/v1/auth/keys/{key_id}/check": {
@@ -1391,9 +1270,7 @@
           }
         ],
         "summary": "Check permission",
-        "tags": [
-          "auth"
-        ]
+        "tags": ["auth"]
       }
     },
     "/v1/auth/recipients/{recipient_id}/sessions": {
@@ -1423,9 +1300,7 @@
           }
         ],
         "summary": "Delete all recipient sessions",
-        "tags": [
-          "sessions"
-        ]
+        "tags": ["sessions"]
       },
       "get": {
         "description": "Lists all active sessions for the specified recipient.",
@@ -1447,10 +1322,7 @@
             "name": "cursor",
             "required": true,
             "schema": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             }
           },
           {
@@ -1461,10 +1333,7 @@
             "schema": {
               "format": "int32",
               "minimum": 0,
-              "type": [
-                "integer",
-                "null"
-              ]
+              "type": ["integer", "null"]
             }
           }
         ],
@@ -1495,9 +1364,7 @@
           }
         ],
         "summary": "List recipient sessions",
-        "tags": [
-          "sessions"
-        ]
+        "tags": ["sessions"]
       },
       "post": {
         "description": "Creates a new session for a recipient with optional custom configuration parameters.",
@@ -1575,9 +1442,7 @@
           }
         ],
         "summary": "Create recipient session",
-        "tags": [
-          "sessions"
-        ]
+        "tags": ["sessions"]
       }
     },
     "/v1/auth/recipients/{recipient_id}/sessions/{session_id}": {
@@ -1629,9 +1494,7 @@
           }
         ],
         "summary": "Delete session",
-        "tags": [
-          "sessions"
-        ]
+        "tags": ["sessions"]
       },
       "get": {
         "description": "Retrieves details for a specific recipient session.",
@@ -1693,9 +1556,7 @@
           }
         ],
         "summary": "Get session details",
-        "tags": [
-          "sessions"
-        ]
+        "tags": ["sessions"]
       }
     },
     "/v1/auth/session/current": {
@@ -1726,9 +1587,7 @@
           }
         ],
         "summary": "Delete current session (logout)",
-        "tags": [
-          "current-session"
-        ]
+        "tags": ["current-session"]
       },
       "get": {
         "description": "Retrieves details about the current session using the session token.",
@@ -1769,9 +1628,7 @@
           }
         ],
         "summary": "Get current session",
-        "tags": [
-          "current-session"
-        ]
+        "tags": ["current-session"]
       }
     },
     "/v1/auth/tokens/refresh": {
@@ -1820,9 +1677,7 @@
           }
         },
         "summary": "Refresh session token",
-        "tags": [
-          "tokens"
-        ]
+        "tags": ["tokens"]
       }
     },
     "/v1/inbox/current": {
@@ -1936,9 +1791,7 @@
           }
         ],
         "summary": "Get current user's inbox",
-        "tags": [
-          "inbox"
-        ]
+        "tags": ["inbox"]
       }
     },
     "/v1/inbox/recipients/{recipient_id}": {
@@ -2062,9 +1915,7 @@
           }
         ],
         "summary": "Get inbox for a specific recipient",
-        "tags": [
-          "inbox"
-        ]
+        "tags": ["inbox"]
       }
     },
     "/v1/notifications": {
@@ -2079,10 +1930,7 @@
             "name": "Idempotency-Key",
             "required": false,
             "schema": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             }
           }
         ],
@@ -2127,9 +1975,7 @@
                   "summary": "Basic notification",
                   "value": {
                     "content": "Click the link below to reset your password. This link expires in 24 hours.",
-                    "recipients": [
-                      "user_123"
-                    ],
+                    "recipients": ["user_123"],
                     "subject": "Password Reset Request"
                   }
                 },
@@ -2144,9 +1990,7 @@
                       }
                     ],
                     "content": "Your order #12345 has been shipped and will arrive in 2-3 business days.",
-                    "recipients": [
-                      "user_456"
-                    ],
+                    "recipients": ["user_456"],
                     "subject": "Order Shipped"
                   }
                 }
@@ -2266,9 +2110,7 @@
           }
         ],
         "summary": "Create notification",
-        "tags": [
-          "notifications"
-        ]
+        "tags": ["notifications"]
       }
     },
     "/v1/notifications/{id}": {
@@ -2293,10 +2135,7 @@
             "name": "Idempotency-Key",
             "required": false,
             "schema": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             }
           }
         ],
@@ -2381,9 +2220,7 @@
           }
         ],
         "summary": "Delete notification",
-        "tags": [
-          "notifications"
-        ]
+        "tags": ["notifications"]
       }
     }
   },
