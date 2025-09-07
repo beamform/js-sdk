@@ -9,9 +9,6 @@ type CurrentSessionResponse =
 type RefreshTokenResponse =
   paths["/v1/auth/tokens/refresh"]["post"]["responses"]["200"]["content"]["application/json"];
 
-type RefreshTokenRequest =
-  paths["/v1/auth/tokens/refresh"]["post"]["requestBody"]["content"]["application/json"];
-
 export interface AuthMethods {
   getCurrentSession(): Promise<CurrentSessionResponse>;
   deleteCurrentSession(): Promise<void>;
