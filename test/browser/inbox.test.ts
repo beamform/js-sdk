@@ -15,7 +15,7 @@ describe("inbox", () => {
   describe("getCurrentInbox", () => {
     const inboxMethods = createInboxMethods(mockClient);
 
-    it("should call correct endpoint and return data on success", async () => {
+    it("should call correct endpoint and return data on success without params", async () => {
       const mockInboxData = { items: [{ id: "notif_123" }] };
 
       mockClient.GET = vi.fn().mockResolvedValue({
@@ -25,7 +25,32 @@ describe("inbox", () => {
 
       const result = await inboxMethods.getCurrentInbox();
 
-      expect(mockClient.GET).toHaveBeenCalledWith("/v1/inbox/current");
+      expect(mockClient.GET).toHaveBeenCalledWith("/v1/inbox/current", {
+        params: { query: {} },
+      });
+      expect(mockClient.GET).toHaveBeenCalledTimes(1);
+      expect(result).toEqual(mockInboxData);
+    });
+
+    it("should call correct endpoint with limit parameter", async () => {
+      const mockInboxData = {
+        items: [
+          { id: "notif_123", subject: "Test Notification", content: "Test content" },
+          { id: "notif_456", subject: "Another Notification", content: "More content" },
+        ],
+      };
+      const limit = 20;
+
+      mockClient.GET = vi.fn().mockResolvedValue({
+        data: mockInboxData,
+        error: null,
+      });
+
+      const result = await inboxMethods.getCurrentInbox({ limit });
+
+      expect(mockClient.GET).toHaveBeenCalledWith("/v1/inbox/current", {
+        params: { query: { limit } },
+      });
       expect(mockClient.GET).toHaveBeenCalledTimes(1);
       expect(result).toEqual(mockInboxData);
     });

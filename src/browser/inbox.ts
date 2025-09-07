@@ -6,14 +6,23 @@ import { formatError } from "../utils";
 type InboxResponse =
   paths["/v1/inbox/current"]["get"]["responses"]["200"]["content"]["application/json"];
 
+type InboxQueryParams = paths["/v1/inbox/current"]["get"]["parameters"]["query"];
+
 export interface InboxMethods {
-  getCurrentInbox(): Promise<InboxResponse>;
+  getCurrentInbox(params?: InboxQueryParams): Promise<InboxResponse>;
 }
 
 export const createInboxMethods = (client: Client<ClientPaths>): InboxMethods => {
   return {
-    async getCurrentInbox(): Promise<InboxResponse> {
-      const { data, error } = await client.GET("/v1/inbox/current");
+    async getCurrentInbox(params?: InboxQueryParams): Promise<InboxResponse> {
+      // Filter out undefined query parameters
+      const cleanQueryParams = params
+        ? Object.fromEntries(Object.entries(params).filter(([_, value]) => value !== undefined))
+        : {};
+
+      const { data, error } = await client.GET("/v1/inbox/current", {
+        params: { query: cleanQueryParams },
+      });
 
       if (error) {
         throw new Error(`Failed to get current inbox: ${formatError(error)}`);
