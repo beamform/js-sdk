@@ -110,9 +110,9 @@ describe("auth", () => {
         error: apiError,
       });
 
-      await expect(authMethods.refreshSessionToken({ refreshToken: "invalid_token" })).rejects.toThrow(
-        "Failed to refresh session token: Invalid refresh token"
-      );
+      await expect(
+        authMethods.refreshSessionToken({ refreshToken: "invalid_token" })
+      ).rejects.toThrow("Failed to refresh session token: Invalid refresh token");
     });
   });
 });

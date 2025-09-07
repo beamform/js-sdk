@@ -12,29 +12,26 @@ type CreateKeyRequest =
 type ListKeysResponse =
   paths["/v1/auth/keys"]["get"]["responses"]["200"]["content"]["application/json"];
 
-type ListKeysParams = 
-  paths["/v1/auth/keys"]["get"]["parameters"]["path"];
+type ListKeysParams = paths["/v1/auth/keys"]["get"]["parameters"]["path"];
 
 type GetKeyResponse =
   paths["/v1/auth/keys/{key_id}"]["get"]["responses"]["200"]["content"]["application/json"];
 
-type GetKeyParams =
-  paths["/v1/auth/keys/{key_id}"]["get"]["parameters"]["path"];
+type GetKeyParams = paths["/v1/auth/keys/{key_id}"]["get"]["parameters"]["path"];
 
 type UpdateKeyRequest =
   paths["/v1/auth/keys/{key_id}"]["patch"]["requestBody"]["content"]["application/json"];
 
-type UpdateKeyParams =
-  paths["/v1/auth/keys/{key_id}"]["patch"]["parameters"]["path"];
+type UpdateKeyParams = paths["/v1/auth/keys/{key_id}"]["patch"]["parameters"]["path"];
 
-export interface ServerAuthMethods {
+export interface AuthMethods {
   createKey(params: { data: CreateKeyRequest }): Promise<CreateKeyResponse>;
   listKeys(params?: ListKeysParams): Promise<ListKeysResponse>;
   getKey(params: GetKeyParams): Promise<GetKeyResponse>;
   updateKey(params: UpdateKeyParams & { data: UpdateKeyRequest }): Promise<void>;
 }
 
-export const createServerAuthMethods = (client: Client<ServerPaths>): ServerAuthMethods => {
+export const createAuthMethods = (client: Client<ServerPaths>): AuthMethods => {
   return {
     async createKey(params: { data: CreateKeyRequest }): Promise<CreateKeyResponse> {
       const { data: responseData, error } = await client.POST("/v1/auth/keys", {

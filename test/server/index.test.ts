@@ -109,10 +109,12 @@ describe("createServerClient", () => {
       mockRawClient.POST.mockResolvedValue({ data: mockKeyData, error: null });
 
       const client = createServerClient(config);
-      const result = await client.createKey({ data: { name: "Test Key", permissions: ["read"] } });
+      const result = await client.createKey({
+        data: { name: "Test Key", permissions: ["keys:read"] },
+      });
 
       expect(mockRawClient.POST).toHaveBeenCalledWith("/v1/auth/keys", {
-        body: { name: "Test Key", permissions: ["read"] },
+        body: { name: "Test Key", permissions: ["keys:read"] },
       });
       expect(result).toEqual(mockKeyData);
     });

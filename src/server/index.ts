@@ -1,13 +1,13 @@
 import openApiClient from "openapi-fetch";
 import type { ServerPaths } from "../path-filters";
-import { createServerAuthMethods, type ServerAuthMethods } from "./auth";
+import { type AuthMethods, createAuthMethods } from "./auth";
 
 interface ServerClientConfig {
   baseUrl?: string;
   apiKey: string;
 }
 
-export interface BeamformServerClient extends ServerAuthMethods {}
+export interface ServerClient extends AuthMethods {}
 
 const DEFAULT_BASE_URL = "https://api.beamform.com";
 
@@ -36,7 +36,7 @@ const DEFAULT_BASE_URL = "https://api.beamform.com";
  * const key = await client.getKey('key_123')
  * ```
  */
-const createServerClient = (config: ServerClientConfig): BeamformServerClient => {
+const createServerClient = (config: ServerClientConfig): ServerClient => {
   const baseUrl = config.baseUrl ?? DEFAULT_BASE_URL;
 
   const rawClient = openApiClient<ServerPaths>({
@@ -46,7 +46,7 @@ const createServerClient = (config: ServerClientConfig): BeamformServerClient =>
     },
   });
 
-  const authMethods = createServerAuthMethods(rawClient);
+  const authMethods = createAuthMethods(rawClient);
 
   return {
     ...authMethods,

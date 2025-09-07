@@ -1,7 +1,7 @@
 import type { Client } from "openapi-fetch";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { ServerPaths } from "../../src/path-filters";
-import { createServerAuthMethods } from "../../src/server/auth";
+import { createAuthMethods } from "../../src/server/auth";
 
 const mockClient = {
   POST: vi.fn(),
@@ -15,14 +15,14 @@ describe("server auth", () => {
   });
 
   describe("createKey", () => {
-    const serverAuthMethods = createServerAuthMethods(mockClient);
+    const authMethods = createAuthMethods(mockClient);
 
     it("should call correct endpoint and return data on success", async () => {
-      const requestData = { name: "Test Key", permissions: ["read"] };
+      const requestData = { name: "Test Key", permissions: ["keys:read" as const] };
       const mockResponseData = {
         keyId: "key_123",
         name: "Test Key",
-        permissions: ["read"],
+        permissions: ["keys:read"],
         createdAt: "2024-01-01T00:00:00Z",
       };
 
@@ -31,7 +31,7 @@ describe("server auth", () => {
         error: null,
       });
 
-      const result = await serverAuthMethods.createKey({ data: requestData });
+      const result = await authMethods.createKey({ data: requestData });
 
       expect(mockClient.POST).toHaveBeenCalledWith("/v1/auth/keys", {
         body: requestData,
@@ -48,20 +48,20 @@ describe("server auth", () => {
         error: apiError,
       });
 
-      await expect(serverAuthMethods.createKey({ data: { name: "Test", permissions: [] } })).rejects.toThrow(
-        "Failed to create key: Invalid permissions"
-      );
+      await expect(
+        authMethods.createKey({ data: { name: "Test", permissions: ["keys:read"] } })
+      ).rejects.toThrow("Failed to create key: Invalid permissions");
     });
   });
 
   describe("listKeys", () => {
-    const serverAuthMethods = createServerAuthMethods(mockClient);
+    const serverAuthMethods = createAuthMethods(mockClient);
 
     it("should call correct endpoint and return data on success", async () => {
       const mockKeysData = {
         keys: [
-          { keyId: "key_1", name: "Key 1", permissions: ["read"] },
-          { keyId: "key_2", name: "Key 2", permissions: ["write"] },
+          { keyId: "key_1", name: "Key 1", permissions: ["keys:read"] },
+          { keyId: "key_2", name: "Key 2", permissions: ["keys:write"] },
         ],
       };
 
@@ -94,14 +94,14 @@ describe("server auth", () => {
   });
 
   describe("getKey", () => {
-    const serverAuthMethods = createServerAuthMethods(mockClient);
+    const serverAuthMethods = createAuthMethods(mockClient);
 
     it("should call correct endpoint and return data on success", async () => {
       const keyId = "key_123";
       const mockKeyData = {
         keyId: "key_123",
         name: "Test Key",
-        permissions: ["read", "write"],
+        permissions: ["keys:read", "keys:write"],
         createdAt: "2024-01-01T00:00:00Z",
       };
 
@@ -134,7 +134,7 @@ describe("server auth", () => {
   });
 
   describe("updateKey", () => {
-    const serverAuthMethods = createServerAuthMethods(mockClient);
+    const serverAuthMethods = createAuthMethods(mockClient);
 
     it("should call correct endpoint on success", async () => {
       const keyId = "key_123";
@@ -161,9 +161,9 @@ describe("server auth", () => {
         error: apiError,
       });
 
-      await expect(serverAuthMethods.updateKey({ key_id: "nonexistent", data: { name: "Updated" } })).rejects.toThrow(
-        "Failed to update key: Key not found"
-      );
+      await expect(
+        serverAuthMethods.updateKey({ key_id: "nonexistent", data: { name: "Updated" } })
+      ).rejects.toThrow("Failed to update key: Key not found");
     });
   });
 });
