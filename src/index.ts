@@ -1,3 +1,4 @@
+export type { AuthMethods } from "./auth";
 export type { BeamformClient, ClientConfig } from "./client";
 export { clear, createClient } from "./client";
 export type { InboxMethods } from "./inbox";

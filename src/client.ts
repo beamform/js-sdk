@@ -1,4 +1,5 @@
 import openApiClient from "openapi-fetch";
+import { type AuthMethods, createAuthMethods } from "./auth";
 import { createInboxMethods, type InboxMethods } from "./inbox";
 import type { ClientPaths } from "./path-filters";
 import { formatError } from "./utils";
@@ -23,7 +24,7 @@ let baseUrl: string = "https://api.beamform.com";
 let customHeaders: Record<string, string> = {};
 let autoRefresh: boolean = true;
 
-export interface BeamformClient extends InboxMethods {}
+export interface BeamformClient extends InboxMethods, AuthMethods {}
 
 /**
  * Create an authenticated Beamform client with automatic token management.
@@ -39,6 +40,8 @@ export interface BeamformClient extends InboxMethods {}
  *
  * // Use clean wrapper methods
  * const inbox = await client.getCurrentInbox()
+ * const session = await client.getCurrentSession()
+ * await client.deleteCurrentSession()
  * ```
  */
 const createClient = async (
@@ -91,8 +94,12 @@ const createClient = async (
   });
 
   const inboxMethods = createInboxMethods(rawClient);
+  const authMethods = createAuthMethods(rawClient);
 
-  return inboxMethods;
+  return {
+    ...inboxMethods,
+    ...authMethods,
+  };
 };
 
 const getValidSessionToken = async (): Promise<string> => {
