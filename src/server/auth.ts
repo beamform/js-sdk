@@ -15,10 +15,14 @@ type ListKeysResponse =
 type GetKeyResponse =
   paths["/v1/auth/keys/{key_id}"]["get"]["responses"]["200"]["content"]["application/json"];
 
+type UpdateKeyRequest =
+  paths["/v1/auth/keys/{key_id}"]["patch"]["requestBody"]["content"]["application/json"];
+
 export interface ServerAuthMethods {
   createKey(data: CreateKeyRequest): Promise<CreateKeyResponse>;
   listKeys(cursor?: string | null, pageSize?: number): Promise<ListKeysResponse>;
   getKey(keyId: string): Promise<GetKeyResponse>;
+  updateKey(keyId: string, data: UpdateKeyRequest): Promise<void>;
 }
 
 export const createServerAuthMethods = (client: Client<ServerPaths>): ServerAuthMethods => {
@@ -62,6 +66,17 @@ export const createServerAuthMethods = (client: Client<ServerPaths>): ServerAuth
       }
 
       return data;
+    },
+
+    async updateKey(keyId: string, data: UpdateKeyRequest): Promise<void> {
+      const { error } = await client.PATCH("/v1/auth/keys/{key_id}", {
+        params: { path: { key_id: keyId } },
+        body: data,
+      });
+
+      if (error) {
+        throw new Error(`Failed to update key: ${formatError(error)}`);
+      }
     },
   };
 };

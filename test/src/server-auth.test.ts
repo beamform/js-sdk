@@ -7,6 +7,7 @@ import { createServerAuthMethods } from "../../src/server/auth";
 const mockClient = {
   POST: vi.fn(),
   GET: vi.fn(),
+  PATCH: vi.fn(),
 } as unknown as Client<ServerPaths>;
 
 describe("server auth", () => {
@@ -129,6 +130,40 @@ describe("server auth", () => {
 
       await expect(serverAuthMethods.getKey("nonexistent")).rejects.toThrow(
         "Failed to get key: Key not found"
+      );
+    });
+  });
+
+  describe("updateKey", () => {
+    const serverAuthMethods = createServerAuthMethods(mockClient);
+
+    it("should call correct endpoint on success", async () => {
+      const keyId = "key_123";
+      const updateData = { name: "Updated Key" };
+
+      mockClient.PATCH = vi.fn().mockResolvedValue({
+        error: null,
+      });
+
+      await serverAuthMethods.updateKey(keyId, updateData);
+
+      expect(mockClient.PATCH).toHaveBeenCalledWith("/v1/auth/keys/{key_id}", {
+        params: { path: { key_id: keyId } },
+        body: updateData,
+      });
+      expect(mockClient.PATCH).toHaveBeenCalledTimes(1);
+    });
+
+    it("should throw formatted error when API returns error", async () => {
+      const apiError = { message: "Key not found" };
+
+      mockClient.PATCH = vi.fn().mockResolvedValue({
+        data: null,
+        error: apiError,
+      });
+
+      await expect(serverAuthMethods.updateKey("nonexistent", { name: "Updated" })).rejects.toThrow(
+        "Failed to update key: Key not found"
       );
     });
   });
