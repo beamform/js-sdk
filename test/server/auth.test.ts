@@ -75,7 +75,9 @@ describe("server auth", () => {
       const result = await serverAuthMethods.listKeys();
 
       expect(mockClient.GET).toHaveBeenCalledWith("/v1/auth/keys", {
-        params: { path: { cursor: null, pageSize: 20 } },
+        params: {
+          query: { cursor: undefined, pageSize: 50 },
+        },
       });
       expect(mockClient.GET).toHaveBeenCalledTimes(1);
       expect(result).toEqual(mockKeysData);

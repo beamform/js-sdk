@@ -12,7 +12,7 @@ type CreateKeyRequest =
 type ListKeysResponse =
   paths["/v1/auth/keys"]["get"]["responses"]["200"]["content"]["application/json"];
 
-type ListKeysParams = paths["/v1/auth/keys"]["get"]["parameters"]["path"];
+type ListKeysQuery = paths["/v1/auth/keys"]["get"]["parameters"]["query"];
 
 type GetKeyResponse =
   paths["/v1/auth/keys/{key_id}"]["get"]["responses"]["200"]["content"]["application/json"];
@@ -40,7 +40,7 @@ type DeleteKeyParams = paths["/v1/auth/keys/{key_id}"]["delete"]["parameters"]["
 
 export interface AuthMethods {
   createKey(params: { data: CreateKeyRequest }): Promise<CreateKeyResponse>;
-  listKeys(params?: ListKeysParams): Promise<ListKeysResponse>;
+  listKeys(params?: ListKeysQuery): Promise<ListKeysResponse>;
   getKey(params: GetKeyParams): Promise<GetKeyResponse>;
   updateKey(params: UpdateKeyParams & { data: UpdateKeyRequest }): Promise<void>;
   replaceKey(params: ReplaceKeyParams & { data: ReplaceKeyRequest }): Promise<void>;
@@ -64,12 +64,12 @@ export const createAuthMethods = (client: Client<ServerPaths>): AuthMethods => {
       return responseData;
     },
 
-    async listKeys(params?: ListKeysParams): Promise<ListKeysResponse> {
+    async listKeys(params?: ListKeysQuery): Promise<ListKeysResponse> {
       const { data, error } = await client.GET("/v1/auth/keys", {
         params: {
-          path: {
-            cursor: params?.cursor ?? null,
-            pageSize: params?.pageSize ?? 20,
+          query: {
+            cursor: params?.cursor ?? undefined,
+            pageSize: params?.pageSize ?? 50,
           },
         },
       });

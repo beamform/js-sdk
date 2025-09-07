@@ -6,15 +6,15 @@ import { formatError } from "../utils";
 type InboxResponse =
   paths["/v1/inbox/current"]["get"]["responses"]["200"]["content"]["application/json"];
 
-type InboxQueryParams = paths["/v1/inbox/current"]["get"]["parameters"]["query"];
+type InboxQuery = paths["/v1/inbox/current"]["get"]["parameters"]["query"];
 
 export interface InboxMethods {
-  getCurrentInbox(params?: InboxQueryParams): Promise<InboxResponse>;
+  getCurrentInbox(params?: InboxQuery): Promise<InboxResponse>;
 }
 
 export const createInboxMethods = (client: Client<ClientPaths>): InboxMethods => {
   return {
-    async getCurrentInbox(params?: InboxQueryParams): Promise<InboxResponse> {
+    async getCurrentInbox(params?: InboxQuery): Promise<InboxResponse> {
       // Filter out undefined query parameters
       const cleanQueryParams = params
         ? Object.fromEntries(Object.entries(params).filter(([_, value]) => value !== undefined))

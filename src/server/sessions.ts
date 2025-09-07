@@ -15,8 +15,11 @@ type CreateSessionParams =
 type ListSessionsResponse =
   paths["/v1/auth/recipients/{recipient_id}/sessions"]["get"]["responses"]["200"]["content"]["application/json"];
 
-type ListSessionsParams =
+type ListSessionsPathParams =
   paths["/v1/auth/recipients/{recipient_id}/sessions"]["get"]["parameters"]["path"];
+
+type ListSessionsQuery =
+  paths["/v1/auth/recipients/{recipient_id}/sessions"]["get"]["parameters"]["query"];
 
 type GetSessionResponse =
   paths["/v1/auth/recipients/{recipient_id}/sessions/{session_id}"]["get"]["responses"]["200"]["content"]["application/json"];
@@ -34,7 +37,9 @@ export interface SessionMethods {
   createSession(
     params: CreateSessionParams & { data: CreateSessionRequest }
   ): Promise<CreateSessionResponse>;
-  listSessions(params: ListSessionsParams): Promise<ListSessionsResponse>;
+  listSessions(
+    params: ListSessionsPathParams & Partial<ListSessionsQuery>
+  ): Promise<ListSessionsResponse>;
   getSession(params: GetSessionParams): Promise<GetSessionResponse>;
   deleteSession(params: DeleteSessionParams): Promise<void>;
   deleteAllSessions(params: DeleteAllSessionsParams): Promise<void>;
@@ -61,9 +66,19 @@ export const createSessionMethods = (client: Client<ServerPaths>): SessionMethod
       return responseData;
     },
 
-    async listSessions(params: ListSessionsParams): Promise<ListSessionsResponse> {
+    async listSessions(
+      params: ListSessionsPathParams & Partial<ListSessionsQuery>
+    ): Promise<ListSessionsResponse> {
+      const { recipient_id, cursor, pageSize } = params;
+
       const { data, error } = await client.GET("/v1/auth/recipients/{recipient_id}/sessions", {
-        params: { path: params },
+        params: {
+          path: { recipient_id },
+          query: {
+            cursor: cursor ?? undefined,
+            pageSize: pageSize ?? 50,
+          },
+        },
       });
 
       if (error) {

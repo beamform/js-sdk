@@ -87,12 +87,15 @@ describe("server sessions", () => {
 
       const result = await sessionMethods.listSessions({
         recipient_id: recipientId,
-        cursor: null,
+        cursor: undefined,
         pageSize: 50,
       });
 
       expect(mockClient.GET).toHaveBeenCalledWith("/v1/auth/recipients/{recipient_id}/sessions", {
-        params: { path: { recipient_id: recipientId, cursor: null, pageSize: 50 } },
+        params: {
+          path: { recipient_id: recipientId },
+          query: { cursor: undefined, pageSize: 50 },
+        },
       });
       expect(mockClient.GET).toHaveBeenCalledTimes(1);
       expect(result).toEqual(mockResponseData);
@@ -109,7 +112,7 @@ describe("server sessions", () => {
       await expect(
         sessionMethods.listSessions({
           recipient_id: "nonexistent",
-          cursor: null,
+          cursor: undefined,
           pageSize: 50,
         })
       ).rejects.toThrow("Failed to list sessions: Recipient not found");

@@ -1,3 +1,7 @@
+# Generate types from OpenAPI spec
+generate:
+    pnpm generate:types
+
 # Run all quality checks
 quality:
     pnpm lint

@@ -13,12 +13,13 @@
 
 ### Phase 1: Dynamic Discovery
 
-1. **Parse OpenAPI Schema**: Extract all endpoints from `/src/generated/schema.d.ts`
-2. **Categorize Endpoints**: Determine auth type by authentication requirements
+1. **Regenerate Schema**: Run `just generate` to ensure latest OpenAPI schema is used
+2. **Parse OpenAPI Schema**: Extract all endpoints from `/src/generated/schema.d.ts`
+3. **Categorize Endpoints**: Determine auth type by authentication requirements
    - Endpoints requiring API key authentication = server auth
    - Endpoints requiring session token authentication = browser auth
    - Endpoints with no authentication requirements = both, add wrapper to both clients
-3. **Extract Endpoint Metadata**: For each endpoint, collect parameters, request/response types, and operation details
+4. **Extract Endpoint Metadata**: For each endpoint, collect parameters, request/response types, and operation details
 
 ### Phase 2: Implementation Validation
 
@@ -77,6 +78,10 @@ For each discovered endpoint, validate:
 - [ ] Parameter types reference OpenAPI schema paths
 - [ ] Response types reference correct schema response
 - [ ] Proper imports from `../generated/schema`
+- [ ] Parameter type naming follows pattern:
+  - Query parameters: `*Query` (e.g., `ListKeysQuery`, `InboxQuery`)
+  - Path parameters: `*Params` or `*PathParams` (e.g., `GetKeyParams`, `ListSessionsPathParams`)
+  - Combined parameters: Use `&` to join types (e.g., `PathParams & Partial<Query>`)
 
 ### ✅ Error Handling
 
@@ -127,10 +132,11 @@ Issues:
 
 ## Command Implementation
 
-1. **Dynamic Discovery**: Parse schema to find all endpoints
-2. **Pattern Validation**: Check each endpoint against established patterns
-3. **Generate Report**: Show discovered endpoints and validation results
-4. **Provide Fixes**: Suggest specific remediation for failures
+1. **Schema Regeneration**: Run `just generate` to rebuild schema from latest OpenAPI spec
+2. **Dynamic Discovery**: Parse schema to find all endpoints
+3. **Pattern Validation**: Check each endpoint against established patterns
+4. **Generate Report**: Show discovered endpoints and validation results
+5. **Provide Fixes**: Suggest specific remediation for failures
 
 ## Remediation Process
 
@@ -140,13 +146,13 @@ One endpoint per commit. Implementation + tests together. Quality gates required
 
 1. **Update Implementation**: Fix wrapper method to match established patterns
 2. **Update Tests**: Add/modify tests to cover the fixed implementation
-3. **Run Quality Checks**: `just format && just quality && just test`
+3. **Run Quality Checks**: `just generate && just quality && just test`
 4. **Commit**: Single commit with conventional format
 
 ### Quality Gates
 
 All checks must pass before commit:
 
-- ✅ `just format` - Code formatting
+- ✅ `just generate` - Regenerate types from OpenAPI spec
 - ✅ `just quality` - Linting
 - ✅ `just test` - Type checking and tests
