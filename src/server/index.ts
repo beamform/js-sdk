@@ -2,13 +2,14 @@ import openApiClient from "openapi-fetch";
 import type { ServerPaths } from "../path-filters";
 import { type AuthMethods, createAuthMethods } from "./auth";
 import { createNotificationMethods, type NotificationMethods } from "./notifications";
+import { createSessionMethods, type SessionMethods } from "./sessions";
 
 interface ServerClientConfig {
   baseUrl?: string;
   apiKey: string;
 }
 
-export interface ServerClient extends AuthMethods, NotificationMethods {}
+export interface ServerClient extends AuthMethods, NotificationMethods, SessionMethods {}
 
 const DEFAULT_BASE_URL = "https://api.beamform.com";
 
@@ -29,14 +30,17 @@ const DEFAULT_BASE_URL = "https://api.beamform.com";
  *
  * // Create a notification
  * const notification = await client.createNotification({
- *   data: { title: 'Welcome', body: 'Welcome to our app!' }
+ *   data: { subject: 'Welcome', content: 'Welcome to our app!', recipients: ['user123'] }
+ * })
+ *
+ * // Create a session for a recipient
+ * const session = await client.createSession({
+ *   recipient_id: 'user123',
+ *   data: { sessionLifetime: '24h' }
  * })
  *
  * // Create an API key
- * const key = await client.createKey({ data: { name: 'My Key', permissions: ['read'] } })
- *
- * // List API keys
- * const keys = await client.listKeys()
+ * const key = await client.createKey({ data: { name: 'My Key', permissions: ['keys:read'] } })
  * ```
  */
 const createServerClient = (config: ServerClientConfig): ServerClient => {
@@ -51,10 +55,12 @@ const createServerClient = (config: ServerClientConfig): ServerClient => {
 
   const authMethods = createAuthMethods(rawClient);
   const notificationMethods = createNotificationMethods(rawClient);
+  const sessionMethods = createSessionMethods(rawClient);
 
   return {
     ...authMethods,
     ...notificationMethods,
+    ...sessionMethods,
   };
 };
 
