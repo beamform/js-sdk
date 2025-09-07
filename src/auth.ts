@@ -6,9 +6,16 @@ import { formatError } from "./utils";
 type CurrentSessionResponse =
   paths["/v1/auth/session/current"]["get"]["responses"]["200"]["content"]["application/json"];
 
+type RefreshTokenResponse =
+  paths["/v1/auth/tokens/refresh"]["post"]["responses"]["200"]["content"]["application/json"];
+
+type RefreshTokenRequest =
+  paths["/v1/auth/tokens/refresh"]["post"]["requestBody"]["content"]["application/json"];
+
 export interface AuthMethods {
   getCurrentSession(): Promise<CurrentSessionResponse>;
   deleteCurrentSession(): Promise<void>;
+  refreshSessionToken(refreshToken: string): Promise<RefreshTokenResponse>;
 }
 
 export const createAuthMethods = (client: Client<ClientPaths>): AuthMethods => {
@@ -29,6 +36,18 @@ export const createAuthMethods = (client: Client<ClientPaths>): AuthMethods => {
       if (error) {
         throw new Error(`Failed to delete current session: ${formatError(error)}`);
       }
+    },
+
+    async refreshSessionToken(refreshToken: string): Promise<RefreshTokenResponse> {
+      const { data, error } = await client.POST("/v1/auth/tokens/refresh", {
+        body: { refreshToken },
+      });
+
+      if (error) {
+        throw new Error(`Failed to refresh session token: ${formatError(error)}`);
+      }
+
+      return data;
     },
   };
 };

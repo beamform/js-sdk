@@ -7,6 +7,7 @@ import type { ClientPaths } from "../../src/path-filters";
 const mockClient = {
   GET: vi.fn(),
   DELETE: vi.fn(),
+  POST: vi.fn(),
 } as unknown as Client<ClientPaths>;
 
 describe("auth", () => {
@@ -73,6 +74,45 @@ describe("auth", () => {
 
       await expect(authMethods.deleteCurrentSession()).rejects.toThrow(
         "Failed to delete current session: Session not found"
+      );
+    });
+  });
+
+  describe("refreshSessionToken", () => {
+    const authMethods = createAuthMethods(mockClient);
+
+    it("should call correct endpoint and return data on success", async () => {
+      const refreshToken = "sr_refresh_token_123";
+      const mockTokenData = {
+        sessionToken: "new_session_token_456",
+        refreshToken: "new_refresh_token_789",
+        expiresAt: "2024-01-02T00:00:00Z",
+      };
+
+      mockClient.POST = vi.fn().mockResolvedValue({
+        data: mockTokenData,
+        error: null,
+      });
+
+      const result = await authMethods.refreshSessionToken(refreshToken);
+
+      expect(mockClient.POST).toHaveBeenCalledWith("/v1/auth/tokens/refresh", {
+        body: { refreshToken },
+      });
+      expect(mockClient.POST).toHaveBeenCalledTimes(1);
+      expect(result).toEqual(mockTokenData);
+    });
+
+    it("should throw formatted error when API returns error", async () => {
+      const apiError = { message: "Invalid refresh token" };
+
+      mockClient.POST = vi.fn().mockResolvedValue({
+        data: null,
+        error: apiError,
+      });
+
+      await expect(authMethods.refreshSessionToken("invalid_token")).rejects.toThrow(
+        "Failed to refresh session token: Invalid refresh token"
       );
     });
   });
