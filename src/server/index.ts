@@ -1,6 +1,7 @@
 import openApiClient from "openapi-fetch";
 import type { ServerPaths } from "../path-filters";
 import { type AuthMethods, createAuthMethods } from "./auth";
+import { createInboxMethods, type InboxMethods } from "./inbox";
 import { createNotificationMethods, type NotificationMethods } from "./notifications";
 import { createSessionMethods, type SessionMethods } from "./sessions";
 
@@ -9,7 +10,11 @@ interface ServerClientConfig {
   apiKey: string;
 }
 
-export interface ServerClient extends AuthMethods, NotificationMethods, SessionMethods {}
+export interface ServerClient
+  extends AuthMethods,
+    InboxMethods,
+    NotificationMethods,
+    SessionMethods {}
 
 const DEFAULT_BASE_URL = "https://api.beamform.com";
 
@@ -20,6 +25,7 @@ const DEFAULT_BASE_URL = "https://api.beamform.com";
  * - Creating notifications
  * - Managing API keys
  * - Creating recipient sessions
+ * - Reading recipient inboxes
  * - Administrative operations
  *
  * @example
@@ -39,6 +45,9 @@ const DEFAULT_BASE_URL = "https://api.beamform.com";
  *   data: { sessionLifetime: '24h' }
  * })
  *
+ * // Get inbox for a recipient
+ * const inbox = await client.getInboxForRecipient({ recipient_id: 'user123', limit: 20 })
+ *
  * // Create an API key
  * const key = await client.createKey({ data: { name: 'My Key', permissions: ['keys:read'] } })
  * ```
@@ -54,11 +63,13 @@ const createServerClient = (config: ServerClientConfig): ServerClient => {
   });
 
   const authMethods = createAuthMethods(rawClient);
+  const inboxMethods = createInboxMethods(rawClient);
   const notificationMethods = createNotificationMethods(rawClient);
   const sessionMethods = createSessionMethods(rawClient);
 
   return {
     ...authMethods,
+    ...inboxMethods,
     ...notificationMethods,
     ...sessionMethods,
   };
