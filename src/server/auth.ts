@@ -12,9 +12,13 @@ type CreateKeyRequest =
 type ListKeysResponse =
   paths["/v1/auth/keys"]["get"]["responses"]["200"]["content"]["application/json"];
 
+type GetKeyResponse =
+  paths["/v1/auth/keys/{key_id}"]["get"]["responses"]["200"]["content"]["application/json"];
+
 export interface ServerAuthMethods {
   createKey(data: CreateKeyRequest): Promise<CreateKeyResponse>;
   listKeys(cursor?: string | null, pageSize?: number): Promise<ListKeysResponse>;
+  getKey(keyId: string): Promise<GetKeyResponse>;
 }
 
 export const createServerAuthMethods = (client: Client<ServerPaths>): ServerAuthMethods => {
@@ -33,16 +37,28 @@ export const createServerAuthMethods = (client: Client<ServerPaths>): ServerAuth
 
     async listKeys(cursor?: string | null, pageSize?: number): Promise<ListKeysResponse> {
       const { data, error } = await client.GET("/v1/auth/keys", {
-        params: { 
-          path: { 
-            cursor: cursor ?? null, 
-            pageSize: pageSize ?? 20 
-          } 
+        params: {
+          path: {
+            cursor: cursor ?? null,
+            pageSize: pageSize ?? 20,
+          },
         },
       });
 
       if (error) {
         throw new Error(`Failed to list keys: ${formatError(error)}`);
+      }
+
+      return data;
+    },
+
+    async getKey(keyId: string): Promise<GetKeyResponse> {
+      const { data, error } = await client.GET("/v1/auth/keys/{key_id}", {
+        params: { path: { key_id: keyId } },
+      });
+
+      if (error) {
+        throw new Error(`Failed to get key: ${formatError(error)}`);
       }
 
       return data;

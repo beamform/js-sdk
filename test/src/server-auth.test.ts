@@ -92,4 +92,44 @@ describe("server auth", () => {
       );
     });
   });
+
+  describe("getKey", () => {
+    const serverAuthMethods = createServerAuthMethods(mockClient);
+
+    it("should call correct endpoint and return data on success", async () => {
+      const keyId = "key_123";
+      const mockKeyData = {
+        keyId: "key_123",
+        name: "Test Key",
+        permissions: ["read", "write"],
+        createdAt: "2024-01-01T00:00:00Z",
+      };
+
+      mockClient.GET = vi.fn().mockResolvedValue({
+        data: mockKeyData,
+        error: null,
+      });
+
+      const result = await serverAuthMethods.getKey(keyId);
+
+      expect(mockClient.GET).toHaveBeenCalledWith("/v1/auth/keys/{key_id}", {
+        params: { path: { key_id: keyId } },
+      });
+      expect(mockClient.GET).toHaveBeenCalledTimes(1);
+      expect(result).toEqual(mockKeyData);
+    });
+
+    it("should throw formatted error when API returns error", async () => {
+      const apiError = { message: "Key not found" };
+
+      mockClient.GET = vi.fn().mockResolvedValue({
+        data: null,
+        error: apiError,
+      });
+
+      await expect(serverAuthMethods.getKey("nonexistent")).rejects.toThrow(
+        "Failed to get key: Key not found"
+      );
+    });
+  });
 });
