@@ -27,7 +27,7 @@ let autoRefresh: boolean = true;
  *
  * @example
  * ```typescript
- * import { createClient } from '@beamform/js-sdk'
+ * import { createClient } from '@beamformio/js-sdk'
  *
  * const client = await createClient('sr_refresh_token_from_server', {
  *   baseUrl: 'https://api.example.com',

@@ -19,7 +19,7 @@ const DEFAULT_BASE_URL = "https://api.beamform.com";
  *
  * @example
  * ```typescript
- * import { createServerClient } from '@beamform/js-sdk'
+ * import { createServerClient } from '@beamformio/js-sdk'
  *
  * const client = createServerClient({ apiKey: 'sk_your_api_key' })
  *
