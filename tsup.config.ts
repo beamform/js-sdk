@@ -7,6 +7,6 @@ export default defineConfig({
   sourcemap: true,
   clean: true,
   splitting: false,
-  minify: false,
+  minify: "terser",
   external: [],
 });
