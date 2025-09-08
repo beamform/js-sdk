@@ -40,4 +40,4 @@ jobs:
       - run: pnpm publish --provenance --access public
         if: ${{ steps.release.outputs.release_created }}
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPMJS_PUBLISH_ALL_TOKEN }}
+          NPMJS_PUBLISH_ALL_TOKEN: ${{ secrets.NPMJS_PUBLISH_ALL_TOKEN }}
