@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.3](https://github.com/beamform/js-sdk/compare/js-sdk-v0.1.2...js-sdk-v0.1.3) (2025-09-08)
+
+
+### Features
+
+* convert build system from tsup to vite ([#19](https://github.com/beamform/js-sdk/issues/19)) ([61cb885](https://github.com/beamform/js-sdk/commit/61cb88596ab78a8a959d13222c07e4a9457501cc))
+
 ## [0.1.2](https://github.com/beamform/js-sdk/compare/js-sdk-v0.1.2...js-sdk-v0.1.2) (2025-09-08)
 
 
