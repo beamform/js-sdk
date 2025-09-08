@@ -1,8 +1,9 @@
 import { resolve } from "node:path";
+import webpackStats from "rollup-plugin-webpack-stats";
 import { defineConfig } from "vite";
 import dts from "vite-plugin-dts";
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   build: {
     lib: {
       entry: resolve(__dirname, "src/index.ts"),
@@ -25,11 +26,12 @@ export default defineConfig({
     dts({
       rollupTypes: true,
     }),
-  ],
+    mode === "analyze" && webpackStats(),
+  ].filter(Boolean),
   test: {
     coverage: {
       include: ["src/**/*.ts"],
       reporter: ["html"],
     },
   },
-});
+}));
