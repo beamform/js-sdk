@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1](https://github.com/beamform/js-sdk/compare/js-sdk-v0.1.0...js-sdk-v0.1.1) (2025-09-08)
+
+
+### Miscellaneous Chores
+
+* release 0.1.1 ([61f5f9a](https://github.com/beamform/js-sdk/commit/61f5f9a82f9b06278347317d611b1106c14f96f9))
+
 ## [0.1.0](https://github.com/beamform/js-sdk/compare/js-sdk-v0.1.0...js-sdk-v0.1.0) (2025-09-07)
 
 
