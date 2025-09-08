@@ -4,7 +4,8 @@
   "packages": {
     ".": {
       "release-type": "node",
-      "package-name": "@beamformio/js-sdk"
+      "package-name": "@beamformio/js-sdk",
+      "tag-prefix": "v"
     }
   }
 }
