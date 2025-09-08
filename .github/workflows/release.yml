@@ -35,6 +35,7 @@ jobs:
         if: ${{ steps.release.outputs.release_created }}
 
       - run: pnpm build
+        if: ${{ steps.release.outputs.release_created }}
 
       - run: pnpm publish --provenance --access public
         if: ${{ steps.release.outputs.release_created }}
