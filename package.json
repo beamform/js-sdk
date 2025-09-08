@@ -23,9 +23,11 @@
   ],
   "scripts": {
     "prebuild": "pnpm generate:types",
-    "build": "tsup",
+    "build": "vite build",
+    "prebuild:analyze": "pnpm generate:types",
+    "build:analyze": "vite build --config vite.config.ts --mode analyze",
     "predev": "pnpm generate:types",
-    "dev": "tsup --watch",
+    "dev": "vite build --watch",
     "generate:types": "openapi-typescript ./openapi.json -o ./src/generated/schema.d.ts",
     "lint": "biome check",
     "format": "biome check --write",
@@ -47,8 +49,11 @@
   "devDependencies": {
     "@biomejs/biome": "^2.2.3",
     "openapi-typescript": "^7.9.1",
-    "tsup": "^8.5.0",
+    "rollup-plugin-webpack-stats": "^2.1.4",
+    "terser": "^5.44.0",
     "typescript": "^5.9.2",
+    "vite-plugin-dts": "^4.5.4",
+    "vite": "^7.1.5",
     "vitest": "^3.2.4"
   },
   "dependencies": {
