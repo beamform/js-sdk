@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.2](https://github.com/beamform/js-sdk/compare/js-sdk-v0.1.1...js-sdk-v0.1.2) (2025-09-08)
+
+
+### Bug Fixes
+
+* npm token envar ([edc0f51](https://github.com/beamform/js-sdk/commit/edc0f51df406421e6f3e8ee5d6cd1bfd9c1a09d1))
+
 ## [0.1.1](https://github.com/beamform/js-sdk/compare/js-sdk-v0.1.0...js-sdk-v0.1.1) (2025-09-08)
 
 
