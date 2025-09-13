@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.4](https://github.com/beamform/js-sdk/compare/js-sdk-v0.1.3...js-sdk-v0.1.4) (2025-09-13)
+
+
+### Features
+
+* clean up exports ([a97984c](https://github.com/beamform/js-sdk/commit/a97984ce041f4b1f309c18a5f2b991c797e7af36))
+
 ## [0.1.3](https://github.com/beamform/js-sdk/compare/js-sdk-v0.1.2...js-sdk-v0.1.3) (2025-09-08)
 
 
