@@ -10,11 +10,7 @@ interface ServerClientConfig {
   apiKey: string;
 }
 
-export interface ServerClient
-  extends AuthMethods,
-    InboxMethods,
-    NotificationMethods,
-    SessionMethods {}
+interface ServerClient extends AuthMethods, InboxMethods, NotificationMethods, SessionMethods {}
 
 const DEFAULT_BASE_URL = "https://api.beamform.com";
 
@@ -76,4 +72,4 @@ const createServerClient = (config: ServerClientConfig): ServerClient => {
 };
 
 export { createServerClient, DEFAULT_BASE_URL };
-export type { ServerClientConfig };
+export type { ServerClient, ServerClientConfig };

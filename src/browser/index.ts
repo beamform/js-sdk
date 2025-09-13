@@ -4,7 +4,7 @@ import { formatError } from "../utils";
 import { type AuthMethods, createAuthMethods } from "./auth";
 import { createInboxMethods, type InboxMethods } from "./inbox";
 
-export interface ClientConfig {
+interface BrowserClientConfig {
   baseUrl?: string;
   headers?: Record<string, string>;
   autoRefresh?: boolean;
@@ -24,7 +24,7 @@ let baseUrl: string = "https://api.beamform.com";
 let customHeaders: Record<string, string> = {};
 let autoRefresh: boolean = true;
 
-export interface BeamformClient extends InboxMethods, AuthMethods {}
+interface BrowserClient extends InboxMethods, AuthMethods {}
 
 /**
  * Create an authenticated Beamform client with automatic token management.
@@ -46,8 +46,8 @@ export interface BeamformClient extends InboxMethods, AuthMethods {}
  */
 const createClient = async (
   refreshToken: string,
-  config: ClientConfig = {}
-): Promise<BeamformClient> => {
+  config: BrowserClientConfig = {}
+): Promise<BrowserClient> => {
   baseUrl = config.baseUrl ?? "https://api.beamform.com";
   customHeaders = config.headers ?? {};
   autoRefresh = config.autoRefresh ?? true;
@@ -185,3 +185,4 @@ const clear = (): void => {
 };
 
 export { clear, createClient };
+export type { BrowserClientConfig, BrowserClient };
